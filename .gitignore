@@ -10,6 +10,9 @@
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 
+# DoTween files
+/[Aa]ssets/Demigiant/
+
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
 
