@@ -11,7 +11,7 @@
 /[Mm]emoryCaptures/
 
 # DoTween files
-/[Aa]ssets/Demigiant/
+/[Aa]ssets/Demigiant*
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
