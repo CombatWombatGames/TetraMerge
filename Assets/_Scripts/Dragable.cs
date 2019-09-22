@@ -8,7 +8,8 @@ public class Dragable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Перестает выполняться, когда курсор мыши за пределами объекта, но не заканчивает Drag! На телефоне все норм
+        //Перестает выполняться, когда курсор мыши за пределами объекта, но не заканчивает Drag! 
+        //На телефоне работает как надо
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
             transform.position = eventData.pointerCurrentRaycast.worldPosition;
