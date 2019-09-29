@@ -12,7 +12,6 @@ public class Tester : MonoBehaviour
     IEnumerator LateStart()
     {
         yield return new WaitForSeconds(1);
-        FindObjectOfType<InputDisabler>().DisableInput();
     }
 }
 #endif
