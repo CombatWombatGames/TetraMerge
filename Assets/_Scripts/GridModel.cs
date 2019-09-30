@@ -9,6 +9,7 @@ public class GridModel : MonoBehaviour
     Cell[,] grid;
 
     public event Action<Cell[,]> GridCreated;
+    public event Action<Cell[,]> GridChanged;
 
     void Start()
     {
@@ -19,5 +20,10 @@ public class GridModel : MonoBehaviour
     {
         grid = new Cell[width, height];
         GridCreated(grid);
+    }
+
+    void ChangeGrid()
+    {
+        GridChanged(grid);
     }
 }

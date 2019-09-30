@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GridVeiw : MonoBehaviour
 {
@@ -9,11 +10,13 @@ public class GridVeiw : MonoBehaviour
     void Awake()
     {
         gridModel.GridCreated += OnGridCreated;
+        gridModel.GridChanged += OnGridChanged;
     }
 
     void OnDestroy()
     {
         gridModel.GridCreated -= OnGridCreated;
+        gridModel.GridChanged += OnGridChanged;
     }
 
     void OnGridCreated(Cell[,] grid)
@@ -27,5 +30,10 @@ public class GridVeiw : MonoBehaviour
                 Instantiate(cellPrefab, new Vector3(i - offsetX, j - offsetY), Quaternion.identity, cellsParent);
             }
         }
+    }
+
+    void OnGridChanged(Cell[,] grid)
+    {
+        throw new NotImplementedException();
     }
 }
