@@ -4,7 +4,9 @@ using UnityEngine;
 public class GridModel : MonoBehaviour
 {
     [SerializeField] int width = default;
+    public int Width => width;
     [SerializeField] int height = default;
+    public int Height => height;
 
     Cell[,] grid;
 

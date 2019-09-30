@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class GridVeiw : MonoBehaviour
 {
-    [SerializeField] GameObject cellPrefab = default;
     [SerializeField] GridModel gridModel = default;
+    [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
 
     void Awake()
@@ -16,7 +16,7 @@ public class GridVeiw : MonoBehaviour
     void OnDestroy()
     {
         gridModel.GridCreated -= OnGridCreated;
-        gridModel.GridChanged += OnGridChanged;
+        gridModel.GridChanged -= OnGridChanged;
     }
 
     void OnGridCreated(Cell[,] grid)

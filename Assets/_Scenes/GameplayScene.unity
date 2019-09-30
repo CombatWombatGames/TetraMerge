@@ -292,7 +292,7 @@ Camera:
   far clip plane: 20
   field of view: 60
   orthographic: 1
-  orthographic size: 9.8
+  orthographic size: 9.6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -804,8 +804,9 @@ GameObject:
   - component: {fileID: 1380896176}
   - component: {fileID: 1380896178}
   - component: {fileID: 1380896177}
-  - component: {fileID: 1380896179}
   - component: {fileID: 1380896180}
+  - component: {fileID: 1380896179}
+  - component: {fileID: 1380896174}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -813,6 +814,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1380896174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380896173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95be309d0d677cc40844f8ddade42ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridModel: {fileID: 1380896180}
 --- !u!4 &1380896176
 Transform:
   m_ObjectHideFlags: 0
@@ -864,9 +878,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e78825ca7d20cb44a1e9194f3e5fc43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridModel: {fileID: 1380896180}
   cellPrefab: {fileID: 6699215293390578632, guid: 0c93f72185fc9ac4db2e6b5110e49a01,
     type: 3}
-  gridModel: {fileID: 1380896180}
   cellsParent: {fileID: 1575166983}
 --- !u!114 &1380896180
 MonoBehaviour:

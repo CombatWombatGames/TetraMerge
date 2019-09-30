@@ -1,17 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-#if UNITY_EDITOR 
+
 public class Tester : MonoBehaviour
 {
+#if UNITY_EDITOR
     void Start()
     {
-        //StartCoroutine(LateStart());
+        //StartCoroutine(LateStart(1f));
     }
 
-    IEnumerator LateStart()
+    IEnumerator LateStart(float duration)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(duration);
     }
-}
 #endif
+}
