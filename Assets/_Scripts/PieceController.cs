@@ -2,13 +2,13 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Dragable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] Text _Text = default;
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Перестает выполняться, когда курсор мыши за пределами объекта, но не заканчивает Drag! 
+        //В редакторе перестает выполняться, когда курсор мыши за пределами объекта, но не заканчивает Drag! 
         //На телефоне работает как надо
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
@@ -23,6 +23,12 @@ public class Dragable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        //Преобразовать координаты внутри 
         _Text.text = "Drag me again!";
+    }
+
+    void Rotate()
+    {
+
     }
 }
