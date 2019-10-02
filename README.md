@@ -1,2 +1,2 @@
 # Tetramino
- TetraMerge
+ TetraMerge: Block Puzzle Brick Game
