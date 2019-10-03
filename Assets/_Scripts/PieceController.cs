@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    [SerializeField] Text _Text = default;
+    //TODO Пул три штуки
+    [SerializeField] GridModel gridModel = default;
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -18,17 +18,49 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        _Text.text = "Dragging!";
+        //Если ближайшее место свободно
+        //Отрисовать тень
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Преобразовать координаты внутри 
-        _Text.text = "Drag me again!";
+        //Если рисовалась тень
+        //Плавно поставить на место тени
+        //Обновить модель сетки
+        //Иначе
+        //Вернуть тайл на место
     }
 
     void Rotate()
     {
 
+    }
+
+    bool NearestAreaIsFree(Cell[] cells)
+    {
+
+        return true;
+    }
+
+    Cell[] FindNearestArea()
+    {
+        //перевести координату каждой клетки в сеточные
+        //для каждой проверить, входит ли в границы поля
+        //если все входят - вернуть массив координат
+        return null;
+    }
+
+    Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
+    {
+        float XGrid = worldCoordinate.x - (float)(gridModel.Width - 1) / 2;
+        float YGrid = worldCoordinate.y - (float)(gridModel.Height - 1) / 2;
+        return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
+    }
+
+    Vector2 GridToWorldCoordinate(Vector2Int gridCoordinate)
+    {
+        float XWorld = gridCoordinate.x + (float)(gridModel.Width - 1) / 2;
+        float YWorld = gridCoordinate.y + (float)(gridModel.Height - 1) / 2;
+        return new Vector2(XWorld, YWorld);
     }
 }
