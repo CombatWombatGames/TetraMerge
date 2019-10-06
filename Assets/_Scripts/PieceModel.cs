@@ -2,5 +2,5 @@
 
 public class PieceModel : MonoBehaviour
 {
-    Cell[,] piece;
+    public Cell[] piece;
 }

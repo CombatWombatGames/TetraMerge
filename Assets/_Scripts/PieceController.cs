@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
@@ -42,12 +43,22 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         return true;
     }
 
-    Cell[] FindNearestArea()
+    Vector2Int[] nearestArea = new Vector2Int[9];
+    Vector2Int[] FindNearestArea(Vector3 worldPosition, PieceModel piece)
     {
-        //перевести координату каждой клетки в сеточные
-        //для каждой проверить, входит ли в границы поля
-        //если все входят - вернуть массив координат
-        return null;
+        Array.Clear(nearestArea, 0, 9);
+        for (int i = 0; i < piece.piece.Length; i++)
+        {
+            nearestArea[i] = PieceToGridCoordinate(worldPosition, piece.piece[i]);
+        }
+        return nearestArea;
+    }
+
+    Vector2Int PieceToGridCoordinate(Vector2 worldCoordinate, Cell cell)
+    {
+        float XGrid = worldCoordinate.x - (float)(gridModel.Width - 1) / 2;
+        float YGrid = worldCoordinate.y - (float)(gridModel.Height - 1) / 2;
+        return new Vector2Int(Mathf.RoundToInt(XGrid) + cell.gridCoordinate.x, Mathf.RoundToInt(YGrid) + cell.gridCoordinate.y);
     }
 
     Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)

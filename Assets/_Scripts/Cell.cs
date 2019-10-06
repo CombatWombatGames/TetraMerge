@@ -3,5 +3,5 @@
 public struct Cell
 {
     bool level;
-    Vector2Int gridCoordinate;
+    public Vector2Int gridCoordinate;
 }
