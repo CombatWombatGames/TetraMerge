@@ -2,6 +2,12 @@
 
 public struct Cell
 {
-    bool level;
-    public Vector2Int gridCoordinate;
+    public int Level;
+    public Vector2Int GridCoordinate;
+
+    public Cell(int Level, Vector2Int GridCoordinate)
+    {
+        this.Level = Level;
+        this.GridCoordinate = GridCoordinate;
+    }
 }
