@@ -4,15 +4,8 @@ using UnityEngine.EventSystems;
 
 public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    //TODO Пул три штуки
     [SerializeField] GridModel gridModel = default;
     [SerializeField] PiecesCollection piecesCollection = default;
-
-    //PieceModel pieceModel = new PieceModel();
-    //private void Start()
-    //{
-    //    pieceModel.piece = new Cell[] { new Vector2Int(0, -1);
-    //};
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -21,7 +14,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
             transform.position = eventData.pointerCurrentRaycast.worldPosition;
-            FindNearestArea(eventData.pointerCurrentRaycast.worldPosition, piecesCollection.Pieces[0]);
+            NearestAreaIsFree(eventData.pointerCurrentRaycast.worldPosition, piecesCollection.NextPieces[0]);
         }
     }
 
@@ -45,9 +38,9 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     }
 
-    bool NearestAreaIsFree(Cell[] cells)
+    bool NearestAreaIsFree(Vector2 centerPosition, Piece piece)
     {
-
+        FindNearestArea(centerPosition, piece);
         return true;
     }
 
@@ -57,13 +50,13 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         Array.Clear(nearestArea, 0, 9);
         for (int i = 0; i < piece.Cells.Length; i++)
         {
-            nearestArea[i] = PieceToGridCoordinate(worldPosition, piece.Cells[i]);
+            nearestArea[i] = PieceToGridCoordinate(piece.Cells[i], worldPosition);
         }
         //Debug.Log($"{nearestArea[0].x},   {nearestArea[0].y}");
         return nearestArea;
     }
 
-    Vector2Int PieceToGridCoordinate(Vector2 centerCoordinate, Cell cell)
+    Vector2Int PieceToGridCoordinate(Cell cell, Vector2 centerCoordinate)
     {
         float XGrid = centerCoordinate.x + cell.GridCoordinate.x + (float)(gridModel.Width - 1) / 2;
         float YGrid = centerCoordinate.y + cell.GridCoordinate.y + (float)(gridModel.Width - 1) / 2;

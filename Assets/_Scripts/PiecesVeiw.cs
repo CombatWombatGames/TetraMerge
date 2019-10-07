@@ -15,9 +15,9 @@ public class PiecesVeiw : MonoBehaviour
         leftPieceCells = nextPieces[0].GetComponentsInChildren<Image>();
         middlePieceCells = nextPieces[1].GetComponentsInChildren<Image>();
         rightPieceCells = nextPieces[2].GetComponentsInChildren<Image>();
-        ShowPiece(piecesCollection.Pieces[0], leftPieceCells);
-        ShowPiece(piecesCollection.Pieces[1], middlePieceCells);
-        ShowPiece(piecesCollection.Pieces[2], rightPieceCells);
+        ShowPiece(piecesCollection.NextPieces[0], leftPieceCells);
+        ShowPiece(piecesCollection.NextPieces[1], middlePieceCells);
+        ShowPiece(piecesCollection.NextPieces[2], rightPieceCells);
     }
 
     void ShowPiece(Piece piece, Image[] slot)
