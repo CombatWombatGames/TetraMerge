@@ -1,11 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] GridModel gridModel = default;
     [SerializeField] PiecesCollection piecesCollection = default;
+    [SerializeField] int number = default;
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -14,14 +14,21 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
             transform.position = eventData.pointerCurrentRaycast.worldPosition;
-            NearestAreaIsFree(eventData.pointerCurrentRaycast.worldPosition, piecesCollection.NextPieces[0]);
+            //Если ближайшее место свободно
+            //Отрисовать там тень
+            if (NearestAreaIsFree(eventData.pointerCurrentRaycast.worldPosition, piecesCollection.NextPieces[number]))
+            {
+                Debug.Log("Free");
+            }
+            else
+            {
+                Debug.Log("Taken");
+            }
         }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Если ближайшее место свободно
-        //Отрисовать тень
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -40,19 +47,34 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     bool NearestAreaIsFree(Vector2 centerPosition, Piece piece)
     {
-        FindNearestArea(centerPosition, piece);
+        Vector2Int[] nearestArea = FindNearestArea(centerPosition, piece);
+        for (int i = 0; i < nearestArea.Length; i++)
+        {
+            if (!(0 <= nearestArea[i].x && nearestArea[i].x < gridModel.Width && 0 <= nearestArea[i].y && nearestArea[i].y < gridModel.Height))
+            {
+                return false;
+            }
+            //Проверить уровень клеток поля
+            //if (true)
+            //{
+            //    return false;
+            //}
+        }
         return true;
     }
 
-    Vector2Int[] nearestArea = new Vector2Int[9];
+
     Vector2Int[] FindNearestArea(Vector3 worldPosition, Piece piece)
     {
-        Array.Clear(nearestArea, 0, 9);
+        Vector2Int[] nearestArea = new Vector2Int[piece.Cells.Length];
         for (int i = 0; i < piece.Cells.Length; i++)
         {
             nearestArea[i] = PieceToGridCoordinate(piece.Cells[i], worldPosition);
         }
-        //Debug.Log($"{nearestArea[0].x},   {nearestArea[0].y}");
+        //for (int i = 0; i < nearestArea.Length; i++)
+        //{
+        //    Debug.Log($"{i}: {nearestArea[i].x}, {nearestArea[i].y}");
+        //}
         return nearestArea;
     }
 
@@ -63,17 +85,17 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
     }
 
-    Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
-    {
-        float XGrid = worldCoordinate.x - (float)(gridModel.Width - 1) / 2;
-        float YGrid = worldCoordinate.y - (float)(gridModel.Height - 1) / 2;
-        return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
-    }
+    //Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
+    //{
+    //    float XGrid = worldCoordinate.x - (float)(gridModel.Width - 1) / 2;
+    //    float YGrid = worldCoordinate.y - (float)(gridModel.Height - 1) / 2;
+    //    return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
+    //}
 
-    Vector2 GridToWorldCoordinate(Vector2Int gridCoordinate)
-    {
-        float XWorld = gridCoordinate.x + (float)(gridModel.Width - 1) / 2;
-        float YWorld = gridCoordinate.y + (float)(gridModel.Height - 1) / 2;
-        return new Vector2(XWorld, YWorld);
-    }
+    //Vector2 GridToWorldCoordinate(Vector2Int gridCoordinate)
+    //{
+    //    float XWorld = gridCoordinate.x + (float)(gridModel.Width - 1) / 2;
+    //    float YWorld = gridCoordinate.y + (float)(gridModel.Height - 1) / 2;
+    //    return new Vector2(XWorld, YWorld);
+    //}
 }

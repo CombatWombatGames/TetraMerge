@@ -1,11 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class GridVeiw : MonoBehaviour
 {
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
+    GameObject[,] cells;
 
     void Awake()
     {
@@ -21,19 +22,27 @@ public class GridVeiw : MonoBehaviour
 
     void OnGridCreated(Cell[,] grid)
     {
+        cells = new GameObject[grid.GetLength(0), grid.GetLength(1)];
         float offsetX = (float)(grid.GetLength(0) - 1) / 2;
         float offsetY = (float)(grid.GetLength(1) - 1) / 2;
         for (int i = 0; i < grid.GetLength(0); i++)
         {
             for (int j = 0; j < grid.GetLength(1); j++)
             {
-                Instantiate(cellPrefab, new Vector3(i - offsetX, j - offsetY), Quaternion.identity, cellsParent);
+                GameObject cell = Instantiate(cellPrefab, new Vector3(i - offsetX, j - offsetY), Quaternion.identity, cellsParent);
+                cells[i, j] = cell;
             }
         }
     }
 
     void OnGridChanged(Cell[,] grid)
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                cells[i, j].GetComponentInChildren<Text>().text = $"{grid[i, j].GridCoordinate.x},{grid[i, j].GridCoordinate.y}:{grid[i, j].Level}";
+            }
+        }
     }
 }

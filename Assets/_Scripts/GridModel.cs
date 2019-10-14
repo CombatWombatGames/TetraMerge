@@ -16,11 +16,20 @@ public class GridModel : MonoBehaviour
     void Start()
     {
         CreateGrid();
+        ChangeGrid();
     }
 
     void CreateGrid()
     {
         grid = new Cell[width, height];
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                grid[i, j].GridCoordinate = new Vector2Int(i, j);
+                grid[i, j].Level = 0;
+            }
+        }
         GridCreated(grid);
     }
 

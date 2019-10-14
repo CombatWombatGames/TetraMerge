@@ -11,7 +11,7 @@ public class PiecesCollection : MonoBehaviour
         FillCollection();
     }
 
-    private void Start()
+    void Start()
     {
         NextPieces = GenerateRandomPieces();
     }
