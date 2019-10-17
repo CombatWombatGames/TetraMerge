@@ -601,6 +601,16 @@ PrefabInstance:
       propertyPath: number
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: gridVeiw
+      value: 
+      objectReference: {fileID: 1380896179}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: piecesVeiw
+      value: 
+      objectReference: {fileID: 1380896175}
     - target: {fileID: 2190242988525315048, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1052,6 +1062,16 @@ PrefabInstance:
       propertyPath: number
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: gridVeiw
+      value: 
+      objectReference: {fileID: 1380896179}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: piecesVeiw
+      value: 
+      objectReference: {fileID: 1380896175}
     - target: {fileID: 2190242988525315048, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1228,6 +1248,16 @@ PrefabInstance:
       propertyPath: piecesCollection
       value: 
       objectReference: {fileID: 1380896174}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: gridVeiw
+      value: 
+      objectReference: {fileID: 1380896179}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: piecesVeiw
+      value: 
+      objectReference: {fileID: 1380896175}
     - target: {fileID: 2190242988525315048, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
         type: 3}
       propertyPath: m_LocalPosition.x

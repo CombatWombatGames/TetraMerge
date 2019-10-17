@@ -39,4 +39,8 @@ public class PiecesVeiw : MonoBehaviour
         }
         return mask;
     }
+
+    public void ReturnPiece()
+    {
+    }
 }

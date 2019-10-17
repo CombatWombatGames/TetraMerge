@@ -45,4 +45,26 @@ public class GridVeiw : MonoBehaviour
             }
         }
     }
+
+    public void DrawPieceShadow(Vector2Int[] area)
+    {
+        OnGridChanged(gridModel.Grid);
+        for (int i = 0; i < area.Length; i++)
+        {
+            cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text = "1";
+        }
+    }
+
+    public void DeletePieceShadow()
+    {
+        OnGridChanged(gridModel.Grid);
+    }
+
+    public void DropPiece(Vector2Int[] area)
+    {
+        for (int i = 0; i < area.Length; i++)
+        {
+            cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text = "1";
+        }
+    }
 }

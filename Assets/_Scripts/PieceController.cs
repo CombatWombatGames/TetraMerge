@@ -4,8 +4,11 @@ using UnityEngine.EventSystems;
 public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] GridModel gridModel = default;
+    [SerializeField] GridVeiw gridVeiw = default;
+    [SerializeField] PiecesVeiw piecesVeiw = default;
     [SerializeField] PiecesCollection piecesCollection = default;
     [SerializeField] int number = default;
+    Vector2Int[] nearestArea;
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -14,15 +17,13 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
             transform.position = eventData.pointerCurrentRaycast.worldPosition;
-            //Если ближайшее место свободно
-            //Отрисовать там тень
-            if (NearestAreaIsFree(eventData.pointerCurrentRaycast.worldPosition, piecesCollection.NextPieces[number]))
+            if (NearestAreaIsAvailable(eventData.pointerCurrentRaycast.worldPosition, piecesCollection.NextPieces[number]))
             {
-                Debug.Log("Free");
+                gridVeiw.DrawPieceShadow(nearestArea);
             }
             else
             {
-                Debug.Log("Taken");
+                gridVeiw.DeletePieceShadow();
             }
         }
     }
@@ -38,6 +39,15 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         //Обновить модель сетки
         //Иначе
         //Вернуть тайл на место
+        if (NearestAreaIsAvailable(eventData.pointerCurrentRaycast.worldPosition, piecesCollection.NextPieces[number]))
+        {
+            gridModel.DropPiece(nearestArea);
+            //gridVeiw.DropPiece(nearestArea);
+        }
+        else
+        {
+            piecesVeiw.ReturnPiece();
+        }
     }
 
     void Rotate()
@@ -45,37 +55,38 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     }
 
-    bool NearestAreaIsFree(Vector2 centerPosition, Piece piece)
+    bool NearestAreaIsAvailable(Vector2 centerPosition, Piece piece)
     {
-        Vector2Int[] nearestArea = FindNearestArea(centerPosition, piece);
+        nearestArea = FindNearestArea(centerPosition, piece);
         for (int i = 0; i < nearestArea.Length; i++)
         {
             if (!(0 <= nearestArea[i].x && nearestArea[i].x < gridModel.Width && 0 <= nearestArea[i].y && nearestArea[i].y < gridModel.Height))
             {
+                //Piece is out of grid
                 return false;
             }
-            //Проверить уровень клеток поля
-            //if (true)
-            //{
-            //    return false;
-            //}
+            if (gridModel.Grid[nearestArea[i].x, nearestArea[i].y].Level != 0)
+            {
+                //Cells are taken
+                return false;
+            }
         }
         return true;
     }
 
-
     Vector2Int[] FindNearestArea(Vector3 worldPosition, Piece piece)
     {
-        Vector2Int[] nearestArea = new Vector2Int[piece.Cells.Length];
+        //TODO Check performance cost
+        Vector2Int[] rawNearestArea = new Vector2Int[piece.Cells.Length];
         for (int i = 0; i < piece.Cells.Length; i++)
         {
-            nearestArea[i] = PieceToGridCoordinate(piece.Cells[i], worldPosition);
+            rawNearestArea[i] = PieceToGridCoordinate(piece.Cells[i], worldPosition);
         }
         //for (int i = 0; i < nearestArea.Length; i++)
         //{
         //    Debug.Log($"{i}: {nearestArea[i].x}, {nearestArea[i].y}");
         //}
-        return nearestArea;
+        return rawNearestArea;
     }
 
     Vector2Int PieceToGridCoordinate(Cell cell, Vector2 centerCoordinate)

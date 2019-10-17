@@ -8,7 +8,7 @@ public class GridModel : MonoBehaviour
     [SerializeField] int height = default;
     public int Height => height;
 
-    Cell[,] grid;
+    public Cell[,] Grid { get; private set; }
 
     public event Action<Cell[,]> GridCreated;
     public event Action<Cell[,]> GridChanged;
@@ -21,20 +21,29 @@ public class GridModel : MonoBehaviour
 
     void CreateGrid()
     {
-        grid = new Cell[width, height];
-        for (int i = 0; i < grid.GetLength(0); i++)
+        Grid = new Cell[width, height];
+        for (int i = 0; i < Grid.GetLength(0); i++)
         {
-            for (int j = 0; j < grid.GetLength(1); j++)
+            for (int j = 0; j < Grid.GetLength(1); j++)
             {
-                grid[i, j].GridCoordinate = new Vector2Int(i, j);
-                grid[i, j].Level = 0;
+                Grid[i, j].GridCoordinate = new Vector2Int(i, j);
+                Grid[i, j].Level = 0;
             }
         }
-        GridCreated(grid);
+        GridCreated(Grid);
     }
 
     void ChangeGrid()
     {
-        GridChanged(grid);
+        GridChanged(Grid);
+    }
+
+    public void DropPiece(Vector2Int[] area)
+    {
+        //void DeletePiece
+        for (int i = 0; i < area.Length; i++)
+        {
+            //cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text = "1";
+        }
     }
 }
