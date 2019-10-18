@@ -11,12 +11,11 @@ public class GridModel : MonoBehaviour
     public Cell[,] Grid { get; private set; }
 
     public event Action<Cell[,]> GridCreated;
-    public event Action<Cell[,]> GridChanged;
+    public event Action<Vector2Int[], int> GridChanged;
 
     void Start()
     {
         CreateGrid();
-        ChangeGrid();
     }
 
     void CreateGrid()
@@ -33,17 +32,12 @@ public class GridModel : MonoBehaviour
         GridCreated(Grid);
     }
 
-    void ChangeGrid()
+    public void ChangeGrid(Vector2Int[] coordinates, int level)
     {
-        GridChanged(Grid);
-    }
-
-    public void DropPiece(Vector2Int[] area)
-    {
-        //void DeletePiece
-        for (int i = 0; i < area.Length; i++)
+        for (int i = 0; i < coordinates.Length; i++)
         {
-            //cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text = "1";
+            Grid[coordinates[i].x, coordinates[i].y].Level = level;
         }
+        GridChanged(coordinates, level);
     }
 }

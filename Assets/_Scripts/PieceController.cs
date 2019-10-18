@@ -6,8 +6,8 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GridVeiw gridVeiw = default;
     [SerializeField] PiecesVeiw piecesVeiw = default;
-    [SerializeField] PiecesCollection piecesCollection = default;
-    [SerializeField] int number = default;
+    [SerializeField] PiecesModel piecesModel = default;
+    [SerializeField] int index = default;
     Vector2Int[] nearestArea;
 
     public void OnDrag(PointerEventData eventData)
@@ -17,7 +17,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
             transform.position = eventData.pointerCurrentRaycast.worldPosition;
-            if (NearestAreaIsAvailable(eventData.pointerCurrentRaycast.worldPosition, piecesCollection.NextPieces[number]))
+            if (NearestAreaIsAvailable(eventData.pointerCurrentRaycast.worldPosition, piecesModel.NextPieces[index]))
             {
                 gridVeiw.DrawPieceShadow(nearestArea);
             }
@@ -34,25 +34,15 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Если рисовалась тень
-        //Плавно поставить на место тени
-        //Обновить модель сетки
-        //Иначе
-        //Вернуть тайл на место
-        if (NearestAreaIsAvailable(eventData.pointerCurrentRaycast.worldPosition, piecesCollection.NextPieces[number]))
+        if (NearestAreaIsAvailable(eventData.pointerCurrentRaycast.worldPosition, piecesModel.NextPieces[index]))
         {
-            gridModel.DropPiece(nearestArea);
-            //gridVeiw.DropPiece(nearestArea);
+            gridModel.ChangeGrid(nearestArea, piecesModel.NextPieces[index].Cells[0].Level);
+            piecesModel.RemovePiece(index);
         }
         else
         {
-            piecesVeiw.ReturnPiece();
+            piecesVeiw.ReturnPiece(index);
         }
-    }
-
-    void Rotate()
-    {
-
     }
 
     bool NearestAreaIsAvailable(Vector2 centerPosition, Piece piece)
@@ -82,10 +72,6 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         {
             rawNearestArea[i] = PieceToGridCoordinate(piece.Cells[i], worldPosition);
         }
-        //for (int i = 0; i < nearestArea.Length; i++)
-        //{
-        //    Debug.Log($"{i}: {nearestArea[i].x}, {nearestArea[i].y}");
-        //}
         return rawNearestArea;
     }
 
@@ -94,6 +80,11 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         float XGrid = centerCoordinate.x + cell.GridCoordinate.x + (float)(gridModel.Width - 1) / 2;
         float YGrid = centerCoordinate.y + cell.GridCoordinate.y + (float)(gridModel.Width - 1) / 2;
         return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
+    }
+
+    void Rotate()
+    {
+
     }
 
     //Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)

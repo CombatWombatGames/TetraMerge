@@ -1,10 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
 
 //Holds piece variants and generates random next pieces
-public class PiecesCollection : MonoBehaviour
+public class PiecesModel : MonoBehaviour
 {
+    public Piece[] NextPieces { get; private set; }
+    //TODO Initialise
+    public Piece EmptyPiece { get; private set; }
     Piece[] pieces = new Piece[6];
-    [HideInInspector] public Piece[] NextPieces;
+
+    public event Action<int> PieceRemoved;
 
     void Awake()
     {
@@ -63,5 +70,10 @@ public class PiecesCollection : MonoBehaviour
     Piece[] GenerateRandomPieces()
     {
         return new Piece[] { pieces[Random.Range(0, pieces.Length)], pieces[Random.Range(0, pieces.Length)], pieces[Random.Range(0, pieces.Length)] };
+    }
+
+    public void RemovePiece(int index)
+    {
+        PieceRemoved(index);
     }
 }

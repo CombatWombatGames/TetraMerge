@@ -35,36 +35,50 @@ public class GridVeiw : MonoBehaviour
         }
     }
 
-    void OnGridChanged(Cell[,] grid)
+    void OnGridChanged(Vector2Int[] coordinates, int level)
     {
-        for (int i = 0; i < grid.GetLength(0); i++)
+        oldArea = null;
+        oldText = null;
+        for (int i = 0; i < coordinates.Length; i++)
         {
-            for (int j = 0; j < grid.GetLength(1); j++)
-            {
-                cells[i, j].GetComponentInChildren<Text>().text = $"{grid[i, j].GridCoordinate.x},{grid[i, j].GridCoordinate.y}:{grid[i, j].Level}";
-            }
+            cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = level.ToString();
         }
     }
 
+    Vector2Int[] oldArea;
+    string[] oldText;
     public void DrawPieceShadow(Vector2Int[] area)
     {
-        OnGridChanged(gridModel.Grid);
+        //Remove old shadow
+        if (oldArea != null)
+        {
+            for (int i = 0; i < oldArea.Length; i++)
+            {
+                cells[oldArea[i].x, oldArea[i].y].GetComponentInChildren<Text>().text = oldText[i];
+            }
+        }
+        //Store shadowless state
+        oldArea = area;
+        oldText = new string[area.Length];
         for (int i = 0; i < area.Length; i++)
         {
-            cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text = "1";
+            oldText[i] = cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text;
+        }
+        //Drop shadow
+        for (int i = 0; i < area.Length; i++)
+        {
+            cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text = "+";
         }
     }
 
     public void DeletePieceShadow()
     {
-        OnGridChanged(gridModel.Grid);
-    }
-
-    public void DropPiece(Vector2Int[] area)
-    {
-        for (int i = 0; i < area.Length; i++)
+        if (oldArea != null)
         {
-            cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text = "1";
+            for (int i = 0; i < oldArea.Length; i++)
+            {
+                cells[oldArea[i].x, oldArea[i].y].GetComponentInChildren<Text>().text = oldText[i];
+            }
         }
     }
 }
