@@ -38,6 +38,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         {
             gridModel.ChangeGrid(nearestArea, piecesModel.NextPieces[index].Cells[0].Level);
             piecesModel.RemovePiece(index);
+            gameObject.SetActive(false);
         }
         else
         {

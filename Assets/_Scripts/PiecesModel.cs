@@ -2,14 +2,11 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
 //Holds piece variants and generates random next pieces
 public class PiecesModel : MonoBehaviour
 {
     public Piece[] NextPieces { get; private set; }
-    //TODO Initialise
-    public Piece EmptyPiece { get; private set; }
-    Piece[] pieces = new Piece[6];
+    Piece[] pieces = new Piece[7];
 
     public event Action<int> PieceRemoved;
 
@@ -29,12 +26,8 @@ public class PiecesModel : MonoBehaviour
         {
             pieces[i] = new Piece();
         }
-        //O
-        pieces[0].Cells = new Cell[] {
-        new Cell(1, new Vector2Int(0, 0)),
-        new Cell(1, new Vector2Int(1, 0)),
-        new Cell(1, new Vector2Int(0, -1)),
-        new Cell(1, new Vector2Int(1, -1))};
+        //Empty
+        pieces[0].Cells = new Cell[0];
         //Z
         pieces[1].Cells = new Cell[] {
         new Cell(1, new Vector2Int(-1, 0)),
@@ -65,15 +58,22 @@ public class PiecesModel : MonoBehaviour
         new Cell(1, new Vector2Int(0, 0)),
         new Cell(1, new Vector2Int(0, -1)),
         new Cell(1, new Vector2Int(1, 0))};
+        //O
+        pieces[6].Cells = new Cell[] {
+        new Cell(1, new Vector2Int(0, 0)),
+        new Cell(1, new Vector2Int(1, 0)),
+        new Cell(1, new Vector2Int(0, -1)),
+        new Cell(1, new Vector2Int(1, -1))};
     }
 
     Piece[] GenerateRandomPieces()
     {
-        return new Piece[] { pieces[Random.Range(0, pieces.Length)], pieces[Random.Range(0, pieces.Length)], pieces[Random.Range(0, pieces.Length)] };
+        return new Piece[] { pieces[Random.Range(1, pieces.Length)], pieces[Random.Range(1, pieces.Length)], pieces[Random.Range(1, pieces.Length)] };
     }
 
     public void RemovePiece(int index)
     {
+        NextPieces[index] = pieces[0];
         PieceRemoved(index);
     }
 }

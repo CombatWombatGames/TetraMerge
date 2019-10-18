@@ -13,12 +13,12 @@ public class PiecesVeiw : MonoBehaviour
 
     void Awake()
     {
-        piecesModel.PieceRemoved += RemovePiece;
+        piecesModel.PieceRemoved += HidePiece;
     }
 
     void OnDestroy()
     {
-        piecesModel.PieceRemoved -= RemovePiece;
+        piecesModel.PieceRemoved -= HidePiece;
     }
 
     void Start()
@@ -59,10 +59,9 @@ public class PiecesVeiw : MonoBehaviour
         nextPieces[index].transform.localPosition = Vector3.zero;
     }
 
-    void RemovePiece(int index)
+    void HidePiece(int index)
     {
-        //TODO Change order
+        ShowPiece(piecesModel.NextPieces[index], nextPiecesImages[index]);
         nextPieces[index].transform.localPosition = Vector3.zero;
-        ShowPiece(piecesModel.EmptyPiece, nextPiecesImages[index]);
     }
 }

@@ -1,5 +1,5 @@
 ﻿public struct Piece
 {
     public Cell[] Cells;
-    //TODO конструктор
+    //TODO Constructor?
 }
