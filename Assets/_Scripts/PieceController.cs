@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
+//Translates player actions to model
 public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] GridModel gridModel = default;
@@ -9,6 +10,21 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     [SerializeField] PiecesModel piecesModel = default;
     [SerializeField] int index = default;
     Vector2Int[] nearestArea;
+
+    void Awake()
+    {
+        piecesModel.PiecesGenerated += ActivatePiece;
+    }
+
+    void OnDestroy()
+    {
+        piecesModel.PiecesGenerated -= ActivatePiece;
+    }
+
+    void ActivatePiece()
+    {
+        gameObject.SetActive(true);
+    }
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -37,8 +53,9 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         if (NearestAreaIsAvailable(eventData.pointerCurrentRaycast.worldPosition, piecesModel.NextPieces[index]))
         {
             gridModel.ChangeGrid(nearestArea, piecesModel.NextPieces[index].Cells[0].Level);
-            piecesModel.RemovePiece(index);
             gameObject.SetActive(false);
+            //TODO Не заменять пустой, раз уж выключаю?
+            piecesModel.RemovePiece(index);
         }
         else
         {
@@ -67,7 +84,6 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     Vector2Int[] FindNearestArea(Vector3 worldPosition, Piece piece)
     {
-        //TODO Check performance cost
         Vector2Int[] rawNearestArea = new Vector2Int[piece.Cells.Length];
         for (int i = 0; i < piece.Cells.Length; i++)
         {
@@ -85,7 +101,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     void Rotate()
     {
-
+        //Change Model
     }
 
     //Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)

@@ -8,6 +8,7 @@ public class PiecesModel : MonoBehaviour
     public Piece[] NextPieces { get; private set; }
     Piece[] pieces = new Piece[7];
 
+    public event Action PiecesGenerated;
     public event Action<int> PieceRemoved;
 
     void Awake()
@@ -17,7 +18,13 @@ public class PiecesModel : MonoBehaviour
 
     void Start()
     {
+        GenerateNextPieces();
+    }
+
+    void GenerateNextPieces()
+    {
         NextPieces = GenerateRandomPieces();
+        PiecesGenerated();
     }
 
     void FillCollection()
@@ -71,9 +78,18 @@ public class PiecesModel : MonoBehaviour
         return new Piece[] { pieces[Random.Range(1, pieces.Length)], pieces[Random.Range(1, pieces.Length)], pieces[Random.Range(1, pieces.Length)] };
     }
 
+    //TODO Proper way
+    int count = 3;
     public void RemovePiece(int index)
     {
+
         NextPieces[index] = pieces[0];
         PieceRemoved(index);
+        count--;
+        if (count == 0)
+        {
+            GenerateNextPieces();
+            count = 3;
+        }
     }
 }

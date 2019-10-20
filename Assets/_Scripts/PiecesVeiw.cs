@@ -1,37 +1,40 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
+//Displays game state to player
 public class PiecesVeiw : MonoBehaviour
 {
     [SerializeField] PiecesModel piecesModel = default;
     [SerializeField] PieceController[] nextPieces = default;
-    Image[] leftPieceCells;
-    Image[] middlePieceCells;
-    Image[] rightPieceCells;
     Image[][] nextPiecesImages = new Image[3][];
 
     void Awake()
     {
         piecesModel.PieceRemoved += HidePiece;
+        piecesModel.PiecesGenerated += ShowPieces;
+        InitializeImages();
     }
 
     void OnDestroy()
     {
         piecesModel.PieceRemoved -= HidePiece;
+        piecesModel.PiecesGenerated -= ShowPieces;
     }
 
-    void Start()
+    void InitializeImages()
     {
-        leftPieceCells = nextPieces[0].GetComponentsInChildren<Image>();
-        middlePieceCells = nextPieces[1].GetComponentsInChildren<Image>();
-        rightPieceCells = nextPieces[2].GetComponentsInChildren<Image>();
-        nextPiecesImages[0] = leftPieceCells;
-        nextPiecesImages[1] = middlePieceCells;
-        nextPiecesImages[2] = rightPieceCells;
-        ShowPiece(piecesModel.NextPieces[0], leftPieceCells);
-        ShowPiece(piecesModel.NextPieces[1], middlePieceCells);
-        ShowPiece(piecesModel.NextPieces[2], rightPieceCells);
+        for (int i = 0; i < nextPieces.Length; i++)
+        {
+            nextPiecesImages[i] = nextPieces[i].GetComponentsInChildren<Image>();
+        }
+    }
+
+    void ShowPieces()
+    {
+        for (int i = 0; i < nextPieces.Length; i++)
+        {
+            ShowPiece(piecesModel.NextPieces[i], nextPiecesImages[i]);
+        }
     }
 
     void ShowPiece(Piece piece, Image[] slot)
@@ -43,10 +46,9 @@ public class PiecesVeiw : MonoBehaviour
         }
     }
 
-    bool[] mask = new bool[9];
     bool[] PieceToMask(Piece piece)
     {
-        Array.Clear(mask, 0, 9);
+        bool[] mask = new bool[9];
         for (int i = 0; i < piece.Cells.Length; i++)
         {
             mask[(1 - piece.Cells[i].GridCoordinate.y) * 3 + piece.Cells[i].GridCoordinate.x + 1] = true;
