@@ -54,7 +54,6 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         {
             gridModel.ChangeGrid(nearestArea, piecesModel.NextPieces[index].Cells[0].Level);
             gameObject.SetActive(false);
-            //TODO Не заменять пустой, раз уж выключаю?
             piecesModel.RemovePiece(index);
         }
         else

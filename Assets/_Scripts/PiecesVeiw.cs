@@ -63,7 +63,6 @@ public class PiecesVeiw : MonoBehaviour
 
     void HidePiece(int index)
     {
-        ShowPiece(piecesModel.NextPieces[index], nextPiecesImages[index]);
         nextPieces[index].transform.localPosition = Vector3.zero;
     }
 }

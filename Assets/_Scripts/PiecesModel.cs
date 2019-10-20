@@ -82,8 +82,6 @@ public class PiecesModel : MonoBehaviour
     int count = 3;
     public void RemovePiece(int index)
     {
-
-        NextPieces[index] = pieces[0];
         PieceRemoved(index);
         count--;
         if (count == 0)
