@@ -12,6 +12,7 @@ public class PiecesVeiw : MonoBehaviour
     {
         piecesModel.PieceRemoved += HidePiece;
         piecesModel.PiecesGenerated += ShowPieces;
+        piecesModel.PieceRotated += ShowPieces;
         InitializeImages();
     }
 
@@ -19,6 +20,7 @@ public class PiecesVeiw : MonoBehaviour
     {
         piecesModel.PieceRemoved -= HidePiece;
         piecesModel.PiecesGenerated -= ShowPieces;
+        piecesModel.PieceRotated += ShowPieces;
     }
 
     void InitializeImages()

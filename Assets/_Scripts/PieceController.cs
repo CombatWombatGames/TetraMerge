@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 
 //Translates player actions to model
-public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler
 {
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GridVeiw gridVeiw = default;
@@ -62,6 +62,12 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         }
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        //TODO Срабатывает и на Drag
+        piecesModel.RotatePiece(index);
+    }
+
     bool NearestAreaIsAvailable(Vector2 centerPosition, Piece piece)
     {
         nearestArea = FindNearestArea(centerPosition, piece);
@@ -102,6 +108,8 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     {
         //Change Model
     }
+
+
 
     //Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
     //{

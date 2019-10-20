@@ -10,6 +10,7 @@ public class PiecesModel : MonoBehaviour
 
     public event Action PiecesGenerated;
     public event Action<int> PieceRemoved;
+    public event Action PieceRotated;
 
     void Awake()
     {
@@ -75,7 +76,7 @@ public class PiecesModel : MonoBehaviour
 
     Piece[] GenerateRandomPieces()
     {
-        return new Piece[] { pieces[Random.Range(1, pieces.Length)], pieces[Random.Range(1, pieces.Length)], pieces[Random.Range(1, pieces.Length)] };
+        return new Piece[] { new Piece(pieces[Random.Range(1, pieces.Length)]), new Piece(pieces[Random.Range(1, pieces.Length)]), new Piece(pieces[Random.Range(1, pieces.Length)]) };
     }
 
     //TODO Proper way
@@ -89,5 +90,18 @@ public class PiecesModel : MonoBehaviour
             GenerateNextPieces();
             count = 3;
         }
+    }
+
+    Vector2Int[,] rotationLookupTable = new Vector2Int[,] {
+        { new Vector2Int(-1, 1), new Vector2Int(0, 1), new Vector2Int(1, 1) },
+        { new Vector2Int(-1, 0), new Vector2Int(0, 0), new Vector2Int(1, 0) },
+        { new Vector2Int(-1, -1), new Vector2Int(0, -1), new Vector2Int(1, -1) } };
+    public void RotatePiece(int index)
+    {
+        for (int i = 0; i < NextPieces[index].Cells.Length; i++)
+        {
+            NextPieces[index].Cells[i].GridCoordinate = rotationLookupTable[NextPieces[index].Cells[i].GridCoordinate.x + 1, NextPieces[index].Cells[i].GridCoordinate.y + 1];
+        }
+        PieceRotated();
     }
 }
