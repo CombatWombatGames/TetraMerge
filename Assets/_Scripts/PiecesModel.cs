@@ -25,6 +25,7 @@ public class PiecesModel : MonoBehaviour
     void GenerateNextPieces()
     {
         NextPieces = GenerateRandomPieces();
+        //RotateAllPiecesRandom();
         PiecesGenerated();
     }
 
@@ -103,5 +104,17 @@ public class PiecesModel : MonoBehaviour
             NextPieces[index].Cells[i].GridCoordinate = rotationLookupTable[NextPieces[index].Cells[i].GridCoordinate.x + 1, NextPieces[index].Cells[i].GridCoordinate.y + 1];
         }
         PieceRotated();
+    }
+
+    void RotateAllPiecesRandom()
+    {
+        for (int i = 0; i < NextPieces.Length; i++)
+        {
+            int rotations = Random.Range(0, 4);
+            for (int j = 1; j <= rotations; j++)
+            {
+                RotatePiece(i);
+            }
+        }
     }
 }
