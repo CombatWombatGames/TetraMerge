@@ -35,6 +35,8 @@ public class GridVeiw : MonoBehaviour
         }
     }
 
+    Vector2Int[] oldArea;
+    string[] oldText;
     void OnGridChanged(Vector2Int[] coordinates, int level)
     {
         oldArea = null;
@@ -45,8 +47,6 @@ public class GridVeiw : MonoBehaviour
         }
     }
 
-    Vector2Int[] oldArea;
-    string[] oldText;
     public void DrawPieceShadow(Vector2Int[] area)
     {
         //Remove old shadow
