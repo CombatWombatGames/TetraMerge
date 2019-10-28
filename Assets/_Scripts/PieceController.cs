@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [SerializeField] GridModel gridModel = default;
-    [SerializeField] GridVeiw gridVeiw = default;
-    [SerializeField] PiecesVeiw piecesVeiw = default;
+    [SerializeField] GridView gridView = default;
+    [SerializeField] PiecesView piecesView = default;
     [SerializeField] PiecesModel piecesModel = default;
     [SerializeField] int index = default;
     Vector2Int[] nearestArea;
@@ -35,11 +35,11 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
             transform.position = eventData.pointerCurrentRaycast.worldPosition;
             if (NearestAreaIsAvailable(eventData.pointerCurrentRaycast.worldPosition, piecesModel.NextPieces[index]))
             {
-                gridVeiw.DrawPieceShadow(nearestArea);
+                gridView.DrawPieceShadow(nearestArea);
             }
             else
             {
-                gridVeiw.DeletePieceShadow();
+                gridView.DeletePieceShadow();
             }
         }
     }
@@ -58,7 +58,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         }
         else
         {
-            piecesVeiw.ReturnPiece(index);
+            piecesView.ReturnPiece(index);
         }
     }
 

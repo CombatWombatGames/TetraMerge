@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class GridVeiw : MonoBehaviour
+public class GridView : MonoBehaviour
 {
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GameObject cellPrefab = default;
@@ -35,12 +35,14 @@ public class GridVeiw : MonoBehaviour
         }
     }
 
-    Vector2Int[] oldArea;
-    string[] oldText;
+    Vector2Int[] oldShadowArea;
+    string[] shadowlessText;
     void OnGridChanged(Vector2Int[] coordinates, int level)
     {
-        oldArea = null;
-        oldText = null;
+        //Clear stored shadowless state
+        oldShadowArea = null;
+        shadowlessText = null;
+        //Show changes
         for (int i = 0; i < coordinates.Length; i++)
         {
             cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = level.ToString();
@@ -50,19 +52,19 @@ public class GridVeiw : MonoBehaviour
     public void DrawPieceShadow(Vector2Int[] area)
     {
         //Remove old shadow
-        if (oldArea != null)
+        if (oldShadowArea != null)
         {
-            for (int i = 0; i < oldArea.Length; i++)
+            for (int i = 0; i < oldShadowArea.Length; i++)
             {
-                cells[oldArea[i].x, oldArea[i].y].GetComponentInChildren<Text>().text = oldText[i];
+                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentInChildren<Text>().text = shadowlessText[i];
             }
         }
         //Store shadowless state
-        oldArea = area;
-        oldText = new string[area.Length];
+        oldShadowArea = area;
+        shadowlessText = new string[area.Length];
         for (int i = 0; i < area.Length; i++)
         {
-            oldText[i] = cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text;
+            shadowlessText[i] = cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text;
         }
         //Drop shadow
         for (int i = 0; i < area.Length; i++)
@@ -73,12 +75,16 @@ public class GridVeiw : MonoBehaviour
 
     public void DeletePieceShadow()
     {
-        if (oldArea != null)
+        if (oldShadowArea != null)
         {
-            for (int i = 0; i < oldArea.Length; i++)
+            for (int i = 0; i < oldShadowArea.Length; i++)
             {
-                cells[oldArea[i].x, oldArea[i].y].GetComponentInChildren<Text>().text = oldText[i];
+                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentInChildren<Text>().text = shadowlessText[i];
             }
         }
+    }
+
+    public void DrawSelectionShadow(Vector2Int[] area)
+    {
     }
 }

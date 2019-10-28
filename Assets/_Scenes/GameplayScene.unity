@@ -731,6 +731,16 @@ PrefabInstance:
       propertyPath: index
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: gridView
+      value: 
+      objectReference: {fileID: 1380896179}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: piecesView
+      value: 
+      objectReference: {fileID: 1380896175}
     - target: {fileID: 2190242988525315048, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1281,6 +1291,16 @@ PrefabInstance:
       propertyPath: index
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: gridView
+      value: 
+      objectReference: {fileID: 1380896179}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: piecesView
+      value: 
+      objectReference: {fileID: 1380896175}
     - target: {fileID: 2190242988525315048, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1437,6 +1457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridModel: {fileID: 1380896180}
+  gridView: {fileID: 1380896179}
   selectionBox: {fileID: 437021568}
 --- !u!114 &1754502269 stripped
 MonoBehaviour:
@@ -1492,6 +1513,16 @@ PrefabInstance:
       propertyPath: index
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: gridView
+      value: 
+      objectReference: {fileID: 1380896179}
+    - target: {fileID: 4851642257688552694, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
+        type: 3}
+      propertyPath: piecesView
+      value: 
+      objectReference: {fileID: 1380896175}
     - target: {fileID: 2190242988525315048, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
         type: 3}
       propertyPath: m_LocalPosition.x

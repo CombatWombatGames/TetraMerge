@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 //Displays game state to player
-public class PiecesVeiw : MonoBehaviour
+public class PiecesView : MonoBehaviour
 {
     [SerializeField] PiecesModel piecesModel = default;
     [SerializeField] PieceController[] nextPieces = default;
