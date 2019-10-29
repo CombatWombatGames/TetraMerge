@@ -50,6 +50,24 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         return area;
     }
 
+    //bool SelectionAreaIsValid(Vector2Int[] area)
+    //{
+    //    for (int i = 0; i < area.Length; i++)
+    //    {
+    //        if (!(0 <= nearestArea[i].x && nearestArea[i].x < gridModel.Width && 0 <= nearestArea[i].y && nearestArea[i].y < gridModel.Height))
+    //        {
+    //            //Piece is out of grid
+    //            return false;
+    //        }
+    //        if (gridModel.Grid[nearestArea[i].x, nearestArea[i].y].Level != 0)
+    //        {
+    //            //Cells are taken
+    //            return false;
+    //        }
+    //    }
+    //    return true;
+    //}
+
     public void OnEndDrag(PointerEventData eventData)
     {
         selectionBox.gameObject.SetActive(false);

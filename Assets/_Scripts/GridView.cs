@@ -86,9 +86,14 @@ public class GridView : MonoBehaviour
 
     public void DrawSelectionShadow(Vector2Int[] area)
     {
-        for (int i = 0; i < area.Length; i++)
+        DrawPieceShadow(area);
+        //Remove old shadow
+        if (oldShadowArea != null)
         {
-            cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text = "+";
+            for (int i = 0; i < oldShadowArea.Length; i++)
+            {
+                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentInChildren<Text>().text = shadowlessText[i];
+            }
         }
     }
 }
