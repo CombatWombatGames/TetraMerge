@@ -28,8 +28,6 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnDrag(PointerEventData eventData)
     {
-        //В редакторе перестает выполняться, когда курсор мыши за пределами объекта, но не заканчивает Drag! 
-        //На телефоне работает как надо
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
             transform.position = eventData.pointerCurrentRaycast.worldPosition;
