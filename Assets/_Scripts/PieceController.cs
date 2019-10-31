@@ -9,7 +9,6 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     [SerializeField] PiecesView piecesView = default;
     [SerializeField] PiecesModel piecesModel = default;
     [SerializeField] int index = default;
-    Vector2Int[] nearestArea;
 
     void Awake()
     {
@@ -31,7 +30,8 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
             transform.position = eventData.pointerCurrentRaycast.worldPosition;
-            if (NearestAreaIsAvailable(eventData.pointerCurrentRaycast.worldPosition, piecesModel.NextPieces[index]))
+            Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition, piecesModel.NextPieces[index]);
+            if (AreaIsAvailable(nearestArea))
             {
                 gridView.DrawPieceShadow(nearestArea);
             }
@@ -48,7 +48,8 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (NearestAreaIsAvailable(eventData.pointerCurrentRaycast.worldPosition, piecesModel.NextPieces[index]))
+        Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition, piecesModel.NextPieces[index]);
+        if (AreaIsAvailable(nearestArea))
         {
             gridModel.ChangeGrid(nearestArea, piecesModel.NextPieces[index].Cells[0].Level);
             gameObject.SetActive(false);
@@ -68,17 +69,16 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         }
     }
 
-    bool NearestAreaIsAvailable(Vector2 centerPosition, Piece piece)
+    bool AreaIsAvailable(Vector2Int[] area)
     {
-        nearestArea = FindNearestArea(centerPosition, piece);
-        for (int i = 0; i < nearestArea.Length; i++)
+        for (int i = 0; i < area.Length; i++)
         {
-            if (!(0 <= nearestArea[i].x && nearestArea[i].x < gridModel.Width && 0 <= nearestArea[i].y && nearestArea[i].y < gridModel.Height))
+            if (!(0 <= area[i].x && area[i].x < gridModel.Width && 0 <= area[i].y && area[i].y < gridModel.Height))
             {
                 //Piece is out of grid
                 return false;
             }
-            if (gridModel.Grid[nearestArea[i].x, nearestArea[i].y].Level != 0)
+            if (gridModel.Grid[area[i].x, area[i].y].Level != 0)
             {
                 //Cells are taken
                 return false;

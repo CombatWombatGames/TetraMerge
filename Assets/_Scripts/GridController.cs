@@ -16,7 +16,6 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     {
         beginDragWorldPosition = eventData.pointerCurrentRaycast.worldPosition;
         beginDragGridPosition = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
-        //Debug.Log(beginDragGridPosition);
         //TODO Move to grid view?
         selectionBox.gameObject.SetActive(true);
     }
@@ -24,10 +23,33 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     public void OnDrag(PointerEventData eventData)
     {
         //Draw selection box
-        selectionBox.rectTransform.position = new Vector3((eventData.pointerCurrentRaycast.worldPosition.x + beginDragWorldPosition.x) / 2, (eventData.pointerCurrentRaycast.worldPosition.y + beginDragWorldPosition.y) / 2);
-        selectionBox.rectTransform.sizeDelta = new Vector2(Mathf.Abs(eventData.pointerCurrentRaycast.worldPosition.x - beginDragWorldPosition.x) * 100, Mathf.Abs(eventData.pointerCurrentRaycast.worldPosition.y - beginDragWorldPosition.y) * 100);
+        if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
+        {
+            selectionBox.rectTransform.position = new Vector3((eventData.pointerCurrentRaycast.worldPosition.x + beginDragWorldPosition.x) / 2, (eventData.pointerCurrentRaycast.worldPosition.y + beginDragWorldPosition.y) / 2);
+            selectionBox.rectTransform.sizeDelta = new Vector2(Mathf.Abs(eventData.pointerCurrentRaycast.worldPosition.x - beginDragWorldPosition.x) * 100, Mathf.Abs(eventData.pointerCurrentRaycast.worldPosition.y - beginDragWorldPosition.y) * 100);
+        }
         //Draw selection shadow
-        gridView.DrawSelectionShadow(CalculateArea(beginDragGridPosition, WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition)));
+        if (AreaIsSquare(beginDragGridPosition, WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition)))
+        {
+            Vector2Int[] selectedArea = CalculateArea(beginDragGridPosition, WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition));
+            if (AreaIsValid(selectedArea))
+            {
+                gridView.DrawSelectionShadow(selectedArea);
+            }
+            else
+            {
+                gridView.DeleteSelectionShadow();
+            }
+        }
+        else
+        {
+            gridView.DeleteSelectionShadow();
+        }
+    }
+
+    bool AreaIsSquare(Vector2Int beginPosition, Vector2Int endPosition)
+    {
+        return Mathf.Abs(endPosition.x - beginPosition.x) == Mathf.Abs(endPosition.y - beginPosition.y);
     }
 
     Vector2Int[] CalculateArea(Vector2Int beginPosition, Vector2Int endPosition)
@@ -50,29 +72,30 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         return area;
     }
 
-    //bool SelectionAreaIsValid(Vector2Int[] area)
-    //{
-    //    for (int i = 0; i < area.Length; i++)
-    //    {
-    //        if (!(0 <= nearestArea[i].x && nearestArea[i].x < gridModel.Width && 0 <= nearestArea[i].y && nearestArea[i].y < gridModel.Height))
-    //        {
-    //            //Piece is out of grid
-    //            return false;
-    //        }
-    //        if (gridModel.Grid[nearestArea[i].x, nearestArea[i].y].Level != 0)
-    //        {
-    //            //Cells are taken
-    //            return false;
-    //        }
-    //    }
-    //    return true;
-    //}
+    bool AreaIsValid(Vector2Int[] area)
+    {
+        for (int i = 0; i < area.Length; i++)
+        {
+            if (!(0 <= area[i].x && area[i].x < gridModel.Width && 0 <= area[i].y && area[i].y < gridModel.Height))
+            {
+                //Selection is out of grid
+                return false;
+            }
+            //TODO Compare to level of the first cell
+            if (gridModel.Grid[area[i].x, area[i].y].Level != 1)
+            {
+                //Cells are different
+                return false;
+            }
+        }
+        return true;
+    }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         selectionBox.gameObject.SetActive(false);
         endDragPosition = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
-        //Debug.Log(endDragPosition);
+        gridView.DeleteSelectionShadow();
     }
 
     Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
