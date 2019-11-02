@@ -41,10 +41,6 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
                 gridView.DeleteSelectionShadow();
             }
         }
-        else
-        {
-            gridView.DeleteSelectionShadow();
-        }
     }
 
     bool AreaIsSquare(Vector2Int beginPosition, Vector2Int endPosition)
