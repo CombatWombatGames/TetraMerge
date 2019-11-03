@@ -39,8 +39,8 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             Vector2Int[] selectedArea = CalculateArea(beginDragGridPosition, currentDragGridPosition);
             if (AreaIsValid(selectedArea))
             {
-                validSelectedArea = selectedArea; //OnEndDrag validSelectedArea will be merged
-                endDragGridPosition = currentDragGridPosition; //using endDragGridPosition
+                validSelectedArea = selectedArea; //OnEndDrag validSelectedArea will be merged...
+                endDragGridPosition = currentDragGridPosition; //...using endDragGridPosition
                 gridView.DrawSelectionShadow(selectedArea);
             }
             else

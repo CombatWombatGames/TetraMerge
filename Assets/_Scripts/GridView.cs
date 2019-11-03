@@ -7,7 +7,9 @@ public class GridView : MonoBehaviour
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
+
     GameObject[,] cells;
+    Color[] colors = new Color[] { Color.cyan, Color.green, Color.magenta, Color.red, Color.yellow, Color.blue };
 
     void Awake()
     {
@@ -47,6 +49,7 @@ public class GridView : MonoBehaviour
         for (int i = 0; i < coordinates.Length; i++)
         {
             cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = level.ToString();
+            cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().color = colors[level];
         }
     }
 

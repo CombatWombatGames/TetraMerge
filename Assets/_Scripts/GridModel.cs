@@ -40,5 +40,6 @@ public class GridModel : MonoBehaviour
             Grid[coordinates[i].x, coordinates[i].y].Level = level;
         }
         GridChanged(coordinates, level);
+        //TODO LevelUp
     }
 }
