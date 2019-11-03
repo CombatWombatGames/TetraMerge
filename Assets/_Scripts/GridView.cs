@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+//Displays field to player
 public class GridView : MonoBehaviour
 {
     [SerializeField] GridModel gridModel = default;

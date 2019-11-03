@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-//Holds piece variants and generates random next pieces
+//Holds types of pieces and generates random next pieces
 public class PiecesModel : MonoBehaviour
 {
+    //TODO Rename
     [SerializeField] Array2DBool[] piecesVariants = default;
 
     public Piece[] NextPieces { get; private set; }

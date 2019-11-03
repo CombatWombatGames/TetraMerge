@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-//Displays game state to player
+//Displays pieces to player
 public class PiecesView : MonoBehaviour
 {
     [SerializeField] PiecesModel piecesModel = default;

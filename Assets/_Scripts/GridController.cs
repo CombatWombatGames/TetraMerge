@@ -1,16 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+//Translates selecting and merging to model
 public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GridView gridView = default;
     [SerializeField] Image selectionBox = default;
 
+    //Shared variables for communication of methods from interfaces
     Vector3 beginDragWorldPosition;
     Vector2Int beginDragGridPosition;
-    Vector2Int endDragPosition;
+    Vector2Int endDragGridPosition;
+    Vector2Int[] validSelectedArea;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -29,15 +33,19 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             selectionBox.rectTransform.sizeDelta = new Vector2(Mathf.Abs(eventData.pointerCurrentRaycast.worldPosition.x - beginDragWorldPosition.x) * 100, Mathf.Abs(eventData.pointerCurrentRaycast.worldPosition.y - beginDragWorldPosition.y) * 100);
         }
         //Draw selection shadow
-        if (AreaIsSquare(beginDragGridPosition, WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition)))
+        Vector2Int currentDragGridPosition = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
+        if (AreaIsSquare(beginDragGridPosition, currentDragGridPosition) && (beginDragGridPosition != currentDragGridPosition))
         {
-            Vector2Int[] selectedArea = CalculateArea(beginDragGridPosition, WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition));
+            Vector2Int[] selectedArea = CalculateArea(beginDragGridPosition, currentDragGridPosition);
             if (AreaIsValid(selectedArea))
             {
+                validSelectedArea = selectedArea; //OnEndDrag validSelectedArea will be merged
+                endDragGridPosition = currentDragGridPosition; //using endDragGridPosition
                 gridView.DrawSelectionShadow(selectedArea);
             }
             else
             {
+                validSelectedArea = null;
                 gridView.DeleteSelectionShadow();
             }
         }
@@ -77,8 +85,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
                 //Selection is out of grid
                 return false;
             }
-            //TODO Compare to level of the first cell
-            if (gridModel.Grid[area[i].x, area[i].y].Level != 1)
+            if (gridModel.Grid[area[i].x, area[i].y].Level == 0 || gridModel.Grid[area[i].x, area[i].y].Level != gridModel.Grid[beginDragGridPosition.x, beginDragGridPosition.y].Level)
             {
                 //Cells are different
                 return false;
@@ -87,17 +94,75 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         return true;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        selectionBox.gameObject.SetActive(false);
-        endDragPosition = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
-        gridView.DeleteSelectionShadow();
-    }
-
     Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
     {
         float XGrid = worldCoordinate.x + (float)(gridModel.Width - 1) / 2;
         float YGrid = worldCoordinate.y + (float)(gridModel.Height - 1) / 2;
         return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        selectionBox.gameObject.SetActive(false);
+        gridView.DeleteSelectionShadow();
+        if (validSelectedArea != null)
+        {
+            Merge(validSelectedArea, beginDragGridPosition, endDragGridPosition);
+        }
+    }
+
+    void Merge(Vector2Int[] area, Vector2Int beginPosition, Vector2Int endPosition)
+    {
+        List<Vector2Int> upgradedArea = new List<Vector2Int>();
+        //TODO Find better solution
+        if (endPosition.x - beginPosition.x > 0)
+        {
+            if (endPosition.y - beginPosition.y > 0)
+            {
+                for (int i = (endPosition.x + beginPosition.x) / 2 + 1; i <= endPosition.x; i++)
+                {
+                    for (int j = (endPosition.y + beginPosition.y) / 2 + 1; j <= endPosition.y; j++)
+                    {
+                        upgradedArea.Add(new Vector2Int(i, j));
+                    }
+                }
+            }
+            else
+            {
+                for (int i = (endPosition.x + beginPosition.x) / 2 + 1; i <= endPosition.x; i++)
+                {
+                    for (int j = (endPosition.y + beginPosition.y - 1) / 2; j >= endPosition.y; j--)
+                    {
+                        upgradedArea.Add(new Vector2Int(i, j));
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (endPosition.y - beginPosition.y > 0)
+            {
+                for (int i = (endPosition.x + beginPosition.x - 1) / 2; i >= endPosition.x; i--)
+                {
+                    for (int j = (endPosition.y + beginPosition.y) / 2 + 1; j <= endPosition.y; j++)
+                    {
+                        upgradedArea.Add(new Vector2Int(i, j));
+                    }
+                }
+            }
+            else
+            {
+                for (int i = (endPosition.x + beginPosition.x - 1) / 2; i >= endPosition.x; i--)
+                {
+                    for (int j = (endPosition.y + beginPosition.y - 1) / 2; j >= endPosition.y; j--)
+                    {
+                        upgradedArea.Add(new Vector2Int(i, j));
+                    }
+                }
+            }
+        }
+        int newLevel = gridModel.Grid[beginPosition.x, beginPosition.y].Level + 1;
+        gridModel.ChangeGrid(area, 0);
+        gridModel.ChangeGrid(upgradedArea.ToArray(), newLevel);
     }
 }

@@ -1,4 +1,5 @@
-﻿public struct Piece
+﻿//Piece inside 3x3 grid
+public struct Piece
 {
     public Cell[] Cells;
     public Piece(Piece piece)

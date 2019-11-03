@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+//Holds state of the field and provides ways to change it
 public class GridModel : MonoBehaviour
 {
     [SerializeField] int width = default;

@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class LevelsProgression : MonoBehaviour
 {
+    public event Action<int> CurrentLevelChanged;
+    public event Action<int> MaximumLevelChanged;
+
     public int CurrentLevel
     {
-        get { return PlayerPrefs.GetInt("LastLevel", 0); }
+        get { return PlayerPrefs.GetInt("CurrentLevel", 0); }
         set
         {
-            PlayerPrefs.SetInt("LastLevel", value);
+            PlayerPrefs.SetInt("CurrentLevel", value);
             CurrentLevelChanged(value);
         }
     }
@@ -22,9 +25,6 @@ public class LevelsProgression : MonoBehaviour
             MaximumLevelChanged(value);
         }
     }
-
-    public event Action<int> CurrentLevelChanged = delegate { };
-    public event Action<int> MaximumLevelChanged = delegate { };
 
     public void OpenNextLevel()
     {

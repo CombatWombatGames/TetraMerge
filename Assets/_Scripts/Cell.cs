@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//Cell of a piece or field
 public struct Cell
 {
     public int Level;
