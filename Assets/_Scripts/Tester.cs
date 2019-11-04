@@ -24,12 +24,14 @@ public class Tester : MonoBehaviour
 
     public void FillGridWithOnes()
     {
-        Vector2Int[] ones = new Vector2Int[100];
-        for (int i = 0; i < 10; i++)
+        int x = FindObjectOfType<GridModel>().Width;
+        int y = FindObjectOfType<GridModel>().Height;
+        Vector2Int[] ones = new Vector2Int[x * y];
+        for (int i = 0; i < x; i++)
         {
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < y; j++)
             {
-                ones[i + 10 * j] = new Vector2Int(i, j);
+                ones[i + y * j] = new Vector2Int(i, j);
             }
         }
         FindObjectOfType<GridModel>().ChangeGrid(ones, 1);

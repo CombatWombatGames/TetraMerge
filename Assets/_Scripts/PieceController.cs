@@ -99,8 +99,8 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     Vector2Int PieceToGridCoordinate(Cell cell, Vector2 centerCoordinate)
     {
-        float XGrid = centerCoordinate.x + cell.GridCoordinate.x + (float)(gridModel.Width - 1) / 2;
-        float YGrid = centerCoordinate.y + cell.GridCoordinate.y + (float)(gridModel.Width - 1) / 2;
+        float XGrid = cell.GridCoordinate.x + centerCoordinate.x / gridView.Scale + (float)(gridModel.Width - 1) / 2;
+        float YGrid = cell.GridCoordinate.y + centerCoordinate.y / gridView.Scale + (float)(gridModel.Height - 1) / 2;
         return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
     }
 

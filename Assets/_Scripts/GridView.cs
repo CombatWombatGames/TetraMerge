@@ -4,6 +4,9 @@ using UnityEngine.UI;
 //Displays field to player
 public class GridView : MonoBehaviour
 {
+    //Used in cell instantiation scaling, conversions between world and grid coordinates
+    public float Scale { get; private set; }
+
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
@@ -25,6 +28,10 @@ public class GridView : MonoBehaviour
 
     void OnGridCreated(Cell[,] grid)
     {
+        float maximumDimension = Mathf.Max(grid.GetLength(0), grid.GetLength(1));
+        float screenWidth = 1080;
+        float reductionPercentage = 110;
+        Scale = screenWidth / maximumDimension / reductionPercentage;
         cells = new GameObject[grid.GetLength(0), grid.GetLength(1)];
         float offsetX = (float)(grid.GetLength(0) - 1) / 2;
         float offsetY = (float)(grid.GetLength(1) - 1) / 2;
@@ -32,7 +39,8 @@ public class GridView : MonoBehaviour
         {
             for (int j = 0; j < grid.GetLength(1); j++)
             {
-                GameObject cell = Instantiate(cellPrefab, new Vector3(i - offsetX, j - offsetY), Quaternion.identity, cellsParent);
+                GameObject cell = Instantiate(cellPrefab, new Vector3((i - offsetX) * Scale, (j - offsetY) * Scale), Quaternion.identity, cellsParent);
+                cell.transform.localScale = new Vector3(Scale, Scale);
                 cells[i, j] = cell;
             }
         }
@@ -49,7 +57,7 @@ public class GridView : MonoBehaviour
         for (int i = 0; i < coordinates.Length; i++)
         {
             cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = level.ToString();
-            cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().color = colors[level];
+            cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().color = colors[level % colors.Length];
         }
     }
 

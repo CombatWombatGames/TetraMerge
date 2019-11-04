@@ -10,9 +10,12 @@ public class GridModel : MonoBehaviour
     public int Height => height;
 
     public Cell[,] Grid { get; private set; }
+    public int MinimumLevel { get; private set; }
 
     public event Action<Cell[,]> GridCreated;
     public event Action<Vector2Int[], int> GridChanged;
+
+    [SerializeField] PiecesModel piecesModel = default;
 
     void Start()
     {
@@ -30,6 +33,7 @@ public class GridModel : MonoBehaviour
                 Grid[i, j].Level = 0;
             }
         }
+        MinimumLevel = 1;
         GridCreated(Grid);
     }
 
@@ -40,6 +44,29 @@ public class GridModel : MonoBehaviour
             Grid[coordinates[i].x, coordinates[i].y].Level = level;
         }
         GridChanged(coordinates, level);
-        //TODO LevelUp
+        //To avoid double check after merge
+        if (level != 0)
+        {
+            if (MinimumLevelPiecesRemoved())
+            {
+                MinimumLevel++;
+                piecesModel.LevelUpCollection();
+            }
+        }
+    }
+
+    bool MinimumLevelPiecesRemoved()
+    {
+        for (int i = 0; i < Grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < Grid.GetLength(1); j++)
+            {
+                if (Grid[i, j].Level == MinimumLevel)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

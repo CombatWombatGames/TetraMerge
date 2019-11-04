@@ -7,15 +7,14 @@ using Random = UnityEngine.Random;
 //Holds types of pieces and generates random next pieces
 public class PiecesModel : MonoBehaviour
 {
-    //TODO Rename
-    [SerializeField] Array2DBool[] piecesVariants = default;
-
-    public Piece[] NextPieces { get; private set; }
-    Piece[] pieces = new Piece[6];
-
     public event Action PiecesGenerated;
     public event Action<int> PieceRemoved;
     public event Action PieceRotated;
+    public Piece[] NextPieces { get; private set; }
+
+    [SerializeField] Array2DBool[] piecesVariants = default;
+
+    Piece[] pieces = new Piece[6];
 
     void Awake()
     {
@@ -56,7 +55,7 @@ public class PiecesModel : MonoBehaviour
     void GenerateNextPieces()
     {
         NextPieces = GenerateRandomPieces();
-        //RotateAllPiecesRandom();
+        //RotateAllPiecesAtRandom();
         PiecesGenerated();
     }
 
@@ -91,7 +90,19 @@ public class PiecesModel : MonoBehaviour
         PieceRotated();
     }
 
-    void RotateAllPiecesRandom()
+    public void LevelUpCollection()
+    {
+        for (int i = 0; i < pieces.Length; i++)
+        {
+            for (int j = 0; j < pieces[i].Cells.Length; j++)
+            {
+                pieces[i].Cells[j].Level++;
+            }
+        }
+        GenerateNextPieces();
+    }
+
+    void RotateAllPiecesAtRandom()
     {
         for (int i = 0; i < NextPieces.Length; i++)
         {

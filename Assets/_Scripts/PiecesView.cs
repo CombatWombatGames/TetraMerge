@@ -6,6 +6,7 @@ public class PiecesView : MonoBehaviour
 {
     [SerializeField] PiecesModel piecesModel = default;
     [SerializeField] PieceController[] nextPieces = default;
+
     Image[][] nextPiecesImages = new Image[3][];
 
     void Awake()

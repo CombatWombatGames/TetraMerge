@@ -96,8 +96,8 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
     {
-        float XGrid = worldCoordinate.x + (float)(gridModel.Width - 1) / 2;
-        float YGrid = worldCoordinate.y + (float)(gridModel.Height - 1) / 2;
+        float XGrid = worldCoordinate.x / gridView.Scale + (float)(gridModel.Width - 1) / 2;
+        float YGrid = worldCoordinate.y / gridView.Scale + (float)(gridModel.Height - 1) / 2;
         return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
     }
 
@@ -108,6 +108,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         if (validSelectedArea != null)
         {
             Merge(validSelectedArea, beginDragGridPosition, endDragGridPosition);
+            validSelectedArea = null;
         }
     }
 
