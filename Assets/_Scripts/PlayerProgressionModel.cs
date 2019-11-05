@@ -1,12 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-public class PlayerProgression : MonoBehaviour
+//Counts current score and holds best score
+public class PlayerProgressionModel : MonoBehaviour
 {
     public event Action<int> CurrentScoreChanged;
     public event Action<int> BestScoreChanged;
 
-    //10 ^ (level - 1) for each tile with level > 0
     public int CurrentScore { get; private set; }
 
     public int BestScore
@@ -40,7 +40,9 @@ public class PlayerProgression : MonoBehaviour
             {
                 if (gridModel.Grid[i, j].Level != 0)
                 {
-                    CurrentScore += Mathf.RoundToInt(Mathf.Pow(10, gridModel.Grid[i, j].Level - 1));
+                    CurrentScore += gridModel.Grid[i, j].Level;
+                    //Old way: always grows, but depends on level too much
+                    //CurrentScore += Mathf.RoundToInt(Mathf.Pow(10, gridModel.Grid[i, j].Level - 1));
                 }
             }
         }
