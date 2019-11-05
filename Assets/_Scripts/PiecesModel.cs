@@ -15,6 +15,7 @@ public class PiecesModel : MonoBehaviour
     [SerializeField] Array2DBool[] piecesVariants = default;
 
     Piece[] pieces = new Piece[6];
+    Piece emptyPiece = new Piece(new Cell[0]);
 
     void Awake()
     {
@@ -23,6 +24,7 @@ public class PiecesModel : MonoBehaviour
 
     void Start()
     {
+        //TODO Do not generate Os at first
         GenerateNextPieces();
     }
 
@@ -52,7 +54,7 @@ public class PiecesModel : MonoBehaviour
         return cells.ToArray();
     }
 
-    void GenerateNextPieces()
+    public void GenerateNextPieces()
     {
         NextPieces = GenerateRandomPieces();
         //RotateAllPiecesAtRandom();
@@ -64,16 +66,21 @@ public class PiecesModel : MonoBehaviour
         return new Piece[] { new Piece(pieces[Random.Range(0, pieces.Length)]), new Piece(pieces[Random.Range(0, pieces.Length)]), new Piece(pieces[Random.Range(0, pieces.Length)]) };
     }
 
-    //TODO Proper way
-    int count = 3;
     public void RemovePiece(int index)
     {
+        NextPieces[index] = emptyPiece;
         PieceRemoved(index);
-        count--;
-        if (count == 0)
+        //Check if it was the last piece
+        for (int i = 0; i < NextPieces.Length; i++)
         {
-            GenerateNextPieces();
-            count = 3;
+            if (NextPieces[i].Cells.Length != 0)
+            {
+                return;
+            }
+            else if (i == NextPieces.Length - 1)
+            {
+                GenerateNextPieces();
+            }
         }
     }
 

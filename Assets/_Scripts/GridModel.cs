@@ -10,6 +10,7 @@ public class GridModel : MonoBehaviour
     public int Height => height;
 
     public Cell[,] Grid { get; private set; }
+    //TODO Add boosters when changed
     public int MinimumLevel { get; private set; }
 
     public event Action<Cell[,]> GridCreated;
@@ -45,7 +46,7 @@ public class GridModel : MonoBehaviour
         }
         GridChanged(coordinates, level);
         //To avoid double check after merge
-        if (level != 0)
+        if (level == 0)
         {
             if (MinimumLevelPiecesRemoved())
             {

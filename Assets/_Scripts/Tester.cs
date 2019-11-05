@@ -17,11 +17,13 @@ public class Tester : MonoBehaviour
     }
 #endif
 
+    //UGUI
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    //UGUI
     public void FillGridWithOnes()
     {
         int x = FindObjectOfType<GridModel>().Width;

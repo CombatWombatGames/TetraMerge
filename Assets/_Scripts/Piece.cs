@@ -13,4 +13,8 @@ public struct Piece
             Cells[i] = piece.Cells[i];
         }
     }
+    public Piece(Cell[] сells)
+    {
+        Cells = сells;
+    }
 }
