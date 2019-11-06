@@ -4,19 +4,17 @@ using UnityEngine;
 //Holds state of the field and provides ways to change it
 public class GridModel : MonoBehaviour
 {
-    [SerializeField] int width = default;
-    public int Width => width;
-    [SerializeField] int height = default;
-    public int Height => height;
-
-    public Cell[,] Grid { get; private set; }
-    //TODO Add boosters when changed
-    public int MinimumLevel { get; private set; }
-
     public event Action<Cell[,]> GridCreated;
     public event Action<Vector2Int[], int> GridChanged;
 
+    public int Width => width;
+    public int Height => height;
+    public Cell[,] Grid { get; private set; }
+
+    [SerializeField] int height = default;
+    [SerializeField] int width = default;
     [SerializeField] PiecesModel piecesModel = default;
+    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
 
     void Start()
     {
@@ -34,7 +32,6 @@ public class GridModel : MonoBehaviour
                 Grid[i, j].Level = 0;
             }
         }
-        MinimumLevel = 1;
         GridCreated(Grid);
     }
 
@@ -45,12 +42,12 @@ public class GridModel : MonoBehaviour
             Grid[coordinates[i].x, coordinates[i].y].Level = level;
         }
         GridChanged(coordinates, level);
-        //To avoid double check after merge
+        //Happens after merge or clear booster only
         if (level == 0)
         {
             if (MinimumLevelPiecesRemoved())
             {
-                MinimumLevel++;
+                playerProgressionModel.LevelNumber++;
                 piecesModel.LevelUpCollection();
             }
         }
@@ -62,7 +59,7 @@ public class GridModel : MonoBehaviour
         {
             for (int j = 0; j < Grid.GetLength(1); j++)
             {
-                if (Grid[i, j].Level == MinimumLevel)
+                if (Grid[i, j].Level == playerProgressionModel.LevelNumber)
                 {
                     return false;
                 }

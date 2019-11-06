@@ -4,10 +4,22 @@ using UnityEngine;
 //Counts current score and holds best score
 public class PlayerProgressionModel : MonoBehaviour
 {
+    public event Action<int> TurnChanged;
     public event Action<int> CurrentScoreChanged;
     public event Action<int> BestScoreChanged;
+    public event Action<int> LevelNumberChanged;
 
     public int CurrentScore { get; private set; }
+
+    public int TurnNumber
+    {
+        get { return turnNumber; }
+        set
+        {
+            turnNumber = value;
+            TurnChanged(value);
+        }
+    }
 
     public int BestScore
     {
@@ -19,7 +31,20 @@ public class PlayerProgressionModel : MonoBehaviour
         }
     }
 
+    public int LevelNumber
+    {
+        get { return levelNumber; }
+        set
+        {
+            levelNumber = value;
+            LevelNumberChanged(value);
+        }
+    }
+
     [SerializeField] GridModel gridModel = default;
+
+    int turnNumber;
+    int levelNumber;
 
     void Awake()
     {
@@ -29,6 +54,13 @@ public class PlayerProgressionModel : MonoBehaviour
     void OnDestroy()
     {
         gridModel.GridChanged -= OnGridChanged;
+    }
+
+
+    void Start()
+    {
+        TurnNumber = 0;
+        LevelNumber = 1;
     }
 
     void OnGridChanged(Vector2Int[] area, int level)
