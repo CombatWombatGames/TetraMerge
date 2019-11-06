@@ -47,12 +47,13 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        piecesView.ScalePiece(index, gridView.Scale);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + shift, piecesModel.NextPieces[index]);
-        if (AreaIsAvailable(nearestArea))
+        if (AreaIsAvailable(nearestArea) && eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
             gridModel.ChangeGrid(nearestArea, piecesModel.NextPieces[index].Cells[0].Level);
             gameObject.SetActive(false);
@@ -63,6 +64,8 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         {
             piecesView.ReturnPiece(index);
         }
+        gridView.DeletePieceShadow();
+        piecesView.ScalePiece(index, 1.0f / gridView.Scale);
     }
 
     public void OnPointerClick(PointerEventData eventData)

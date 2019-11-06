@@ -68,4 +68,9 @@ public class PiecesView : MonoBehaviour
     {
         nextPieces[index].transform.localPosition = Vector3.zero;
     }
+
+    public void ScalePiece(int index, float scale)
+    {
+        nextPieces[index].transform.localScale *= scale;
+    }
 }

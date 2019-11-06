@@ -44,6 +44,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        //TODO Scale
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -51,23 +52,19 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         if (boosterType != BoosterType.Refresh)
         {
             Vector2Int nearestCell = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + shift);
-            if (CellIsAvailable(nearestCell))
+            if (CellIsAvailable(nearestCell) && eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
             {
                 if (boosterType == BoosterType.Clear)
                 {
                     ClearCell(nearestCell);
-                    transform.localPosition = Vector3.zero;
                 }
                 else if (boosterType == BoosterType.Add)
                 {
                     AddCell(nearestCell);
-                    transform.localPosition = Vector3.zero;
                 }
             }
-            else
-            {
-                transform.localPosition = Vector3.zero;
-            }
+            transform.localPosition = Vector3.zero;
+            gridView.DeletePieceShadow();
         }
     }
 

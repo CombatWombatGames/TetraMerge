@@ -41,7 +41,7 @@ public class BoostersView : MonoBehaviour
         addsCount.text = count.ToString();
         if (count == 0)
         {
-            //disable controller
+            //TODO Disable controller
         }
         else
         {
@@ -54,7 +54,7 @@ public class BoostersView : MonoBehaviour
         clearsCount.text = count.ToString();
         if (count == 0)
         {
-            //disable controller
+            //TODO Disable controller
         }
         else
         {
