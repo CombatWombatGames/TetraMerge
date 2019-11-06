@@ -8,15 +8,29 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GridView gridView = default;
     [SerializeField] BoostersModel boostersModel = default;
+    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     //TODO Use inheritance instead
     [SerializeField] BoosterType boosterType = default;
+
+    int turnsToGiveBoosters = 10;
+    Vector3 shift = Vector3.up * 4;
+
+    void Awake()
+    {
+        playerProgressionModel.TurnChanged += OnTurnChanged;
+    }
+
+    void OnDestroy()
+    {
+        playerProgressionModel.TurnChanged -= OnTurnChanged;
+    }
 
     public void OnDrag(PointerEventData eventData)
     {
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero && boosterType != BoosterType.Refresh)
         {
-            transform.position = eventData.pointerCurrentRaycast.worldPosition;
-            Vector2Int nearestCell = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
+            transform.position = eventData.pointerCurrentRaycast.worldPosition + shift;
+            Vector2Int nearestCell = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + shift);
             if (CellIsAvailable(nearestCell))
             {
                 gridView.DrawPieceShadow(new Vector2Int[] { nearestCell });
@@ -36,7 +50,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         if (boosterType != BoosterType.Refresh)
         {
-            Vector2Int nearestCell = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
+            Vector2Int nearestCell = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + shift);
             if (CellIsAvailable(nearestCell))
             {
                 if (boosterType == BoosterType.Clear)
@@ -80,7 +94,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         if (boostersModel.AddsCount > 0)
         {
-            gridModel.ChangeGrid(new Vector2Int[] { position }, gridModel.MinimumLevel);
+            gridModel.ChangeGrid(new Vector2Int[] { position }, playerProgressionModel.LevelNumber);
             boostersModel.AddsCount--;
         }
     }
@@ -110,6 +124,25 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         else
         {
             return false;
+        }
+    }
+
+    void OnTurnChanged(int turnNumber)
+    {
+        if (turnNumber % turnsToGiveBoosters == 0)
+        {
+            if (boosterType == BoosterType.Refresh)
+            {
+                boostersModel.RefreshesCount++;
+            }
+            else if (boosterType == BoosterType.Add)
+            {
+                boostersModel.AddsCount++;
+            }
+            else if (boosterType == BoosterType.Clear)
+            {
+                boostersModel.ClearsCount++;
+            }
         }
     }
 

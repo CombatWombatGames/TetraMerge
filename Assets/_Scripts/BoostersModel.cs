@@ -1,16 +1,41 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class BoostersModel : MonoBehaviour
 {
-    //TODO Disable controller if booster is not available
-    public int RefreshesCount { get; set; }
-    public int AddsCount { get; set; }
-    public int ClearsCount { get; set; }
+    public event Action<int> RefreshesCountChanged;
+    public event Action<int> AddsCountChanged;
+    public event Action<int> ClearsCountChanged;
 
-    void Start()
+    public int RefreshesCount
     {
-        RefreshesCount = 1;
-        AddsCount = 1;
-        ClearsCount = 1;
+        get { return refreshesCount; }
+        set
+        {
+            refreshesCount = value;
+            RefreshesCountChanged(value);
+        }
     }
+    public int AddsCount
+    {
+        get { return addsCount; }
+        set
+        {
+            addsCount = value;
+            AddsCountChanged(value);
+        }
+    }
+    public int ClearsCount
+    {
+        get { return clearsCount; }
+        set
+        {
+            clearsCount = value;
+            ClearsCountChanged(value);
+        }
+    }
+
+    int refreshesCount = 0;
+    int addsCount = 0;
+    int clearsCount = 0;
 }
