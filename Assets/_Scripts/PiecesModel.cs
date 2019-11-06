@@ -12,6 +12,7 @@ public class PiecesModel : MonoBehaviour
     public event Action PieceRotated;
     public Piece[] NextPieces { get; private set; }
 
+    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] Array2DBool[] piecesVariants = default;
 
     Piece[] pieces = new Piece[6];
@@ -24,7 +25,6 @@ public class PiecesModel : MonoBehaviour
 
     void Start()
     {
-        //TODO Do not generate Os at first
         GenerateNextPieces();
     }
 
@@ -32,8 +32,7 @@ public class PiecesModel : MonoBehaviour
     {
         for (int i = 0; i < piecesVariants.Length; i++)
         {
-            pieces[i] = new Piece();
-            pieces[i].Cells = ArrayToPiece(piecesVariants[i]);
+            pieces[i] = new Piece { Cells = ArrayToPiece(piecesVariants[i]) };
         }
     }
 
@@ -63,7 +62,15 @@ public class PiecesModel : MonoBehaviour
 
     Piece[] GenerateRandomPieces()
     {
-        return new Piece[] { new Piece(pieces[Random.Range(0, pieces.Length)]), new Piece(pieces[Random.Range(0, pieces.Length)]), new Piece(pieces[Random.Range(0, pieces.Length)]) };
+        if (playerProgressionModel.TurnNumber != 0)
+        {
+            return new Piece[] { new Piece(pieces[Random.Range(0, pieces.Length)]), new Piece(pieces[Random.Range(0, pieces.Length)]), new Piece(pieces[Random.Range(0, pieces.Length)]) };
+        }
+        else
+        {
+            //Do not spawn "O"-figures at the first turn (mb also forbid 2J/2L?)
+            return new Piece[] { new Piece(pieces[Random.Range(1, pieces.Length)]), new Piece(pieces[Random.Range(1, pieces.Length)]), new Piece(pieces[Random.Range(1, pieces.Length)]) };
+        }
     }
 
     public void RemovePiece(int index)
@@ -99,6 +106,7 @@ public class PiecesModel : MonoBehaviour
 
     public void LevelUpCollection()
     {
+        //Update collection
         for (int i = 0; i < pieces.Length; i++)
         {
             for (int j = 0; j < pieces[i].Cells.Length; j++)
@@ -106,7 +114,14 @@ public class PiecesModel : MonoBehaviour
                 pieces[i].Cells[j].Level++;
             }
         }
-        GenerateNextPieces();
+        //Update pieces already generated
+        for (int i = 0; i < NextPieces.Length; i++)
+        {
+            for (int j = 0; j < NextPieces[i].Cells.Length; j++)
+            {
+                NextPieces[i].Cells[j].Level++;
+            }
+        }
     }
 
     void RotateAllPiecesAtRandom()

@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-//Translates movement and rotation of the piece to model
+//Translates movement, rotation and dropping of the piece to models
 public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GridView gridView = default;
     [SerializeField] PiecesView piecesView = default;
     [SerializeField] PiecesModel piecesModel = default;
+    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] int index = default;
+
+    Vector3 shift = Vector3.up * 4;
 
     void Awake()
     {
@@ -29,8 +32,8 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     {
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
-            transform.position = eventData.pointerCurrentRaycast.worldPosition;
-            Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition, piecesModel.NextPieces[index]);
+            transform.position = eventData.pointerCurrentRaycast.worldPosition + shift;
+            Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + shift, piecesModel.NextPieces[index]);
             if (AreaIsAvailable(nearestArea))
             {
                 gridView.DrawPieceShadow(nearestArea);
@@ -48,12 +51,13 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition, piecesModel.NextPieces[index]);
+        Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + shift, piecesModel.NextPieces[index]);
         if (AreaIsAvailable(nearestArea))
         {
             gridModel.ChangeGrid(nearestArea, piecesModel.NextPieces[index].Cells[0].Level);
             gameObject.SetActive(false);
             piecesModel.RemovePiece(index);
+            playerProgressionModel.TurnNumber++;
         }
         else
         {

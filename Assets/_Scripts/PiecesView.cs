@@ -21,7 +21,7 @@ public class PiecesView : MonoBehaviour
     {
         piecesModel.PieceRemoved -= HidePiece;
         piecesModel.PiecesGenerated -= ShowPieces;
-        piecesModel.PieceRotated += ShowPieces;
+        piecesModel.PieceRotated -= ShowPieces;
     }
 
     void InitializeImages()
