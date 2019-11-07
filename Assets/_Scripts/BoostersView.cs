@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+//Shows amount of boosters to player
 public class BoostersView : MonoBehaviour
 {
     [SerializeField] BoostersModel boostersModel = default;
@@ -26,39 +27,23 @@ public class BoostersView : MonoBehaviour
     void OnRefreshesCountChanged(int count)
     {
         refreshesCount.text = count.ToString();
-        if (count == 0)
+        if (count != 0)
         {
-            refreshButton.interactable = false;
+            refreshButton.interactable = true;
         }
         else
         {
-            refreshButton.interactable = true;
+            refreshButton.interactable = false;
         }
     }
 
     void OnAddsCountChanged(int count)
     {
         addsCount.text = count.ToString();
-        if (count == 0)
-        {
-            //TODO Disable controller
-        }
-        else
-        {
-
-        }
     }
 
     void OnClearsCountChanged(int count)
     {
         clearsCount.text = count.ToString();
-        if (count == 0)
-        {
-            //TODO Disable controller
-        }
-        else
-        {
-
-        }
     }
 }

@@ -56,8 +56,17 @@ public class GridView : MonoBehaviour
         //Show changes
         for (int i = 0; i < coordinates.Length; i++)
         {
-            cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = level.ToString();
-            cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().color = colors[level % colors.Length];
+            if (level != 0)
+            {
+                cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = level.ToString();
+                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[0].color = colors[level % colors.Length];
+                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[0].enabled = true;
+            }
+            else
+            {
+                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[0].enabled = false;
+                cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = "";
+            }
         }
     }
 

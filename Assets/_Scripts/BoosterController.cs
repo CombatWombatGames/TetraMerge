@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 //Provides methods for booster buttons
-public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] PiecesModel piecesModel = default;
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GridView gridView = default;
     [SerializeField] BoostersModel boostersModel = default;
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
-    //TODO Use inheritance instead
+    //TODO Use inheritance instead!
     [SerializeField] BoosterType boosterType = default;
+    [SerializeField] Text raycastTarget = default;
 
     int turnsToGiveBoosters = 10;
     Vector3 shift = Vector3.up * 4;
@@ -18,11 +20,15 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     void Awake()
     {
         playerProgressionModel.TurnChanged += OnTurnChanged;
+        boostersModel.AddsCountChanged += OnAddsCountChanged;
+        boostersModel.ClearsCountChanged += OnClearsCountChanged;
     }
 
     void OnDestroy()
     {
         playerProgressionModel.TurnChanged -= OnTurnChanged;
+        boostersModel.AddsCountChanged -= OnAddsCountChanged;
+        boostersModel.ClearsCountChanged -= OnClearsCountChanged;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -44,7 +50,8 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //TODO Scale
+        //TODO Move to view
+        transform.localScale *= gridView.Scale;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -65,6 +72,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
             }
             transform.localPosition = Vector3.zero;
             gridView.DeletePieceShadow();
+            transform.localScale /= gridView.Scale;
         }
     }
 
@@ -139,6 +147,53 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
             else if (boosterType == BoosterType.Clear)
             {
                 boostersModel.ClearsCount++;
+            }
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (boosterType != BoosterType.Refresh)
+        {
+            transform.position = eventData.pointerCurrentRaycast.worldPosition + shift;
+        }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (boosterType != BoosterType.Refresh)
+        {
+            transform.localPosition = Vector3.zero;
+            gridView.DeletePieceShadow();
+        }
+    }
+
+    void OnClearsCountChanged(int count)
+    {
+        if (boosterType == BoosterType.Clear)
+        {
+            if (count != 0)
+            {
+                raycastTarget.raycastTarget = true;
+            }
+            else
+            {
+                raycastTarget.raycastTarget = false;
+            }
+        }
+    }
+
+    void OnAddsCountChanged(int count)
+    {
+        if (boosterType == BoosterType.Add)
+        {
+            if (count != 0)
+            {
+                raycastTarget.raycastTarget = true;
+            }
+            else
+            {
+                raycastTarget.raycastTarget = false;
             }
         }
     }

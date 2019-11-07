@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+//Holds amount of boosters
 public class BoostersModel : MonoBehaviour
 {
     public event Action<int> RefreshesCountChanged;
