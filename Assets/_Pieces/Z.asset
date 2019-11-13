@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSize: {x: 3, y: 3}
   cells:
-  - row: 000000
   - row: 010100
   - row: 000101
+  - row: 000000
