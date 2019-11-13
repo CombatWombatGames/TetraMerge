@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 //Provides methods for booster buttons
+//TODO Rewrite
 public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] PiecesModel piecesModel = default;
@@ -14,8 +15,9 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     [SerializeField] BoosterType boosterType = default;
     [SerializeField] Text raycastTarget = default;
 
-    int turnsToGiveBoosters = 10;
-    Vector3 shift = Vector3.up * 4;
+    int boostersGiven = 0;
+    int nextBoosterTurnNumber = 4;
+    Vector3 shift = Vector3.up * 2;
 
     void Awake()
     {
@@ -39,11 +41,11 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
             Vector2Int nearestCell = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + shift);
             if (CellIsAvailable(nearestCell))
             {
-                gridView.DrawPieceShadow(new Vector2Int[] { nearestCell });
+                gridView.DrawShadow(new Vector2Int[] { nearestCell });
             }
             else
             {
-                gridView.DeletePieceShadow();
+                gridView.DeleteShadow();
             }
         }
     }
@@ -71,7 +73,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
                 }
             }
             transform.localPosition = Vector3.zero;
-            gridView.DeletePieceShadow();
+            gridView.DeleteShadow();
             transform.localScale /= gridView.Scale;
         }
     }
@@ -134,7 +136,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
     void OnTurnChanged(int turnNumber)
     {
-        if (turnNumber % turnsToGiveBoosters == 0)
+        if (turnNumber == nextBoosterTurnNumber)
         {
             if (boosterType == BoosterType.Refresh)
             {
@@ -148,6 +150,8 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
             {
                 boostersModel.ClearsCount++;
             }
+            boostersGiven++;
+            UpdateNextBoosterTurnNumber();
         }
     }
 
@@ -164,7 +168,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         if (boosterType != BoosterType.Refresh)
         {
             transform.localPosition = Vector3.zero;
-            gridView.DeletePieceShadow();
+            gridView.DeleteShadow();
         }
     }
 
@@ -196,6 +200,12 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
                 raycastTarget.raycastTarget = false;
             }
         }
+    }
+
+    void UpdateNextBoosterTurnNumber()
+    {
+        //Gives boosters on turn 4, 9, 15, 22, 30... Gap increments every time
+        nextBoosterTurnNumber = (boostersGiven + 1) * (boostersGiven + 8) / 2;
     }
 
     enum BoosterType { Refresh, Add, Clear }
