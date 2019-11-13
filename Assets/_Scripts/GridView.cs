@@ -10,9 +10,9 @@ public class GridView : MonoBehaviour
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
+    [SerializeField] Colors colors = default;
 
     GameObject[,] cells;
-    Color[] colors = new Color[] { Color.cyan, Color.green, Color.magenta, Color.red, Color.yellow, Color.blue };
 
     void Awake()
     {
@@ -46,20 +46,14 @@ public class GridView : MonoBehaviour
         }
     }
 
-    Vector2Int[] oldShadowArea;
-    string[] shadowlessText;
     void OnGridChanged(Vector2Int[] coordinates, int level)
     {
-        //Clear stored shadowless state
-        oldShadowArea = null;
-        shadowlessText = null;
-        //Show changes
         for (int i = 0; i < coordinates.Length; i++)
         {
             if (level != 0)
             {
                 cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = level.ToString();
-                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[0].color = colors[level % colors.Length];
+                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[0].color = colors.Palete[(level - 1) % colors.Palete.Length];
                 cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[0].enabled = true;
             }
             else
@@ -70,48 +64,34 @@ public class GridView : MonoBehaviour
         }
     }
 
-    public void DrawPieceShadow(Vector2Int[] area)
+    Vector2Int[] oldShadowArea;
+    public void DrawShadow(Vector2Int[] area)
     {
         //Remove old shadow
         if (oldShadowArea != null)
         {
             for (int i = 0; i < oldShadowArea.Length; i++)
             {
-                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentInChildren<Text>().text = shadowlessText[i];
+                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[1].enabled = false;
             }
         }
         //Store shadowless state
         oldShadowArea = area;
-        shadowlessText = new string[area.Length];
-        for (int i = 0; i < area.Length; i++)
-        {
-            shadowlessText[i] = cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text;
-        }
         //Drop shadow
         for (int i = 0; i < area.Length; i++)
         {
-            cells[area[i].x, area[i].y].GetComponentInChildren<Text>().text = "+";
+            cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[1].enabled = true;
         }
     }
 
-    public void DeletePieceShadow()
+    public void DeleteShadow()
     {
         if (oldShadowArea != null)
         {
             for (int i = 0; i < oldShadowArea.Length; i++)
             {
-                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentInChildren<Text>().text = shadowlessText[i];
+                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[1].enabled = false;
             }
         }
-    }
-
-    public void DrawSelectionShadow(Vector2Int[] area)
-    {
-        DrawPieceShadow(area);
-    }
-
-    public void DeleteSelectionShadow()
-    {
-        DeletePieceShadow();
     }
 }

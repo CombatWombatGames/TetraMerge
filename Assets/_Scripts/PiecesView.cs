@@ -6,6 +6,7 @@ public class PiecesView : MonoBehaviour
 {
     [SerializeField] PiecesModel piecesModel = default;
     [SerializeField] PieceController[] nextPieces = default;
+    [SerializeField] Colors colors = default;
 
     Image[][] nextPiecesImages = new Image[3][];
 
@@ -13,7 +14,8 @@ public class PiecesView : MonoBehaviour
     {
         piecesModel.PieceRemoved += HidePiece;
         piecesModel.PiecesGenerated += ShowPieces;
-        piecesModel.PieceRotated += ShowPieces;
+        piecesModel.PieceRotated += ShowPieceByIndex;
+        piecesModel.CollectionLevelUp += ShowPieces;
         InitializeImages();
     }
 
@@ -21,7 +23,8 @@ public class PiecesView : MonoBehaviour
     {
         piecesModel.PieceRemoved -= HidePiece;
         piecesModel.PiecesGenerated -= ShowPieces;
-        piecesModel.PieceRotated -= ShowPieces;
+        piecesModel.PieceRotated -= ShowPieceByIndex;
+        piecesModel.CollectionLevelUp -= ShowPieces;
     }
 
     void InitializeImages()
@@ -40,12 +43,21 @@ public class PiecesView : MonoBehaviour
         }
     }
 
+    void ShowPieceByIndex(int index)
+    {
+        ShowPiece(piecesModel.NextPieces[index], nextPiecesImages[index]);
+    }
+
     void ShowPiece(Piece piece, Image[] slot)
     {
-        bool[] mask = PieceToMask(piece);
-        for (int i = 0; i < 9; i++)
+        if (piece.Cells.Length != 0)
         {
-            slot[i].enabled = mask[i];
+            bool[] mask = PieceToMask(piece);
+            for (int i = 0; i < 9; i++)
+            {
+                slot[i].color = colors.Palete[(piece.Cells[0].Level - 1) % colors.Palete.Length];
+                slot[i].enabled = mask[i];
+            }
         }
     }
 
