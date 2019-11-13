@@ -41,18 +41,18 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             {
                 validSelectedArea = selectedArea; //OnEndDrag validSelectedArea will be merged...
                 endDragGridPosition = currentDragGridPosition; //...using endDragGridPosition
-                gridView.DrawSelectionShadow(selectedArea);
+                gridView.DrawShadow(selectedArea);
             }
             else
             {
                 validSelectedArea = null;
-                gridView.DeleteSelectionShadow();
+                gridView.DeleteShadow();
             }
         }
         else if (beginDragGridPosition == currentDragGridPosition)
         {
             validSelectedArea = null;
-            gridView.DeleteSelectionShadow();
+            gridView.DeleteShadow();
         }
     }
 
@@ -109,7 +109,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     public void OnEndDrag(PointerEventData eventData)
     {
         selectionBox.gameObject.SetActive(false);
-        gridView.DeleteSelectionShadow();
+        gridView.DeleteShadow();
         if (validSelectedArea != null)
         {
             Merge(validSelectedArea, beginDragGridPosition, endDragGridPosition);

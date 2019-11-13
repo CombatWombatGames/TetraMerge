@@ -9,7 +9,8 @@ public class PiecesModel : MonoBehaviour
 {
     public event Action PiecesGenerated;
     public event Action<int> PieceRemoved;
-    public event Action PieceRotated;
+    public event Action<int> PieceRotated;
+    public event Action CollectionLevelUp;
     public Piece[] NextPieces { get; private set; }
 
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
@@ -101,7 +102,7 @@ public class PiecesModel : MonoBehaviour
         {
             NextPieces[index].Cells[i].GridCoordinate = rotationLookupTable[NextPieces[index].Cells[i].GridCoordinate.x + 1, NextPieces[index].Cells[i].GridCoordinate.y + 1];
         }
-        PieceRotated();
+        PieceRotated(index);
     }
 
     public void LevelUpCollection()
@@ -122,6 +123,7 @@ public class PiecesModel : MonoBehaviour
                 NextPieces[i].Cells[j].Level++;
             }
         }
+        CollectionLevelUp();
     }
 
     void RotateAllPiecesAtRandom()

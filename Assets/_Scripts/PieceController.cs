@@ -11,7 +11,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] int index = default;
 
-    Vector3 shift = Vector3.up * 4;
+    Vector3 shift = Vector3.up * 2;
 
     void Awake()
     {
@@ -36,11 +36,11 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
             Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + shift, piecesModel.NextPieces[index]);
             if (AreaIsAvailable(nearestArea))
             {
-                gridView.DrawPieceShadow(nearestArea);
+                gridView.DrawShadow(nearestArea);
             }
             else
             {
-                gridView.DeletePieceShadow();
+                gridView.DeleteShadow();
             }
         }
     }
@@ -64,7 +64,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         {
             piecesView.ReturnPiece(index);
         }
-        gridView.DeletePieceShadow();
+        gridView.DeleteShadow();
         piecesView.ScalePiece(index, 1.0f / gridView.Scale);
     }
 
