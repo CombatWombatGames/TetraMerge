@@ -23,18 +23,23 @@ public class Tester : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void FillGridWithOnes()
+    public void FillGrid(int level)
     {
         int x = FindObjectOfType<GridModel>().Width;
         int y = FindObjectOfType<GridModel>().Height;
-        Vector2Int[] ones = new Vector2Int[x * y];
+        Vector2Int[] area = new Vector2Int[x * y];
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
             {
-                ones[i + y * j] = new Vector2Int(i, j);
+                area[i + y * j] = new Vector2Int(i, j);
             }
         }
-        FindObjectOfType<GridModel>().ChangeGrid(ones, 1);
+        FindObjectOfType<GridModel>().ChangeGrid(area, level);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

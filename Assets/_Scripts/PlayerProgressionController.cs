@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 //Provides methods for progression-related buttons
 public class PlayerProgressionController : MonoBehaviour
@@ -14,7 +13,7 @@ public class PlayerProgressionController : MonoBehaviour
         if (currentScore > bestScore)
         {
             playerProgressionModel.BestScore = currentScore;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
