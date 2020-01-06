@@ -67,3 +67,6 @@ crashlytics-build.properties
 # Sprites
 [Aa]ssets/_Sprites
 
+# Links
+*.lnk
+

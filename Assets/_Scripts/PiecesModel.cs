@@ -16,8 +16,8 @@ public class PiecesModel : MonoBehaviour
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] Array2DBool[] piecesVariants = default;
 
-    Piece[] pieces = new Piece[6];
-    Piece emptyPiece = new Piece(new Cell[0]);
+    public Piece[] Pieces { get; private set; }
+    Piece emptyPiece = new Piece(new Cell[0], -1);
 
     void Awake()
     {
@@ -31,9 +31,10 @@ public class PiecesModel : MonoBehaviour
 
     void InitializeCollection()
     {
+        Pieces = new Piece[piecesVariants.Length];
         for (int i = 0; i < piecesVariants.Length; i++)
         {
-            pieces[i] = new Piece { Cells = ArrayToPiece(piecesVariants[i]) };
+            Pieces[i] = new Piece(ArrayToPiece(piecesVariants[i]), i);
         }
     }
 
@@ -65,12 +66,12 @@ public class PiecesModel : MonoBehaviour
     {
         if (playerProgressionModel.TurnNumber != 0)
         {
-            return new Piece[] { new Piece(pieces[Random.Range(0, pieces.Length)]), new Piece(pieces[Random.Range(0, pieces.Length)]), new Piece(pieces[Random.Range(0, pieces.Length)]) };
+            return new Piece[] { new Piece(Pieces[Random.Range(0, Pieces.Length)]), new Piece(Pieces[Random.Range(0, Pieces.Length)]), new Piece(Pieces[Random.Range(0, Pieces.Length)]) };
         }
         else
         {
             //Do not spawn "O"-figures at the first turn (mb also forbid 2J/2L?)
-            return new Piece[] { new Piece(pieces[Random.Range(1, pieces.Length)]), new Piece(pieces[Random.Range(1, pieces.Length)]), new Piece(pieces[Random.Range(1, pieces.Length)]) };
+            return new Piece[] { new Piece(Pieces[Random.Range(1, Pieces.Length)]), new Piece(Pieces[Random.Range(1, Pieces.Length)]), new Piece(Pieces[Random.Range(1, Pieces.Length)]) };
         }
     }
 
@@ -108,11 +109,11 @@ public class PiecesModel : MonoBehaviour
     public void LevelUpCollection()
     {
         //Update collection
-        for (int i = 0; i < pieces.Length; i++)
+        for (int i = 0; i < Pieces.Length; i++)
         {
-            for (int j = 0; j < pieces[i].Cells.Length; j++)
+            for (int j = 0; j < Pieces[i].Cells.Length; j++)
             {
-                pieces[i].Cells[j].Level++;
+                Pieces[i].Cells[j].Level++;
             }
         }
         //Update pieces already generated

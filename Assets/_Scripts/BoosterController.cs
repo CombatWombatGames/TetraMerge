@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 //Provides methods for booster buttons
-//TODO Rewrite
+//TODO LOW Rewrite
 public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] PiecesModel piecesModel = default;
@@ -11,24 +11,20 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     [SerializeField] GridView gridView = default;
     [SerializeField] BoostersModel boostersModel = default;
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
-    //TODO Use inheritance instead!
+    //TODO MED Use inheritance instead!
     [SerializeField] BoosterType boosterType = default;
     [SerializeField] Text raycastTarget = default;
 
-    int boostersGiven = 0;
-    int nextBoosterTurnNumber = 4;
     Vector3 shift = Vector3.up * 2;
 
     void Awake()
     {
-        playerProgressionModel.TurnChanged += OnTurnChanged;
         boostersModel.AddsCountChanged += OnAddsCountChanged;
         boostersModel.ClearsCountChanged += OnClearsCountChanged;
     }
 
     void OnDestroy()
     {
-        playerProgressionModel.TurnChanged -= OnTurnChanged;
         boostersModel.AddsCountChanged -= OnAddsCountChanged;
         boostersModel.ClearsCountChanged -= OnClearsCountChanged;
     }
@@ -52,8 +48,11 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //TODO Move to view
-        transform.localScale *= gridView.Scale;
+        //TODO LOW Move to view, make method with scale parameter
+        if (boosterType != BoosterType.Refresh)
+        {
+            transform.localScale *= gridView.Scale;
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -79,6 +78,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     }
 
     //UGUI
+    //TODO HIGH Update save
     public void GenerateNewPieces()
     {
         if (boostersModel.RefreshesCount > 0)
@@ -134,27 +134,6 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         }
     }
 
-    void OnTurnChanged(int turnNumber)
-    {
-        if (turnNumber == nextBoosterTurnNumber)
-        {
-            if (boosterType == BoosterType.Refresh)
-            {
-                boostersModel.RefreshesCount++;
-            }
-            else if (boosterType == BoosterType.Add)
-            {
-                boostersModel.AddsCount++;
-            }
-            else if (boosterType == BoosterType.Clear)
-            {
-                boostersModel.ClearsCount++;
-            }
-            boostersGiven++;
-            UpdateNextBoosterTurnNumber();
-        }
-    }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         if (boosterType != BoosterType.Refresh)
@@ -200,12 +179,6 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
                 raycastTarget.raycastTarget = false;
             }
         }
-    }
-
-    void UpdateNextBoosterTurnNumber()
-    {
-        //Gives boosters on turn 4, 9, 15, 22, 30... Gap increments every time
-        nextBoosterTurnNumber = (boostersGiven + 1) * (boostersGiven + 8) / 2;
     }
 
     enum BoosterType { Refresh, Add, Clear }

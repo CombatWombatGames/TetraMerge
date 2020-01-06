@@ -16,11 +16,18 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     Vector2Int endDragGridPosition;
     Vector2Int[] validSelectedArea;
 
+    float scale;
+
+    void Start()
+    {
+        scale = 1 / FindObjectOfType<Canvas>().transform.localScale.x;
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         beginDragWorldPosition = eventData.pointerCurrentRaycast.worldPosition;
         beginDragGridPosition = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
-        //TODO Move to view?
+        //TODO LOW Move to view?
         selectionBox.gameObject.SetActive(true);
     }
 
@@ -29,8 +36,9 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         //Draw selection box
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
-            selectionBox.rectTransform.position = new Vector3((eventData.pointerCurrentRaycast.worldPosition.x + beginDragWorldPosition.x) / 2, (eventData.pointerCurrentRaycast.worldPosition.y + beginDragWorldPosition.y) / 2);
-            selectionBox.rectTransform.sizeDelta = new Vector2(Mathf.Abs(eventData.pointerCurrentRaycast.worldPosition.x - beginDragWorldPosition.x) * 100, Mathf.Abs(eventData.pointerCurrentRaycast.worldPosition.y - beginDragWorldPosition.y) * 100);
+            Vector3 cursorPosition = eventData.pointerCurrentRaycast.worldPosition;
+            selectionBox.rectTransform.position = new Vector3((cursorPosition.x + beginDragWorldPosition.x) / 2, (cursorPosition.y + beginDragWorldPosition.y) / 2);
+            selectionBox.rectTransform.sizeDelta = new Vector2(Mathf.Abs(cursorPosition.x - beginDragWorldPosition.x) * scale, Mathf.Abs(cursorPosition.y - beginDragWorldPosition.y) * scale);
         }
         //Draw selection shadow
         Vector2Int currentDragGridPosition = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
@@ -77,7 +85,6 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
                 index++;
             }
         }
-        index = 0;
         return area;
     }
 
@@ -101,6 +108,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
     {
+        //TODO HIGH Remove duplicating code
         float XGrid = worldCoordinate.x / gridView.Scale + (float)(gridModel.Width - 1) / 2;
         float YGrid = worldCoordinate.y / gridView.Scale + (float)(gridModel.Height - 1) / 2;
         return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
@@ -120,7 +128,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     void Merge(Vector2Int[] area, Vector2Int beginPosition, Vector2Int endPosition)
     {
         List<Vector2Int> upgradedArea = new List<Vector2Int>();
-        //TODO Find better solution
+        //TODO LOW Find better solution
         if (endPosition.x - beginPosition.x > 0)
         {
             if (endPosition.y - beginPosition.y > 0)

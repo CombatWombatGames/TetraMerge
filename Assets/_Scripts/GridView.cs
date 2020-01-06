@@ -13,6 +13,8 @@ public class GridView : MonoBehaviour
     [SerializeField] Colors colors = default;
 
     GameObject[,] cells;
+    int cellTileImageIndex = 1;
+    int cellShadowImageIndex = 2;
 
     void Awake()
     {
@@ -29,9 +31,10 @@ public class GridView : MonoBehaviour
     void OnGridCreated(Cell[,] grid)
     {
         float maximumDimension = Mathf.Max(grid.GetLength(0), grid.GetLength(1));
-        float screenWidth = 1080;
-        float reductionPercentage = 110;
-        Scale = screenWidth / maximumDimension / reductionPercentage;
+        float playFieldWidth = 1080f;
+        float reductionPercentage = 110f;
+        //TODO HIGH Scale
+        Scale = playFieldWidth / maximumDimension / reductionPercentage; // * FindObjectOfType<Canvas>().transform.localScale.x * 100f;
         cells = new GameObject[grid.GetLength(0), grid.GetLength(1)];
         float offsetX = (float)(grid.GetLength(0) - 1) / 2;
         float offsetY = (float)(grid.GetLength(1) - 1) / 2;
@@ -53,12 +56,12 @@ public class GridView : MonoBehaviour
             if (level != 0)
             {
                 cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = level.ToString();
-                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[0].color = colors.Palete[(level - 1) % colors.Palete.Length];
-                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[0].enabled = true;
+                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[cellTileImageIndex].color = colors.Palete[(level - 1) % colors.Palete.Length];
+                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[cellTileImageIndex].enabled = true;
             }
             else
             {
-                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[0].enabled = false;
+                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[cellTileImageIndex].enabled = false;
                 cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = "";
             }
         }
@@ -72,7 +75,7 @@ public class GridView : MonoBehaviour
         {
             for (int i = 0; i < oldShadowArea.Length; i++)
             {
-                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[1].enabled = false;
+                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].enabled = false;
             }
         }
         //Store shadowless state
@@ -80,7 +83,7 @@ public class GridView : MonoBehaviour
         //Drop shadow
         for (int i = 0; i < area.Length; i++)
         {
-            cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[1].enabled = true;
+            cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].enabled = true;
         }
     }
 
@@ -90,7 +93,7 @@ public class GridView : MonoBehaviour
         {
             for (int i = 0; i < oldShadowArea.Length; i++)
             {
-                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[1].enabled = false;
+                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].enabled = false;
             }
         }
     }

@@ -3,10 +3,31 @@ using UnityEngine.UI;
 
 public class ResolutionHandler : MonoBehaviour
 {
+    float nineBySixteen = 0.5625f;
+
+    void Awake()
+    {
+        ChangeScaling();
+    }
+
+    void ChangeScaling()
+    {
+        CanvasScaler canvasScaler = GetComponent<CanvasScaler>();
+        float aspectRatio = (float)Screen.width / Screen.height;
+        if (aspectRatio >= nineBySixteen)
+        {
+            canvasScaler.matchWidthOrHeight = 1;
+        }
+        else
+        {
+            canvasScaler.matchWidthOrHeight = 0;
+        }
+    }
+
 #if UNITY_EDITOR
     Vector2 resolution;
 
-    void Awake()
+    void Start()
     {
         resolution = new Vector2(Screen.width, Screen.height);
     }
@@ -21,23 +42,4 @@ public class ResolutionHandler : MonoBehaviour
         }
     }
 #endif
-
-    void Start()
-    {
-        ChangeScaling();
-    }
-
-    void ChangeScaling()
-    {
-        CanvasScaler canvasScaler = GetComponent<CanvasScaler>();
-        float aspectRatio = (float)Screen.width / Screen.height;
-        if (aspectRatio >= 0.5625)
-        {
-            canvasScaler.matchWidthOrHeight = 1;
-        }
-        else
-        {
-            canvasScaler.matchWidthOrHeight = 0;
-        }
-    }
 }

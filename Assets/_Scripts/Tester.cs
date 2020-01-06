@@ -40,6 +40,9 @@ public class Tester : MonoBehaviour
 
     public void Quit()
     {
+#if UNITY_EDITOR
+        Debug.Log("Quit!");
+#endif
         Application.Quit();
     }
 }
