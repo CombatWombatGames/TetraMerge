@@ -77,8 +77,6 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         }
     }
 
-    //UGUI
-    //TODO HIGH Update save
     public void GenerateNewPieces()
     {
         if (boostersModel.RefreshesCount > 0)

@@ -11,12 +11,12 @@ public class PiecesModel : MonoBehaviour
     public event Action<int> PieceRemoved;
     public event Action<int> PieceRotated;
     public event Action CollectionLevelUp;
+    public Piece[] Pieces { get; private set; }
     public Piece[] NextPieces { get; private set; }
 
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] Array2DBool[] piecesVariants = default;
 
-    public Piece[] Pieces { get; private set; }
     Piece emptyPiece = new Piece(new Cell[0], -1);
 
     void Awake()
@@ -36,6 +36,30 @@ public class PiecesModel : MonoBehaviour
         {
             Pieces[i] = new Piece(ArrayToPiece(piecesVariants[i]), i);
         }
+    }
+
+    Piece[] IntegersToPieces(int[] integers)
+    {
+        Piece[] pieces = new Piece[integers.Length];
+        for (int i = 0; i < pieces.Length; i++)
+        {
+            if (integers[i] != -1)
+            {
+                pieces[i] = Pieces[integers[i]];
+                ////Set levels
+                //for (int j = 0; j < pieces[i].Cells.Length; j++)
+                //{
+                //    pieces[i].Cells[j].Level = saveSystem.StateData.LevelNumber;
+                //}
+            }
+            else
+            {
+                pieces[i] = emptyPiece;
+                //Remove?
+                PieceRemoved(i);
+            }
+        }
+        return pieces;
     }
 
     Cell[] ArrayToPiece(Array2DBool array2DBool)
@@ -58,7 +82,6 @@ public class PiecesModel : MonoBehaviour
     public void GenerateNextPieces()
     {
         NextPieces = GenerateRandomPieces();
-        //RotateAllPiecesAtRandom();
         PiecesGenerated();
     }
 
@@ -106,6 +129,7 @@ public class PiecesModel : MonoBehaviour
         PieceRotated(index);
     }
 
+    //TODO HIGH Make set level function and call from here and from init
     public void LevelUpCollection()
     {
         //Update collection
@@ -125,17 +149,5 @@ public class PiecesModel : MonoBehaviour
             }
         }
         CollectionLevelUp();
-    }
-
-    void RotateAllPiecesAtRandom()
-    {
-        for (int i = 0; i < NextPieces.Length; i++)
-        {
-            int rotations = Random.Range(0, 4);
-            for (int j = 1; j <= rotations; j++)
-            {
-                RotatePiece(i);
-            }
-        }
     }
 }

@@ -25,7 +25,14 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     void ActivatePiece()
     {
-        gameObject.SetActive(true);
+        if (piecesModel.NextPieces[index].Identifier != -1)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -55,6 +62,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + shift, piecesModel.NextPieces[index]);
         if (AreaIsAvailable(nearestArea) && eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
+            //TODO LOW Ask for level another way. MB make entire piece level?
             gridModel.ChangeGrid(nearestArea, piecesModel.NextPieces[index].Cells[0].Level);
             gameObject.SetActive(false);
             piecesModel.RemovePiece(index);

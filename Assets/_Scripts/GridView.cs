@@ -30,6 +30,7 @@ public class GridView : MonoBehaviour
 
     void OnGridCreated(Cell[,] grid)
     {
+        //Create empty grid
         float maximumDimension = Mathf.Max(grid.GetLength(0), grid.GetLength(1));
         float playFieldWidth = 1080f;
         float reductionPercentage = 110f;
@@ -44,8 +45,24 @@ public class GridView : MonoBehaviour
             {
                 GameObject cell = Instantiate(cellPrefab, new Vector3((i - offsetX) * Scale, (j - offsetY) * Scale), Quaternion.identity, cellsParent);
                 cell.transform.localScale = new Vector3(Scale, Scale);
+                AssembleCellView(cell, grid[i, j].Level);
                 cells[i, j] = cell;
             }
+        }
+    }
+
+    void AssembleCellView(GameObject cell, int level)
+    {
+        if (level != 0)
+        {
+            cell.GetComponentInChildren<Text>().text = level.ToString();
+            cell.GetComponentsInChildren<Image>()[cellTileImageIndex].color = colors.Palete[(level - 1) % colors.Palete.Length];
+            cell.GetComponentsInChildren<Image>()[cellTileImageIndex].enabled = true;
+        }
+        else
+        {
+            cell.GetComponentsInChildren<Image>()[cellTileImageIndex].enabled = false;
+            cell.GetComponentInChildren<Text>().text = "";
         }
     }
 
@@ -53,17 +70,7 @@ public class GridView : MonoBehaviour
     {
         for (int i = 0; i < coordinates.Length; i++)
         {
-            if (level != 0)
-            {
-                cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = level.ToString();
-                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[cellTileImageIndex].color = colors.Palete[(level - 1) % colors.Palete.Length];
-                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[cellTileImageIndex].enabled = true;
-            }
-            else
-            {
-                cells[coordinates[i].x, coordinates[i].y].GetComponentsInChildren<Image>()[cellTileImageIndex].enabled = false;
-                cells[coordinates[i].x, coordinates[i].y].GetComponentInChildren<Text>().text = "";
-            }
+            AssembleCellView(cells[coordinates[i].x, coordinates[i].y], level);
         }
     }
 

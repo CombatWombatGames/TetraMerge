@@ -2,6 +2,7 @@
 using UnityEngine;
 
 //Holds state of the field and provides ways to change it
+[DefaultExecutionOrder(-1)]
 public class GridModel : MonoBehaviour
 {
     public event Action<Cell[,]> GridCreated;
@@ -18,10 +19,30 @@ public class GridModel : MonoBehaviour
 
     void Start()
     {
-        CreateGrid();
+        //CreateEmptyGrid();
     }
 
-    void CreateGrid()
+    public void Initialize(int[] grid)
+    {
+        Grid = IntegersToCells(grid);
+        GridCreated(Grid);
+    }
+
+    Cell[,] IntegersToCells(int[] integers)
+    {
+        Cell[,] grid = new Cell[width, height];
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                grid[i, j].GridCoordinate = new Vector2Int(i, j);
+                grid[i, grid.GetLength(1) - j - 1].Level = integers[i + j * grid.GetLength(0)];
+            }
+        }
+        return grid;
+    }
+
+    void CreateEmptyGrid()
     {
         Grid = new Cell[width, height];
         for (int i = 0; i < Grid.GetLength(0); i++)
@@ -32,6 +53,9 @@ public class GridModel : MonoBehaviour
                 Grid[i, j].Level = 0;
             }
         }
+        //TODO LOADING
+        //Load saved state; if absent, will load new game
+        //Grid = IntegersToCells(saveSystem.StateData.Grid);
         GridCreated(Grid);
     }
 

@@ -4,36 +4,57 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 //TODO HIGH Loading (auto from start)
+[DefaultExecutionOrder(-1000)]
 public class SaveSystem : MonoBehaviour
 {
-    public StateData stateData { get; private set; }
+    StateData stateData;
 
     [SerializeField] protected GridModel gridModel = default;
     [SerializeField] protected PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] protected BoostersModel boostersModel = default;
     [SerializeField] protected PiecesModel piecesModel = default;
-    protected string fileName = "data.cs";
+    protected string fileName = "data.txt";
     string filePath;
+    bool initialized;
 
     void Awake()
     {
-        playerProgressionModel.CurrentScoreChanged += Save;
+        playerProgressionModel.TurnChanged += OnTurnChanged;
+        PrepareStateData();
     }
 
     void OnDestroy()
     {
-        playerProgressionModel.CurrentScoreChanged -= Save;
+        playerProgressionModel.TurnChanged -= OnTurnChanged;
     }
 
     void Start()
+    {
+        Load();
+    }
+
+    void OnApplicationQuit()
+    {
+        Save();
+    }
+
+    void PrepareStateData()
     {
         filePath = Path.Combine(Application.persistentDataPath, fileName);
         if (!File.Exists(filePath)) { CreateInitialSave(filePath); }
         stateData = ReadSaveFile(filePath);
     }
 
-    void CreateInitialSave(string path)
+    void Load()
     {
+        gridModel.Initialize(stateData.Grid);
+        //piecesModel.Initialize(stateData.NextPieces);
+        //playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber);
+        //boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.NextBoosterTurnNumber);
+    }                            
+                                 
+    void CreateInitialSave(string path)
+    {                            
         stateData = new StateData()
         {
             Grid = CreateEmptyLinearGrid(gridModel.Width, gridModel.Height),
@@ -79,12 +100,27 @@ public class SaveSystem : MonoBehaviour
         return new int[] { Random.Range(1, piecesCount), Random.Range(1, piecesCount), Random.Range(1, piecesCount) };
     }
 
-    void Save(int score)
+    //Saving on turn changed only, so actions like merging or using boosters wouldn't be saved now, only on quit
+    void OnTurnChanged(int turn)
     {
+        //Do not save if turn sets up during loading
+        if (initialized)
+        {
+            Save();
+        }
+        else
+        {
+            initialized = true;
+        }
+    }
+
+    void Save()
+    {
+        Debug.Log($"<color=green><b>Saving!</b></color>");
         stateData = new StateData()
         {
             Grid = CellsToIntegers(gridModel.Grid),
-            NextPieces = CreateNextPieces(),
+            NextPieces = PiecesToIntegers(piecesModel.NextPieces),
             CurrentScore = playerProgressionModel.CurrentScore,
             TurnNumber = playerProgressionModel.TurnNumber,
             LevelNumber = playerProgressionModel.LevelNumber,
@@ -111,7 +147,7 @@ public class SaveSystem : MonoBehaviour
         return integers;
     }
 
-    int[] CellsToIntegers(Piece[] pieces)
+    int[] PiecesToIntegers(Piece[] pieces)
     {
         int[] integers = new int[pieces.Length];
         for (int i = 0; i < integers.Length; i++)

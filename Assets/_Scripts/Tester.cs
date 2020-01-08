@@ -20,6 +20,8 @@ public class Tester : MonoBehaviour
     //UGUI
     public void RestartScene()
     {
+        FillGrid(0);
+        FindObjectOfType<PlayerProgressionModel>().TurnNumber = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

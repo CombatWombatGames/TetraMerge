@@ -1,25 +1,31 @@
 ﻿using UnityEngine;
+using System.Reflection;
+using System;
+using UnityEditor;
 
-public class GameViewScale : MonoBehaviour
+namespace WombatScaling
 {
+    public class GameViewScale : MonoBehaviour
+    {
 #if UNITY_EDITOR
-    void Awake()
-    {
-        SetGameViewScale();
-    }
+        float desiredGameViewScale = 0.33f;
 
-    void SetGameViewScale()
-    {
-        System.Reflection.Assembly assembly = typeof(UnityEditor.EditorWindow).Assembly;
-        System.Type type = assembly.GetType("UnityEditor.GameView");
-        UnityEditor.EditorWindow v = UnityEditor.EditorWindow.GetWindow(type);
-        var defScaleField = type.GetField("m_defaultScale", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-        //Scale on click Play
-        float defaultScale = 0.33f;
-        var areaField = type.GetField("m_ZoomArea", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-        var areaObject = areaField.GetValue(v);
-        var scaleField = areaObject.GetType().GetField("m_Scale", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-        scaleField.SetValue(areaObject, new Vector2(defaultScale, defaultScale));
-    }
+        void Awake()
+        {
+            SetGameViewScale();
+        }
+
+        void SetGameViewScale()
+        {
+            Assembly assembly = typeof(EditorWindow).Assembly;
+            Type type = assembly.GetType("UnityEditor.GameView");
+            EditorWindow window = EditorWindow.GetWindow(type);
+            var defScaleField = type.GetField("m_defaultScale", BindingFlags.Instance | BindingFlags.NonPublic);
+            var areaField = type.GetField("m_ZoomArea", BindingFlags.Instance | BindingFlags.NonPublic);
+            var areaObject = areaField.GetValue(window);
+            var scaleField = areaObject.GetType().GetField("m_Scale", BindingFlags.Instance | BindingFlags.NonPublic);
+            scaleField.SetValue(areaObject, new Vector2(desiredGameViewScale, desiredGameViewScale));
+        }
 #endif
+    }
 }
