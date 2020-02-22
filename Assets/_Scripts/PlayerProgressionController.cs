@@ -13,7 +13,6 @@ public class PlayerProgressionController : MonoBehaviour
         if (currentScore > bestScore)
         {
             playerProgressionModel.BestScore = currentScore;
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

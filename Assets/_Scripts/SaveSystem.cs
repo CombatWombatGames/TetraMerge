@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 //TODO HIGH Loading (auto from start)
@@ -9,11 +10,12 @@ public class SaveSystem : MonoBehaviour
 {
     StateData stateData;
 
-    [SerializeField] protected GridModel gridModel = default;
-    [SerializeField] protected PlayerProgressionModel playerProgressionModel = default;
-    [SerializeField] protected BoostersModel boostersModel = default;
-    [SerializeField] protected PiecesModel piecesModel = default;
-    protected string fileName = "data.txt";
+    [SerializeField] GridModel gridModel = default;
+    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
+    [SerializeField] BoostersModel boostersModel = default;
+    [SerializeField] PiecesModel piecesModel = default;
+
+    string fileName = "data.json";
     string filePath;
     bool initialized;
 
@@ -116,7 +118,6 @@ public class SaveSystem : MonoBehaviour
 
     void Save()
     {
-        Debug.Log($"<color=green><b>Saving!</b></color>");
         stateData = new StateData()
         {
             Grid = CellsToIntegers(gridModel.Grid),
@@ -131,6 +132,12 @@ public class SaveSystem : MonoBehaviour
             NextBoosterTurnNumber = boostersModel.NextBoosterTurnNumber
         };
         WriteSaveFile(stateData, filePath);
+    }
+
+    public void StartFromScratch()
+    {
+        CreateInitialSave(filePath);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     //Produces array from field left to right top to bottom

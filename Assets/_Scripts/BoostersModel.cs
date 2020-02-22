@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-//Handles amount of boosters
+//Handles amount of boosters, gives boosters at appointed turns
 public class BoostersModel : MonoBehaviour
 {
     public event Action<int> RefreshesCountChanged;
@@ -44,7 +44,7 @@ public class BoostersModel : MonoBehaviour
             UpdateNextBoosterTurnNumber();
         }
     }
-    public int NextBoosterTurnNumber { get; set; } = 4;
+    public int NextBoosterTurnNumber { get; set; }
 
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
 
@@ -65,7 +65,7 @@ public class BoostersModel : MonoBehaviour
 
     void UpdateNextBoosterTurnNumber()
     {
-        //Gives boosters on turn 4, 9, 15, 22, 30... Gap increments every time
+        //Gives boosters on turn 4, 9, 15, 22, 30... Gap increases every time
         NextBoosterTurnNumber = (BoostersGiven + 1) * (BoostersGiven + 8) / 2;
     }
 

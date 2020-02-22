@@ -1,6 +1,6 @@
 ﻿using System.Collections;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 //For dirty shortcuts during development
 public class Tester : MonoBehaviour
@@ -20,15 +20,15 @@ public class Tester : MonoBehaviour
     //UGUI
     public void RestartScene()
     {
-        FillGrid(0);
-        FindObjectOfType<PlayerProgressionModel>().TurnNumber = 0;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        FindObjectOfType<SaveSystem>().StartFromScratch();
     }
 
+    //UGUI
     public void FillGrid(int level)
     {
-        int x = FindObjectOfType<GridModel>().Width;
-        int y = FindObjectOfType<GridModel>().Height;
+        GridModel grid = FindObjectOfType<GridModel>();
+        int x = grid.Width;
+        int y = grid.Height;
         Vector2Int[] area = new Vector2Int[x * y];
         for (int i = 0; i < x; i++)
         {
@@ -37,14 +37,16 @@ public class Tester : MonoBehaviour
                 area[i + y * j] = new Vector2Int(i, j);
             }
         }
-        FindObjectOfType<GridModel>().ChangeGrid(area, level);
+        grid.ChangeGrid(area, level);
     }
 
+    //UGUI
     public void Quit()
     {
 #if UNITY_EDITOR
-        Debug.Log("Quit!");
-#endif
+        EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 }

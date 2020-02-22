@@ -17,11 +17,6 @@ public class GridModel : MonoBehaviour
     [SerializeField] PiecesModel piecesModel = default;
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
 
-    void Start()
-    {
-        //CreateEmptyGrid();
-    }
-
     public void Initialize(int[] grid)
     {
         Grid = IntegersToCells(grid);
@@ -53,9 +48,6 @@ public class GridModel : MonoBehaviour
                 Grid[i, j].Level = 0;
             }
         }
-        //TODO LOADING
-        //Load saved state; if absent, will load new game
-        //Grid = IntegersToCells(saveSystem.StateData.Grid);
         GridCreated(Grid);
     }
 
@@ -69,7 +61,7 @@ public class GridModel : MonoBehaviour
         //Happens after merge or clear booster only
         if (level == 0)
         {
-            if (MinimumLevelPiecesRemoved())
+            while (MinimumLevelPiecesRemoved())
             {
                 playerProgressionModel.LevelNumber++;
                 piecesModel.LevelUpCollection();

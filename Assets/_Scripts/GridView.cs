@@ -35,7 +35,7 @@ public class GridView : MonoBehaviour
         float playFieldWidth = 1080f;
         float reductionPercentage = 110f;
         //TODO HIGH Scale
-        Scale = playFieldWidth / maximumDimension / reductionPercentage; // * FindObjectOfType<Canvas>().transform.localScale.x * 100f;
+        Scale = playFieldWidth / maximumDimension / reductionPercentage;
         cells = new GameObject[grid.GetLength(0), grid.GetLength(1)];
         float offsetX = (float)(grid.GetLength(0) - 1) / 2;
         float offsetY = (float)(grid.GetLength(1) - 1) / 2;
