@@ -50,7 +50,7 @@ public class SaveSystem : MonoBehaviour
     void Load()
     {
         gridModel.Initialize(stateData.Grid);
-        //piecesModel.Initialize(stateData.NextPieces);
+        piecesModel.Initialize(stateData.NextPieces, stateData.LevelNumber);
         //playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber);
         //boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.NextBoosterTurnNumber);
     }                            

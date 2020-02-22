@@ -61,7 +61,8 @@ public class GridModel : MonoBehaviour
         //Happens after merge or clear booster only
         if (level == 0)
         {
-            while (MinimumLevelPiecesRemoved())
+            //TODO Increase level repeatedly if needed
+            if (MinimumLevelPiecesRemoved())
             {
                 playerProgressionModel.LevelNumber++;
                 piecesModel.LevelUpCollection();

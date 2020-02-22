@@ -19,22 +19,23 @@ public class PiecesModel : MonoBehaviour
 
     Piece emptyPiece = new Piece(new Cell[0], -1);
 
-    void Awake()
+    public void Initialize(int[] nextPieces, int levelNumber)
     {
-        InitializeCollection();
+        InitializeCollection(levelNumber);
+        NextPieces = IntegersToPieces(nextPieces);
+        PiecesGenerated();
     }
 
-    void Start()
-    {
-        GenerateNextPieces();
-    }
-
-    void InitializeCollection()
+    void InitializeCollection(int levelNumber)
     {
         Pieces = new Piece[piecesVariants.Length];
         for (int i = 0; i < piecesVariants.Length; i++)
         {
             Pieces[i] = new Piece(ArrayToPiece(piecesVariants[i]), i);
+            for (int j = 0; j < Pieces[i].Cells.Length; j++)
+            {
+                Pieces[i].Cells[j].Level = levelNumber;
+            }
         }
     }
 
@@ -45,18 +46,11 @@ public class PiecesModel : MonoBehaviour
         {
             if (integers[i] != -1)
             {
-                pieces[i] = Pieces[integers[i]];
-                ////Set levels
-                //for (int j = 0; j < pieces[i].Cells.Length; j++)
-                //{
-                //    pieces[i].Cells[j].Level = saveSystem.StateData.LevelNumber;
-                //}
+                pieces[i] = new Piece(Pieces[integers[i]]);
             }
             else
             {
-                pieces[i] = emptyPiece;
-                //Remove?
-                PieceRemoved(i);
+                pieces[i] = new Piece(emptyPiece);
             }
         }
         return pieces;
@@ -82,6 +76,7 @@ public class PiecesModel : MonoBehaviour
     public void GenerateNextPieces()
     {
         NextPieces = GenerateRandomPieces();
+        //TODO LOW Put in setter?
         PiecesGenerated();
     }
 
@@ -135,19 +130,21 @@ public class PiecesModel : MonoBehaviour
         //Update collection
         for (int i = 0; i < Pieces.Length; i++)
         {
-            for (int j = 0; j < Pieces[i].Cells.Length; j++)
-            {
-                Pieces[i].Cells[j].Level++;
-            }
+            LevelUpPiece(Pieces[i]);
         }
         //Update pieces already generated
         for (int i = 0; i < NextPieces.Length; i++)
         {
-            for (int j = 0; j < NextPieces[i].Cells.Length; j++)
-            {
-                NextPieces[i].Cells[j].Level++;
-            }
+            LevelUpPiece(NextPieces[i]);
         }
         CollectionLevelUp();
+    }
+
+    void LevelUpPiece(Piece piece)
+    {
+        for (int i = 0; i < piece.Cells.Length; i++)
+        {
+            piece.Cells[i].Level++;
+        }
     }
 }

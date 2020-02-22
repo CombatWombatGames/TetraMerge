@@ -1,6 +1,7 @@
 ﻿//Piece inside 3x3 grid
 public struct Piece
 {
+    //TODO LOW Piece level, which changes cells levels
     public int Identifier;
     public Cell[] Cells;
     public Piece(Piece piece)
