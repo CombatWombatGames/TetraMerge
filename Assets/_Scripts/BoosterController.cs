@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -13,21 +14,8 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     //TODO MED Use inheritance instead!
     [SerializeField] BoosterType boosterType = default;
-    [SerializeField] Text raycastTarget = default;
 
     Vector3 shift = Vector3.up * 2;
-
-    void Awake()
-    {
-        boostersModel.AddsCountChanged += OnAddsCountChanged;
-        boostersModel.ClearsCountChanged += OnClearsCountChanged;
-    }
-
-    void OnDestroy()
-    {
-        boostersModel.AddsCountChanged -= OnAddsCountChanged;
-        boostersModel.ClearsCountChanged -= OnClearsCountChanged;
-    }
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -149,36 +137,4 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
             gridView.DeleteShadow();
         }
     }
-
-    void OnClearsCountChanged(int count)
-    {
-        if (boosterType == BoosterType.Clear)
-        {
-            if (count != 0)
-            {
-                raycastTarget.raycastTarget = true;
-            }
-            else
-            {
-                raycastTarget.raycastTarget = false;
-            }
-        }
-    }
-
-    void OnAddsCountChanged(int count)
-    {
-        if (boosterType == BoosterType.Add)
-        {
-            if (count != 0)
-            {
-                raycastTarget.raycastTarget = true;
-            }
-            else
-            {
-                raycastTarget.raycastTarget = false;
-            }
-        }
-    }
-
-    enum BoosterType { Refresh, Add, Clear }
 }

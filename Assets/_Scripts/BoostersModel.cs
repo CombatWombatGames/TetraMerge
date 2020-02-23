@@ -4,9 +4,7 @@ using UnityEngine;
 //Handles amount of boosters, gives boosters at appointed turns
 public class BoostersModel : MonoBehaviour
 {
-    public event Action<int> RefreshesCountChanged;
-    public event Action<int> AddsCountChanged;
-    public event Action<int> ClearsCountChanged;
+    public event Action<int, BoosterType> BoosterCountChanged;
 
     public int RefreshesCount
     {
@@ -14,7 +12,7 @@ public class BoostersModel : MonoBehaviour
         set
         {
             refreshesCount = value;
-            RefreshesCountChanged(value);
+            BoosterCountChanged(value, BoosterType.Refresh);
         }
     }
     public int AddsCount
@@ -23,7 +21,7 @@ public class BoostersModel : MonoBehaviour
         set
         {
             addsCount = value;
-            AddsCountChanged(value);
+            BoosterCountChanged(value, BoosterType.Add);
         }
     }
     public int ClearsCount
@@ -32,7 +30,7 @@ public class BoostersModel : MonoBehaviour
         set
         {
             clearsCount = value;
-            ClearsCountChanged(value);
+            BoosterCountChanged(value, BoosterType.Clear);
         }
     }
     public int BoostersGiven
@@ -89,3 +87,5 @@ public class BoostersModel : MonoBehaviour
         }
     }
 }
+
+public enum BoosterType { Refresh, Add, Clear }

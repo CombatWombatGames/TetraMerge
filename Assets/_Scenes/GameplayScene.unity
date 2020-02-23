@@ -2495,7 +2495,6 @@ MonoBehaviour:
   boostersModel: {fileID: 1380896183}
   playerProgressionModel: {fileID: 1380896181}
   boosterType: 2
-  raycastTarget: {fileID: 188894161}
 --- !u!222 &769592884
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4428,6 +4427,8 @@ MonoBehaviour:
   refreshesCount: {fileID: 1947048181}
   addsCount: {fileID: 447064174}
   clearsCount: {fileID: 1181265416}
+  addsRaycastTarget: {fileID: 1298991744}
+  clearsRaycastTarget: {fileID: 188894161}
 --- !u!114 &1380896186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5325,7 +5326,6 @@ MonoBehaviour:
   boostersModel: {fileID: 1380896183}
   playerProgressionModel: {fileID: 1380896181}
   boosterType: 1
-  raycastTarget: {fileID: 1298991744}
 --- !u!222 &1706262655
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6441,7 +6441,6 @@ MonoBehaviour:
   boostersModel: {fileID: 1380896183}
   playerProgressionModel: {fileID: 1380896181}
   boosterType: 0
-  raycastTarget: {fileID: 0}
 --- !u!1 &2145589969
 GameObject:
   m_ObjectHideFlags: 0
