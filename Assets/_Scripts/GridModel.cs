@@ -2,7 +2,6 @@
 using UnityEngine;
 
 //Holds state of the field and provides ways to change it
-[DefaultExecutionOrder(-1)]
 public class GridModel : MonoBehaviour
 {
     public event Action<Cell[,]> GridCreated;

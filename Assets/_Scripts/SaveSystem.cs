@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-//TODO HIGH Loading (auto from start)
 [DefaultExecutionOrder(-1000)]
 public class SaveSystem : MonoBehaviour
 {
@@ -52,7 +51,7 @@ public class SaveSystem : MonoBehaviour
         gridModel.Initialize(stateData.Grid);
         piecesModel.Initialize(stateData.NextPieces, stateData.LevelNumber);
         playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber);
-        //boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.NextBoosterTurnNumber);
+        boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.NextBoosterTurnNumber);
     }                            
                                  
     void CreateInitialSave(string path)
@@ -98,7 +97,7 @@ public class SaveSystem : MonoBehaviour
 
     int[] CreateNextPieces()
     {
-        int piecesCount = piecesModel.Pieces.Length;
+        int piecesCount = piecesModel.CountPiecesVariants();
         return new int[] { Random.Range(1, piecesCount), Random.Range(1, piecesCount), Random.Range(1, piecesCount) };
     }
 

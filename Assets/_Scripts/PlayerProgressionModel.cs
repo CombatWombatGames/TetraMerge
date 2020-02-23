@@ -41,6 +41,7 @@ public class PlayerProgressionModel : MonoBehaviour
 
     public int BestScore
     {
+        //TODO LOW Move from Prefs to JSON
         get { return PlayerPrefs.GetInt("BestScore", 0); }
         set
         {
@@ -65,7 +66,7 @@ public class PlayerProgressionModel : MonoBehaviour
         gridModel.GridChanged -= OnGridChanged;
     }
 
-    internal void Initialize(int currentScore, int levelNumber, int turnNumber)
+    public void Initialize(int currentScore, int levelNumber, int turnNumber)
     {
         CurrentScore = currentScore;
         LevelNumber = levelNumber;

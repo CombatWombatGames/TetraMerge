@@ -147,4 +147,9 @@ public class PiecesModel : MonoBehaviour
             piece.Cells[i].Level++;
         }
     }
+
+    public int CountPiecesVariants()
+    {
+        return piecesVariants.Length;
+    }
 }

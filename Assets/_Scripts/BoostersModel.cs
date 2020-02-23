@@ -63,6 +63,15 @@ public class BoostersModel : MonoBehaviour
         playerProgressionModel.TurnChanged -= OnTurnChanged;
     }
 
+    public void Initialize(int refreshesCount, int addsCount, int clearsCount, int boostersGiven, int nextBoosterTurnNumber)
+    {
+        RefreshesCount = refreshesCount;
+        AddsCount = addsCount;
+        ClearsCount = clearsCount;
+        BoostersGiven = boostersGiven;
+        NextBoosterTurnNumber = nextBoosterTurnNumber;
+    }
+
     void UpdateNextBoosterTurnNumber()
     {
         //Gives boosters on turn 4, 9, 15, 22, 30... Gap increases every time
