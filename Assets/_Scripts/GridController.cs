@@ -27,7 +27,6 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     {
         beginDragWorldPosition = eventData.pointerCurrentRaycast.worldPosition;
         beginDragGridPosition = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
-        //TODO LOW Move to view?
         selectionBox.gameObject.SetActive(true);
     }
 

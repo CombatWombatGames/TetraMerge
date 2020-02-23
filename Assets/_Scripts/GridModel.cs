@@ -36,20 +36,6 @@ public class GridModel : MonoBehaviour
         return grid;
     }
 
-    void CreateEmptyGrid()
-    {
-        Grid = new Cell[width, height];
-        for (int i = 0; i < Grid.GetLength(0); i++)
-        {
-            for (int j = 0; j < Grid.GetLength(1); j++)
-            {
-                Grid[i, j].GridCoordinate = new Vector2Int(i, j);
-                Grid[i, j].Level = 0;
-            }
-        }
-        GridCreated(Grid);
-    }
-
     public void ChangeGrid(Vector2Int[] coordinates, int level)
     {
         for (int i = 0; i < coordinates.Length; i++)

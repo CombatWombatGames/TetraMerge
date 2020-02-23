@@ -95,6 +95,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
     Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
     {
+        //TODO HIGH Remove duplicating code
         float XGrid = worldCoordinate.x / gridView.Scale + (float)(gridModel.Width - 1) / 2;
         float YGrid = worldCoordinate.y / gridView.Scale + (float)(gridModel.Height - 1) / 2;
         return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
