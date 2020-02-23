@@ -72,6 +72,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         {
             piecesModel.GenerateNextPieces();
             boostersModel.RefreshesCount--;
+            playerProgressionModel.TurnNumber++;
         }
     }
 
@@ -81,6 +82,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         {
             gridModel.ChangeGrid(new Vector2Int[] { position }, 0);
             boostersModel.ClearsCount--;
+            playerProgressionModel.TurnNumber++;
         }
     }
 
@@ -90,6 +92,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         {
             gridModel.ChangeGrid(new Vector2Int[] { position }, playerProgressionModel.LevelNumber);
             boostersModel.AddsCount--;
+            playerProgressionModel.TurnNumber++;
         }
     }
 

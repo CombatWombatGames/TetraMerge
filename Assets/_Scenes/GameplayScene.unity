@@ -5006,6 +5006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridModel: {fileID: 1380896180}
   gridView: {fileID: 1380896179}
+  playerProgressionModel: {fileID: 1380896181}
   selectionBox: {fileID: 437021568}
 --- !u!1 &1627713221
 GameObject:

@@ -8,6 +8,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 {
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GridView gridView = default;
+    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] Image selectionBox = default;
 
     //Shared variables for communication of methods from interfaces
@@ -177,5 +178,6 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         int newLevel = gridModel.Grid[beginPosition.x, beginPosition.y].Level + 1;
         gridModel.ChangeGrid(area, 0);
         gridModel.ChangeGrid(upgradedArea.ToArray(), newLevel);
+        playerProgressionModel.TurnNumber++;
     }
 }

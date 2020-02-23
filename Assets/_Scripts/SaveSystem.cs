@@ -101,7 +101,6 @@ public class SaveSystem : MonoBehaviour
         return new int[] { Random.Range(1, piecesCount), Random.Range(1, piecesCount), Random.Range(1, piecesCount) };
     }
 
-    //Saving on turn changed only, so actions like merging or using boosters wouldn't be saved now, only on quit
     void OnTurnChanged(int turn)
     {
         //Do not save if turn sets up during loading
