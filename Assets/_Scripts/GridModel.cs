@@ -60,7 +60,7 @@ public class GridModel : MonoBehaviour
         //Happens after merge or clear booster only
         if (level == 0)
         {
-            //TODO Increase level repeatedly if needed
+            //TODO LOW Increase level repeatedly if needed
             if (MinimumLevelPiecesRemoved())
             {
                 playerProgressionModel.LevelNumber++;

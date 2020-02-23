@@ -124,7 +124,7 @@ public class PiecesModel : MonoBehaviour
         PieceRotated(index);
     }
 
-    //TODO HIGH Make set level function and call from here and from init
+    //TODO LOW Make set level function and call from here and from init
     public void LevelUpCollection()
     {
         //Update collection
