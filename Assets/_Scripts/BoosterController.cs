@@ -77,6 +77,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         }
     }
 
+    //UGUI
     public void GenerateNewPieces()
     {
         if (boostersModel.RefreshesCount > 0)

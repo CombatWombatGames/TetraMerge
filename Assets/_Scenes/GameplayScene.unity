@@ -3767,7 +3767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1258935565}
   m_Layer: 5
-  m_Name: NextFigurePanel
+  m_Name: PiecesPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
