@@ -2,6 +2,7 @@
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [DefaultExecutionOrder(-1000)]
@@ -13,9 +14,12 @@ public class SaveSystem : MonoBehaviour
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] BoostersModel boostersModel = default;
     [SerializeField] PiecesModel piecesModel = default;
+    [SerializeField] Button undoButton = default;
 
-    string fileName = "data.json";
-    string filePath;
+    string saveFileName = "data.json";
+    string preveousSaveFileName = "olddata.json";
+    string saveFilePath;
+    string preveousSaveFilePath;
     bool initialized;
 
     void Awake()
@@ -34,16 +38,12 @@ public class SaveSystem : MonoBehaviour
         Load();
     }
 
-    void OnApplicationQuit()
-    {
-        Save();
-    }
-
     void PrepareStateData()
     {
-        filePath = Path.Combine(Application.persistentDataPath, fileName);
-        if (!File.Exists(filePath)) { CreateInitialSave(filePath); }
-        stateData = ReadSaveFile(filePath);
+        saveFilePath = Path.Combine(Application.persistentDataPath, saveFileName);
+        preveousSaveFilePath = Path.Combine(Application.persistentDataPath, preveousSaveFileName);
+        if (!File.Exists(saveFilePath)) { CreateInitialSave(saveFilePath); }
+        stateData = ReadSaveFile(saveFilePath);
     }
 
     void Load()
@@ -52,6 +52,10 @@ public class SaveSystem : MonoBehaviour
         piecesModel.Initialize(stateData.NextPieces, stateData.LevelNumber);
         playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber);
         boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.NextBoosterTurnNumber);
+        if (File.Exists(preveousSaveFilePath))
+        {
+            undoButton.interactable = true;
+        }
     }                            
                                  
     void CreateInitialSave(string path)
@@ -116,6 +120,7 @@ public class SaveSystem : MonoBehaviour
 
     void Save()
     {
+        WriteSaveFile(stateData, preveousSaveFilePath);
         stateData = new StateData()
         {
             Grid = CellsToIntegers(gridModel.Grid),
@@ -129,12 +134,22 @@ public class SaveSystem : MonoBehaviour
             BoostersGiven = boostersModel.BoostersGiven,
             NextBoosterTurnNumber = boostersModel.NextBoosterTurnNumber
         };
-        WriteSaveFile(stateData, filePath);
+        WriteSaveFile(stateData, saveFilePath);
+        undoButton.interactable = true;
+    }
+
+    //UGUI
+    public void Undo()
+    {
+        File.Delete(saveFilePath);
+        File.Move(preveousSaveFilePath, saveFilePath);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void StartFromScratch()
     {
-        CreateInitialSave(filePath);
+        Save();
+        CreateInitialSave(saveFilePath);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
