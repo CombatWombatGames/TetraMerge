@@ -75,20 +75,31 @@ public class PlayerProgressionModel : MonoBehaviour
 
     void OnGridChanged(Vector2Int[] area, int level)
     {
-        int score = 0;
-        for (int i = 0; i < gridModel.Grid.GetLength(0); i++)
+        if (level == 0)
         {
-            for (int j = 0; j < gridModel.Grid.GetLength(1); j++)
+            int score = 0;
+            if (area.Length > 25)
             {
-                if (gridModel.Grid[i, j].Level != 0)
-                {
-                    score += gridModel.Grid[i, j].Level;
-                    //Old way: always grows, but depends on level too much
-                    //CurrentScore += Mathf.RoundToInt(Mathf.Pow(10, gridModel.Grid[i, j].Level - 1));
-                }
+                score = 50;
             }
+            else if (area.Length > 16)
+            {
+                score = 30;
+            }
+            else if (area.Length > 9)
+            {
+                score = 20;
+            }
+            else if (area.Length > 4)
+            {
+                score = 10;
+            }
+            else if (area.Length > 1)
+            {
+                score = 5;
+            }
+            CurrentScore += score;
         }
-        CurrentScore = score;
     }
 
     public void UpdateBestScore()
