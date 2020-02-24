@@ -4028,8 +4028,8 @@ GameObject:
   - component: {fileID: 1380896175}
   - component: {fileID: 1380896181}
   - component: {fileID: 1380896182}
-  - component: {fileID: 1380896178}
   - component: {fileID: 1380896187}
+  - component: {fileID: 1380896178}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -4203,12 +4203,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostersModel: {fileID: 1380896183}
+  playerProgressionModel: {fileID: 1380896181}
+  colors: {fileID: 1380896186}
   refreshButton: {fileID: 2071144091}
   refreshesCount: {fileID: 1947048181}
   addsCount: {fileID: 447064174}
   clearsCount: {fileID: 1181265416}
   addsRaycastTarget: {fileID: 1298991744}
   clearsRaycastTarget: {fileID: 188894161}
+  addImage: {fileID: 230392091}
 --- !u!114 &1380896186
 MonoBehaviour:
   m_ObjectHideFlags: 0
