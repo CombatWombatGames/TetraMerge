@@ -20,6 +20,7 @@ public class Tester : MonoBehaviour
     //UGUI
     public void RestartScene()
     {
+        FindObjectOfType<PlayerProgressionModel>().UpdateBestScore();
         FindObjectOfType<SaveSystem>().StartFromScratch();
     }
 

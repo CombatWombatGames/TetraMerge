@@ -90,4 +90,12 @@ public class PlayerProgressionModel : MonoBehaviour
         }
         CurrentScore = score;
     }
+
+    public void UpdateBestScore()
+    {
+        if (CurrentScore > BestScore)
+        {
+            BestScore = CurrentScore;
+        }
+    }
 }
