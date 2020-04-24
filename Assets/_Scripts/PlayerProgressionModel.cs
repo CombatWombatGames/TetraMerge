@@ -80,15 +80,15 @@ public class PlayerProgressionModel : MonoBehaviour
             int score = 0;
             if (area.Length > 25)
             {
-                score = 50;
+                score = 100;
             }
             else if (area.Length > 16)
             {
-                score = 30;
+                score = 50;
             }
             else if (area.Length > 9)
             {
-                score = 20;
+                score = 25;
             }
             else if (area.Length > 4)
             {
