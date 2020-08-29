@@ -6,9 +6,9 @@ public struct Cell
     public int Level;
     public Vector2Int GridCoordinate;
 
-    public Cell(int Level, Vector2Int GridCoordinate)
+    public Cell(int level, Vector2Int gridCoordinate)
     {
-        this.Level = Level;
-        this.GridCoordinate = GridCoordinate;
+        Level = level;
+        GridCoordinate = gridCoordinate;
     }
 }
