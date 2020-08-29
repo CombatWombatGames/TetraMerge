@@ -78,13 +78,7 @@ public class GridView : MonoBehaviour
     public void DrawShadow(Vector2Int[] area)
     {
         //Remove old shadow
-        if (oldShadowArea != null)
-        {
-            for (int i = 0; i < oldShadowArea.Length; i++)
-            {
-                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].enabled = false;
-            }
-        }
+        DeleteShadow();
         //Store shadowless state
         oldShadowArea = area;
         //Drop shadow
