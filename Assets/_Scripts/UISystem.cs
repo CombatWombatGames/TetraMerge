@@ -21,6 +21,7 @@ public class UISystem : MonoBehaviour
     {
         tester = GetComponent<Tester>();
         saveSystem = GetComponent<SaveSystem>();
+        boosterController = GetComponent<BoosterController>();
         quitButton.onClick.AddListener(tester.Quit);
         restartButton.onClick.AddListener(tester.RestartScene);
         undoButton.onClick.AddListener(saveSystem.Undo);

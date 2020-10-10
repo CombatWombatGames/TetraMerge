@@ -50,6 +50,7 @@ public class BoostersModel : MonoBehaviour
     int addsCount = 0;
     int clearsCount = 0;
     int boostersGiven = 0;
+    private int nextBoosterTurnNumber;
 
     void Awake()
     {
@@ -74,7 +75,8 @@ public class BoostersModel : MonoBehaviour
     void UpdateNextBoosterTurnNumber()
     {
         //Gives boosters on turn 5, 11, 18, 26, 35... Gap increases every time
-        NextBoosterTurnNumber = BoostersGiven * (BoostersGiven + 9) / 2;
+        //BoostersGiven + 1 because it starts from zero
+        NextBoosterTurnNumber = (BoostersGiven + 1) * (BoostersGiven + 10) / 2;
     }
 
     void OnTurnChanged(int turnNumber)
