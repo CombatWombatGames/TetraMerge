@@ -14,13 +14,14 @@ public class PiecesModel : MonoBehaviour
     public Piece[] Pieces { get; private set; }
     public Piece[] NextPieces { get; private set; }
 
-    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] Array2DBool[] piecesVariants = default;
 
+    PlayerProgressionModel playerProgressionModel;
     Piece emptyPiece = new Piece(new Cell[0], -1);
 
     public void Initialize(int[] nextPieces, int levelNumber)
     {
+        playerProgressionModel = GetComponent<PlayerProgressionModel>();
         InitializeCollection(levelNumber);
         NextPieces = IntegersToPieces(nextPieces);
         PiecesGenerated();

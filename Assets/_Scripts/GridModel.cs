@@ -7,24 +7,24 @@ public class GridModel : MonoBehaviour
     public event Action<Cell[,]> GridCreated;
     public event Action<Vector2Int[], int> GridChanged;
 
-    public int Width => width;
-    public int Height => height;
+    public int Width { get; } = 6;
+    public int Height { get; } = 6;
     public Cell[,] Grid { get; private set; }
 
-    [SerializeField] int height = default;
-    [SerializeField] int width = default;
-    [SerializeField] PiecesModel piecesModel = default;
-    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
+    PiecesModel piecesModel;
+    PlayerProgressionModel playerProgressionModel;
 
     public void Initialize(int[] grid)
     {
+        piecesModel = GetComponent<PiecesModel>();
+        playerProgressionModel = GetComponent<PlayerProgressionModel>();
         Grid = IntegersToCells(grid);
         GridCreated(Grid);
     }
 
     Cell[,] IntegersToCells(int[] integers)
     {
-        Cell[,] grid = new Cell[width, height];
+        Cell[,] grid = new Cell[Width, Height];
         for (int i = 0; i < grid.GetLength(0); i++)
         {
             for (int j = 0; j < grid.GetLength(1); j++)

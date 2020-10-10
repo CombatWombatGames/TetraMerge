@@ -4,14 +4,16 @@ using UnityEngine.UI;
 //Displays best and current scores
 public class PlayerProgressionView : MonoBehaviour
 {
-    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] Text turnNumberText = default;
     [SerializeField] Text scoreText = default;
     [SerializeField] Text bestScoreText = default;
     [SerializeField] Text levelNumberText = default;
 
+    PlayerProgressionModel playerProgressionModel;
+
     void Awake()
     {
+        playerProgressionModel = GetComponent<PlayerProgressionModel>();
         playerProgressionModel.TurnChanged += OnTurnChanged;
         playerProgressionModel.CurrentScoreChanged += OnCurrentScoreChanged;
         playerProgressionModel.BestScoreChanged += OnBestScoreChanged;

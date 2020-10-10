@@ -44,7 +44,7 @@ public class BoostersModel : MonoBehaviour
     }
     public int NextBoosterTurnNumber { get; set; }
 
-    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
+    PlayerProgressionModel playerProgressionModel;
 
     int refreshesCount = 0;
     int addsCount = 0;
@@ -53,6 +53,7 @@ public class BoostersModel : MonoBehaviour
 
     void Awake()
     {
+        playerProgressionModel = GetComponent<PlayerProgressionModel>();
         playerProgressionModel.TurnChanged += OnTurnChanged;
     }
 
@@ -72,8 +73,8 @@ public class BoostersModel : MonoBehaviour
 
     void UpdateNextBoosterTurnNumber()
     {
-        //Gives boosters on turn 4, 9, 15, 22, 30... Gap increases every time
-        NextBoosterTurnNumber = (BoostersGiven + 1) * (BoostersGiven + 8) / 2;
+        //Gives boosters on turn 5, 11, 18, 26, 35... Gap increases every time
+        NextBoosterTurnNumber = BoostersGiven * (BoostersGiven + 9) / 2;
     }
 
     void OnTurnChanged(int turnNumber)

@@ -20,7 +20,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero && boosterType != BoosterType.Refresh)
         {
             transform.position = eventData.pointerCurrentRaycast.worldPosition + shift;
-            Vector2Int nearestCell = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + shift);
+            Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + shift);
             if (CellIsAvailable(nearestCell))
             {
                 gridView.DrawShadow(new Vector2Int[] { nearestCell });
@@ -45,7 +45,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         if (boosterType != BoosterType.Refresh)
         {
-            Vector2Int nearestCell = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + shift);
+            Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + shift);
             if (CellIsAvailable(nearestCell) && eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
             {
                 if (boosterType == BoosterType.Clear)
@@ -92,14 +92,6 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
             boostersModel.AddsCount--;
             playerProgressionModel.TurnNumber++;
         }
-    }
-
-    Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
-    {
-        //TODO HIGH Remove duplicating code
-        float XGrid = worldCoordinate.x / gridView.Scale + (float)(gridModel.Width - 1) / 2;
-        float YGrid = worldCoordinate.y / gridView.Scale + (float)(gridModel.Height - 1) / 2;
-        return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
     }
 
     bool CellIsAvailable(Vector2Int position)

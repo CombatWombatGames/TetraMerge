@@ -27,7 +27,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     public void OnBeginDrag(PointerEventData eventData)
     {
         beginDragWorldPosition = eventData.pointerCurrentRaycast.worldPosition;
-        beginDragGridPosition = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
+        beginDragGridPosition = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
         selectionBox.gameObject.SetActive(true);
     }
 
@@ -41,7 +41,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             selectionBox.rectTransform.sizeDelta = new Vector2(Mathf.Abs(cursorPosition.x - beginDragWorldPosition.x) * scale, Mathf.Abs(cursorPosition.y - beginDragWorldPosition.y) * scale);
         }
         //Draw selection shadow
-        Vector2Int currentDragGridPosition = WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
+        Vector2Int currentDragGridPosition = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
         if (AreaIsSquare(beginDragGridPosition, currentDragGridPosition) && (beginDragGridPosition != currentDragGridPosition))
         {
             Vector2Int[] selectedArea = CalculateArea(beginDragGridPosition, currentDragGridPosition);
@@ -104,14 +104,6 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             }
         }
         return true;
-    }
-
-    Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
-    {
-        //TODO HIGH Remove duplicating code
-        float XGrid = worldCoordinate.x / gridView.Scale + (float)(gridModel.Width - 1) / 2;
-        float YGrid = worldCoordinate.y / gridView.Scale + (float)(gridModel.Height - 1) / 2;
-        return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
     }
 
     public void OnEndDrag(PointerEventData eventData)

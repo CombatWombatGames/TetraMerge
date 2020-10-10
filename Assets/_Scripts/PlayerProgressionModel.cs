@@ -50,14 +50,14 @@ public class PlayerProgressionModel : MonoBehaviour
         }
     }
 
-    [SerializeField] GridModel gridModel = default;
-
+    GridModel gridModel;
     int currentScore;
     int levelNumber;
     int turnNumber;
 
     void Awake()
     {
+        gridModel = GetComponent<GridModel>();
         gridModel.GridChanged += OnGridChanged;
     }
 

@@ -7,17 +7,20 @@ public class GridView : MonoBehaviour
     //Used in cell instantiation scaling, conversions between world and grid coordinates
     public float Scale { get; private set; }
 
-    [SerializeField] GridModel gridModel = default;
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
-    [SerializeField] Colors colors = default;
+    //[SerializeField] Colors colors = default;
+    [SerializeField] Sprite[] tiles = default;
 
+    GridModel gridModel;
     GameObject[,] cells;
     int cellTileImageIndex = 1;
     int cellShadowImageIndex = 2;
+    float fieldOffsetY = 1.6f;
 
     void Awake()
     {
+        gridModel = GetComponent<GridModel>();
         gridModel.GridCreated += OnGridCreated;
         gridModel.GridChanged += OnGridChanged;
     }
@@ -32,10 +35,10 @@ public class GridView : MonoBehaviour
     {
         //Create empty grid
         float maximumDimension = Mathf.Max(grid.GetLength(0), grid.GetLength(1));
-        float playFieldWidth = 1080f;
-        float reductionPercentage = 110f;
+        float playFieldWidth = 752f;
+        float pixelsPerUnits = 100f;
         //TODO HIGH Scale
-        Scale = playFieldWidth / maximumDimension / reductionPercentage;
+        Scale = playFieldWidth / maximumDimension / pixelsPerUnits;
         cells = new GameObject[grid.GetLength(0), grid.GetLength(1)];
         float offsetX = (float)(grid.GetLength(0) - 1) / 2;
         float offsetY = (float)(grid.GetLength(1) - 1) / 2;
@@ -43,8 +46,8 @@ public class GridView : MonoBehaviour
         {
             for (int j = 0; j < grid.GetLength(1); j++)
             {
-                GameObject cell = Instantiate(cellPrefab, new Vector3((i - offsetX) * Scale, (j - offsetY) * Scale), Quaternion.identity, cellsParent);
-                cell.transform.localScale = new Vector3(Scale, Scale);
+                GameObject cell = Instantiate(cellPrefab, new Vector3((i - offsetX) * Scale, (j - offsetY) * Scale + fieldOffsetY), Quaternion.identity, cellsParent);
+                //cell.transform.localScale = new Vector3(Scale, Scale);
                 AssembleCellView(cell, grid[i, j].Level);
                 cells[i, j] = cell;
             }
@@ -55,8 +58,9 @@ public class GridView : MonoBehaviour
     {
         if (level != 0)
         {
-            cell.GetComponentInChildren<Text>().text = level.ToString();
-            cell.GetComponentsInChildren<Image>()[cellTileImageIndex].color = colors.Palete[(level - 1) % colors.Palete.Length];
+            //cell.GetComponentInChildren<Text>().text = level.ToString();
+            //cell.GetComponentsInChildren<Image>()[cellTileImageIndex].color = colors.Palete[(level - 1) % colors.Palete.Length];
+            cell.GetComponentsInChildren<Image>()[cellTileImageIndex].sprite = tiles[(level - 1) % tiles.Length];
             cell.GetComponentsInChildren<Image>()[cellTileImageIndex].enabled = true;
         }
         else
@@ -97,5 +101,12 @@ public class GridView : MonoBehaviour
                 cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].enabled = false;
             }
         }
+    }
+
+    public Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
+    {
+        float XGrid = worldCoordinate.x / Scale + (float)(gridModel.Width - 1) / 2;
+        float YGrid = (worldCoordinate.y - fieldOffsetY) / Scale + (float)(gridModel.Height - 1) / 2;
+        return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
     }
 }

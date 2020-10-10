@@ -10,12 +10,12 @@ public class SaveSystem : MonoBehaviour
 {
     StateData stateData;
 
-    [SerializeField] GridModel gridModel = default;
-    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
-    [SerializeField] BoostersModel boostersModel = default;
-    [SerializeField] PiecesModel piecesModel = default;
     [SerializeField] Button undoButton = default;
 
+    GridModel gridModel;
+    PlayerProgressionModel playerProgressionModel;
+    BoostersModel boostersModel;
+    PiecesModel piecesModel;
     string saveFileName = "data.json";
     string preveousSaveFileName = "olddata.json";
     string saveFilePath;
@@ -24,6 +24,10 @@ public class SaveSystem : MonoBehaviour
 
     void Awake()
     {
+        gridModel = GetComponent<GridModel>();
+        playerProgressionModel = GetComponent<PlayerProgressionModel>();
+        boostersModel = GetComponent<BoostersModel>();
+        piecesModel = GetComponent<PiecesModel>();
         playerProgressionModel.TurnChanged += OnTurnChanged;
         PrepareStateData();
     }
@@ -71,7 +75,7 @@ public class SaveSystem : MonoBehaviour
             AddsCount = 0,
             ClearsCount = 0,
             BoostersGiven = 0,
-            NextBoosterTurnNumber = 4
+            NextBoosterTurnNumber = 5
         };
         WriteSaveFile(stateData, path);
     }

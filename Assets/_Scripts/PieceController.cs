@@ -54,7 +54,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        piecesView.ScalePiece(index, gridView.Scale);
+        piecesView.ScalePiece(index, gridView.Scale * 1.42f);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -73,7 +73,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
             piecesView.ReturnPiece(index);
         }
         gridView.DeleteShadow();
-        piecesView.ScalePiece(index, 1.0f / gridView.Scale);
+        piecesView.ScalePiece(index, 1.0f / (gridView.Scale * 1.42f));
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -114,15 +114,11 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     Vector2Int PieceToGridCoordinate(Cell cell, Vector2 centerCoordinate)
     {
-        float XGrid = cell.GridCoordinate.x + centerCoordinate.x / gridView.Scale + (float)(gridModel.Width - 1) / 2;
-        float YGrid = cell.GridCoordinate.y + centerCoordinate.y / gridView.Scale + (float)(gridModel.Height - 1) / 2;
+        //float XGrid = cell.GridCoordinate.x + centerCoordinate.x / gridView.Scale + (float)(gridModel.Width - 1) / 2;
+        //float YGrid = cell.GridCoordinate.y + centerCoordinate.y / gridView.Scale + (float)(gridModel.Height - 1) / 2;
+        var _centerCoordinate = gridView.WorldToGridCoordinate(centerCoordinate);
+        float XGrid = _centerCoordinate.x + cell.GridCoordinate.x;
+        float YGrid = _centerCoordinate.y + cell.GridCoordinate.y;
         return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
     }
-
-    //Vector2 GridToWorldCoordinate(Vector2Int gridCoordinate)
-    //{
-    //    float XWorld = gridCoordinate.x + (float)(gridModel.Width - 1) / 2;
-    //    float YWorld = gridCoordinate.y + (float)(gridModel.Height - 1) / 2;
-    //    return new Vector2(XWorld, YWorld);
-    //}
 }
