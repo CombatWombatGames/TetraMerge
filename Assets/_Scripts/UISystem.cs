@@ -11,9 +11,11 @@ public class UISystem : MonoBehaviour
     [SerializeField] Button boostersButton = default;
     [SerializeField] GameObject piecesPanel = default;
     [SerializeField] GameObject boostersPanel = default;
+    [SerializeField] Button refreshButton = default;
 
     Tester tester;
     SaveSystem saveSystem;
+    BoosterController boosterController;
 
     void Awake()
     {
@@ -24,6 +26,7 @@ public class UISystem : MonoBehaviour
         undoButton.onClick.AddListener(saveSystem.Undo);
         piecesButton.onClick.AddListener(() => OnTableButtonClicked(true));
         boostersButton.onClick.AddListener(() => OnTableButtonClicked(false));
+        refreshButton.onClick.AddListener(() => { boosterController.GenerateNewPieces(); OnTableButtonClicked(true); });
         OnTableButtonClicked(true);
     }
 
