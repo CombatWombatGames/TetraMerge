@@ -114,8 +114,6 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     Vector2Int PieceToGridCoordinate(Cell cell, Vector2 centerCoordinate)
     {
-        //float XGrid = cell.GridCoordinate.x + centerCoordinate.x / gridView.Scale + (float)(gridModel.Width - 1) / 2;
-        //float YGrid = cell.GridCoordinate.y + centerCoordinate.y / gridView.Scale + (float)(gridModel.Height - 1) / 2;
         var _centerCoordinate = gridView.WorldToGridCoordinate(centerCoordinate);
         float XGrid = _centerCoordinate.x + cell.GridCoordinate.x;
         float YGrid = _centerCoordinate.y + cell.GridCoordinate.y;

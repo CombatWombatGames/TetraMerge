@@ -33,27 +33,29 @@ public class BoostersModel : MonoBehaviour
             BoosterCountChanged(value, BoosterType.Clear);
         }
     }
-    public int BoostersGiven
+    public int BoostersGiven { get; set; }
+    public int NextBoosterTurnNumber
     {
-        get { return boostersGiven; }
-        set
+        get
         {
-            boostersGiven = value;
-            UpdateNextBoosterTurnNumber();
+            //Gives boosters on turn 5, 11, 18, 26, 35... Gap increases every time
+            //BoostersGiven + 1 because it starts from zero
+            return (BoostersGiven + 1) * (BoostersGiven + 10) / 2;
         }
     }
-    public int NextBoosterTurnNumber { get; set; }
 
+    GridModel gridModel;
+    PiecesModel piecesModel;
     PlayerProgressionModel playerProgressionModel;
 
     int refreshesCount = 0;
     int addsCount = 0;
     int clearsCount = 0;
-    int boostersGiven = 0;
-    private int nextBoosterTurnNumber;
 
     void Awake()
     {
+        gridModel = GetComponent<GridModel>();
+        piecesModel = GetComponent<PiecesModel>();
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
         playerProgressionModel.TurnChanged += OnTurnChanged;
     }
@@ -63,20 +65,12 @@ public class BoostersModel : MonoBehaviour
         playerProgressionModel.TurnChanged -= OnTurnChanged;
     }
 
-    public void Initialize(int refreshesCount, int addsCount, int clearsCount, int boostersGiven, int nextBoosterTurnNumber)
+    public void Initialize(int refreshesCount, int addsCount, int clearsCount, int boostersGiven)
     {
         RefreshesCount = refreshesCount;
         AddsCount = addsCount;
         ClearsCount = clearsCount;
         BoostersGiven = boostersGiven;
-        NextBoosterTurnNumber = nextBoosterTurnNumber;
-    }
-
-    void UpdateNextBoosterTurnNumber()
-    {
-        //Gives boosters on turn 5, 11, 18, 26, 35... Gap increases every time
-        //BoostersGiven + 1 because it starts from zero
-        NextBoosterTurnNumber = (BoostersGiven + 1) * (BoostersGiven + 10) / 2;
     }
 
     void OnTurnChanged(int turnNumber)
@@ -87,6 +81,36 @@ public class BoostersModel : MonoBehaviour
             AddsCount++;
             ClearsCount++;
             BoostersGiven++;
+        }
+    }
+
+    public void GenerateNewPieces()
+    {
+        if (RefreshesCount > 0)
+        {
+            piecesModel.GenerateNextPieces();
+            RefreshesCount--;
+            playerProgressionModel.TurnNumber++;
+        }
+    }
+
+    public void ClearCell(Vector2Int position)
+    {
+        if (ClearsCount > 0)
+        {
+            gridModel.ChangeGrid(new Vector2Int[] { position }, 0);
+            ClearsCount--;
+            playerProgressionModel.TurnNumber++;
+        }
+    }
+
+    public void AddCell(Vector2Int position)
+    {
+        if (AddsCount > 0)
+        {
+            gridModel.ChangeGrid(new Vector2Int[] { position }, playerProgressionModel.LevelNumber);
+            AddsCount--;
+            playerProgressionModel.TurnNumber++;
         }
     }
 }

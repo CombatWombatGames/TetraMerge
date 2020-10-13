@@ -4,14 +4,12 @@ using UnityEngine.UI;
 //Shows amount of boosters to player
 public class BoostersView : MonoBehaviour
 {
-    //[SerializeField] Colors colors = default;
     [SerializeField] Button refreshButton = default;
     [SerializeField] Text refreshesCount = default;
     [SerializeField] Text addsCount = default;
     [SerializeField] Text clearsCount = default;
     [SerializeField] Text addsRaycastTarget = default;
     [SerializeField] Text clearsRaycastTarget = default;
-    //[SerializeField] Image addImage = default;
 
     BoostersModel boostersModel;
     PlayerProgressionModel playerProgressionModel;
@@ -32,9 +30,7 @@ public class BoostersView : MonoBehaviour
 
     private void OnLevelNumberChanged(int number)
     {
-        //addImage.color = colors.Palete[(number - 1) % colors.Palete.Length];
     }
-
 
     void OnBoostersCountChanged(int count, BoosterType type)
     {

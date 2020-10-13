@@ -9,7 +9,6 @@ public class GridView : MonoBehaviour
 
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
-    //[SerializeField] Colors colors = default;
     [SerializeField] Sprite[] tiles = default;
 
     GridModel gridModel;
@@ -59,7 +58,6 @@ public class GridView : MonoBehaviour
         if (level != 0)
         {
             //cell.GetComponentInChildren<Text>().text = level.ToString();
-            //cell.GetComponentsInChildren<Image>()[cellTileImageIndex].color = colors.Palete[(level - 1) % colors.Palete.Length];
             cell.GetComponentsInChildren<Image>()[cellTileImageIndex].sprite = tiles[(level - 1) % tiles.Length];
             cell.GetComponentsInChildren<Image>()[cellTileImageIndex].enabled = true;
         }

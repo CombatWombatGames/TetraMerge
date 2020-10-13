@@ -5,11 +5,9 @@ using UnityEngine.EventSystems;
 //TODO LOW Rewrite
 public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] PiecesModel piecesModel = default;
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GridView gridView = default;
     [SerializeField] BoostersModel boostersModel = default;
-    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     //TODO MED Use inheritance instead!
     [SerializeField] BoosterType boosterType = default;
 
@@ -50,47 +48,16 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
             {
                 if (boosterType == BoosterType.Clear)
                 {
-                    ClearCell(nearestCell);
+                    boostersModel.ClearCell(nearestCell);
                 }
                 else if (boosterType == BoosterType.Add)
                 {
-                    AddCell(nearestCell);
+                    boostersModel.AddCell(nearestCell);
                 }
             }
             transform.localPosition = Vector3.zero;
             gridView.DeleteShadow();
             transform.localScale /= gridView.Scale;
-        }
-    }
-
-    //UGUI
-    public void GenerateNewPieces()
-    {
-        if (boostersModel.RefreshesCount > 0)
-        {
-            piecesModel.GenerateNextPieces();
-            boostersModel.RefreshesCount--;
-            playerProgressionModel.TurnNumber++;
-        }
-    }
-
-    public void ClearCell(Vector2Int position)
-    {
-        if (boostersModel.ClearsCount > 0)
-        {
-            gridModel.ChangeGrid(new Vector2Int[] { position }, 0);
-            boostersModel.ClearsCount--;
-            playerProgressionModel.TurnNumber++;
-        }
-    }
-
-    public void AddCell(Vector2Int position)
-    {
-        if (boostersModel.AddsCount > 0)
-        {
-            gridModel.ChangeGrid(new Vector2Int[] { position }, playerProgressionModel.LevelNumber);
-            boostersModel.AddsCount--;
-            playerProgressionModel.TurnNumber++;
         }
     }
 

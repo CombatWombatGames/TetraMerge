@@ -15,19 +15,19 @@ public class UISystem : MonoBehaviour
 
     Tester tester;
     SaveSystem saveSystem;
-    BoosterController boosterController;
+    BoostersModel boosterModel;
 
     void Awake()
     {
         tester = GetComponent<Tester>();
         saveSystem = GetComponent<SaveSystem>();
-        boosterController = GetComponent<BoosterController>();
+        boosterModel = GetComponent<BoostersModel>();
         quitButton.onClick.AddListener(tester.Quit);
         restartButton.onClick.AddListener(tester.RestartScene);
         undoButton.onClick.AddListener(saveSystem.Undo);
         piecesButton.onClick.AddListener(() => OnTableButtonClicked(true));
         boostersButton.onClick.AddListener(() => OnTableButtonClicked(false));
-        refreshButton.onClick.AddListener(() => { boosterController.GenerateNewPieces(); OnTableButtonClicked(true); });
+        refreshButton.onClick.AddListener(() => { boosterModel.GenerateNewPieces(); OnTableButtonClicked(true); });
         OnTableButtonClicked(true);
     }
 

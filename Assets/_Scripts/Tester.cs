@@ -17,14 +17,12 @@ public class Tester : MonoBehaviour
     }
 #endif
 
-    //UGUI
     public void RestartScene()
     {
         FindObjectOfType<PlayerProgressionModel>().UpdateBestScore();
         FindObjectOfType<SaveSystem>().StartFromScratch();
     }
 
-    //UGUI
     public void FillGrid(int level)
     {
         GridModel grid = FindObjectOfType<GridModel>();
@@ -41,7 +39,6 @@ public class Tester : MonoBehaviour
         grid.ChangeGrid(area, level);
     }
 
-    //UGUI
     public void Quit()
     {
 #if UNITY_EDITOR

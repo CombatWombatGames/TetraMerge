@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class PiecesView : MonoBehaviour
 {
     [SerializeField] PieceController[] nextPieces = default;
-    //[SerializeField] Colors colors = default;
     [SerializeField] Sprite[] tiles = default;
 
     PiecesModel piecesModel;
@@ -57,7 +56,6 @@ public class PiecesView : MonoBehaviour
             bool[] mask = PieceToMask(piece);
             for (int i = 0; i < 9; i++)
             {
-                //slot[i].color = colors.Palete[(piece.Cells[0].Level - 1) % colors.Palete.Length];
                 //TODO LOW Fix duplicating functionality
                 slot[i].sprite = tiles[(piece.Cells[0].Level - 1) % tiles.Length];
                 slot[i].enabled = mask[i];
