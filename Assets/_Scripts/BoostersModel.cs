@@ -38,9 +38,9 @@ public class BoostersModel : MonoBehaviour
     {
         get
         {
-            //Gives boosters on turn 5, 11, 18, 26, 35... Gap increases every time
+            //Gives boosters on turn 10, 21, 33, 46, 60... Gap increases every time
             //BoostersGiven + 1 because it starts from zero
-            return (BoostersGiven + 1) * (BoostersGiven + 10) / 2;
+            return (BoostersGiven + 1) * (BoostersGiven + 20) / 2;
         }
     }
 
