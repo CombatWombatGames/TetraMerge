@@ -11,7 +11,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] int index = default;
 
-    Vector3 shift = Vector3.up * 2;
+    float scaleRate = 1.75f;
 
     void Awake()
     {
@@ -39,8 +39,8 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     {
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
-            transform.position = eventData.pointerCurrentRaycast.worldPosition + shift;
-            Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + shift, piecesModel.NextPieces[index]);
+            transform.position = eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift;
+            Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift, piecesModel.NextPieces[index]);
             if (AreaIsAvailable(nearestArea))
             {
                 gridView.DrawShadow(nearestArea);
@@ -54,12 +54,12 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        piecesView.ScalePiece(index, gridView.Scale * 1.42f);
+        piecesView.ScalePiece(index, scaleRate);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + shift, piecesModel.NextPieces[index]);
+        Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift, piecesModel.NextPieces[index]);
         if (AreaIsAvailable(nearestArea) && eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
             //TODO LOW Ask for level another way. MB make entire piece level?
@@ -73,7 +73,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
             piecesView.ReturnPiece(index);
         }
         gridView.DeleteShadow();
-        piecesView.ScalePiece(index, 1.0f / (gridView.Scale * 1.42f));
+        piecesView.ScalePiece(index, 1.0f / scaleRate);
     }
 
     public void OnPointerClick(PointerEventData eventData)

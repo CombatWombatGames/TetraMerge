@@ -4,8 +4,8 @@ using UnityEngine.UI;
 //Displays field to player
 public class GridView : MonoBehaviour
 {
-    //Used in cell instantiation scaling, conversions between world and grid coordinates
-    public float Scale { get; private set; }
+    public float CellSize { get; private set; } //In units
+    public Vector3 FingerShift { get; private set; }
 
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
@@ -13,9 +13,9 @@ public class GridView : MonoBehaviour
 
     GridModel gridModel;
     GameObject[,] cells;
+    float fieldOffsetY;
     int cellTileImageIndex = 1;
     int cellShadowImageIndex = 2;
-    float fieldOffsetY = 1.6f;
 
     void Awake()
     {
@@ -32,12 +32,23 @@ public class GridView : MonoBehaviour
 
     void OnGridCreated(Cell[,] grid)
     {
-        //Create empty grid
+        //Calculate scales
         float maximumDimension = Mathf.Max(grid.GetLength(0), grid.GetLength(1));
-        float playFieldWidth = 752f;
         float pixelsPerUnits = 100f;
-        //TODO HIGH Scale
-        Scale = playFieldWidth / maximumDimension / pixelsPerUnits;
+        float scale;
+        if (Screen.height / (float)Screen.width  > 16f / 9f)
+        {
+            scale = Screen.width / 1080f;
+        }
+        else
+        {
+            scale = Screen.height / 1920f;
+        }
+        fieldOffsetY = 1.6f * scale;
+        float playFieldWidth = 752f * scale;
+        CellSize = playFieldWidth / maximumDimension / pixelsPerUnits;
+        FingerShift = Vector3.up * CellSize * 1.5f;
+        //Create empty grid
         cells = new GameObject[grid.GetLength(0), grid.GetLength(1)];
         float offsetX = (float)(grid.GetLength(0) - 1) / 2;
         float offsetY = (float)(grid.GetLength(1) - 1) / 2;
@@ -45,8 +56,7 @@ public class GridView : MonoBehaviour
         {
             for (int j = 0; j < grid.GetLength(1); j++)
             {
-                GameObject cell = Instantiate(cellPrefab, new Vector3((i - offsetX) * Scale, (j - offsetY) * Scale + fieldOffsetY), Quaternion.identity, cellsParent);
-                //cell.transform.localScale = new Vector3(Scale, Scale);
+                GameObject cell = Instantiate(cellPrefab, new Vector3((i - offsetX) * CellSize, (j - offsetY) * CellSize + fieldOffsetY), Quaternion.identity, cellsParent);
                 AssembleCellView(cell, grid[i, j].Level);
                 cells[i, j] = cell;
             }
@@ -103,8 +113,8 @@ public class GridView : MonoBehaviour
 
     public Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
     {
-        float XGrid = worldCoordinate.x / Scale + (float)(gridModel.Width - 1) / 2;
-        float YGrid = (worldCoordinate.y - fieldOffsetY) / Scale + (float)(gridModel.Height - 1) / 2;
+        float XGrid = worldCoordinate.x / CellSize + (float)(gridModel.Width - 1) / 2;
+        float YGrid = (worldCoordinate.y - fieldOffsetY) / CellSize + (float)(gridModel.Height - 1) / 2;
         return new Vector2Int(Mathf.RoundToInt(XGrid), Mathf.RoundToInt(YGrid));
     }
 }

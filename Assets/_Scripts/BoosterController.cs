@@ -11,14 +11,12 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     //TODO MED Use inheritance instead!
     [SerializeField] BoosterType boosterType = default;
 
-    Vector3 shift = Vector3.up * 2;
-
     public void OnDrag(PointerEventData eventData)
     {
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero && boosterType != BoosterType.Refresh)
         {
-            transform.position = eventData.pointerCurrentRaycast.worldPosition + shift;
-            Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + shift);
+            transform.position = eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift;
+            Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift);
             if (CellIsAvailable(nearestCell))
             {
                 gridView.DrawShadow(new Vector2Int[] { nearestCell });
@@ -33,17 +31,17 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public void OnBeginDrag(PointerEventData eventData)
     {
         //TODO LOW Move to view, make method with scale parameter
-        if (boosterType != BoosterType.Refresh)
-        {
-            transform.localScale *= gridView.Scale;
-        }
+        //if (boosterType != BoosterType.Refresh)
+        //{
+        //    transform.localScale *= gridView.CellSize;
+        //}
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         if (boosterType != BoosterType.Refresh)
         {
-            Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + shift);
+            Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift);
             if (CellIsAvailable(nearestCell) && eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
             {
                 if (boosterType == BoosterType.Clear)
@@ -57,7 +55,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
             }
             transform.localPosition = Vector3.zero;
             gridView.DeleteShadow();
-            transform.localScale /= gridView.Scale;
+            //transform.localScale /= gridView.CellSize;
         }
     }
 
@@ -86,7 +84,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         if (boosterType != BoosterType.Refresh)
         {
-            transform.position = eventData.pointerCurrentRaycast.worldPosition + shift;
+            transform.position = eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift;
         }
     }
 
