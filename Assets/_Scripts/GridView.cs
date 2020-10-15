@@ -14,8 +14,8 @@ public class GridView : MonoBehaviour
     GridModel gridModel;
     GameObject[,] cells;
     float fieldOffsetY;
-    int cellTileImageIndex = 1;
-    int cellShadowImageIndex = 2;
+    int cellTileImageIndex = 0;
+    int cellShadowImageIndex = 1;
 
     void Awake()
     {

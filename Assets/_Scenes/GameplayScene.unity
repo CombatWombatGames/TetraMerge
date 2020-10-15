@@ -2243,11 +2243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a6d0299f9cefc34789fc1ee9e2f399f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecesModel: {fileID: 1380896174}
   gridModel: {fileID: 1380896180}
   gridView: {fileID: 1380896179}
   boostersModel: {fileID: 1380896183}
-  playerProgressionModel: {fileID: 1380896181}
   boosterType: 2
 --- !u!222 &769592884
 CanvasRenderer:
@@ -2710,7 +2708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5061,11 +5059,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a6d0299f9cefc34789fc1ee9e2f399f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecesModel: {fileID: 1380896174}
   gridModel: {fileID: 1380896180}
   gridView: {fileID: 1380896179}
   boostersModel: {fileID: 1380896183}
-  playerProgressionModel: {fileID: 1380896181}
   boosterType: 1
 --- !u!222 &1706262655
 CanvasRenderer:
@@ -5922,7 +5918,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.4}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6293,11 +6289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a6d0299f9cefc34789fc1ee9e2f399f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecesModel: {fileID: 1380896174}
   gridModel: {fileID: 1380896180}
   gridView: {fileID: 1380896179}
   boostersModel: {fileID: 1380896183}
-  playerProgressionModel: {fileID: 1380896181}
   boosterType: 0
 --- !u!1 &2145589969
 GameObject:
