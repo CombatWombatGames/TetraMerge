@@ -43,6 +43,15 @@ public class BoostersModel : MonoBehaviour
             return (BoostersGiven + 1) * (BoostersGiven + 20) / 2;
         }
     }
+    public int PreviousBoosterTurnNumber
+    {
+        get
+        {
+            //Gives boosters on turn 10, 21, 33, 46, 60... Gap increases every time
+            //BoostersGiven + 1 because it starts from zero
+            return BoostersGiven * (BoostersGiven + 19) / 2;
+        }
+    }
 
     GridModel gridModel;
     PiecesModel piecesModel;

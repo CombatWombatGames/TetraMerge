@@ -31,7 +31,7 @@ public class UISystem : MonoBehaviour
         OnTableButtonClicked(true);
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         quitButton.onClick.RemoveAllListeners();
         restartButton.onClick.RemoveAllListeners();

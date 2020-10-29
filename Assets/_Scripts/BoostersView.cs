@@ -10,6 +10,7 @@ public class BoostersView : MonoBehaviour
     [SerializeField] Text clearsCount = default;
     [SerializeField] Text addsRaycastTarget = default;
     [SerializeField] Text clearsRaycastTarget = default;
+    [SerializeField] Slider slider = default;
 
     BoostersModel boostersModel;
     PlayerProgressionModel playerProgressionModel;
@@ -18,12 +19,14 @@ public class BoostersView : MonoBehaviour
     {
         boostersModel = GetComponent<BoostersModel>();
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
+        playerProgressionModel.TurnChanged += OnTurnChanged;
         boostersModel.BoosterCountChanged += OnBoostersCountChanged;
         playerProgressionModel.LevelNumberChanged += OnLevelNumberChanged;
     }
 
     void OnDestroy()
     {
+        playerProgressionModel.TurnChanged -= OnTurnChanged;
         boostersModel.BoosterCountChanged -= OnBoostersCountChanged;
         playerProgressionModel.LevelNumberChanged -= OnLevelNumberChanged;
     }
@@ -87,5 +90,10 @@ public class BoostersView : MonoBehaviour
         {
             clearsRaycastTarget.raycastTarget = true;
         }
+    }
+
+    void OnTurnChanged(int turnNumber)
+    {
+        slider.value = (float)(turnNumber - boostersModel.PreviousBoosterTurnNumber) / (boostersModel.NextBoosterTurnNumber - boostersModel.PreviousBoosterTurnNumber);
     }
 }
