@@ -28,7 +28,7 @@ public class UISystem : MonoBehaviour
         piecesButton.onClick.AddListener(() => OnTableButtonClicked(true));
         boostersButton.onClick.AddListener(() => OnTableButtonClicked(false));
         refreshButton.onClick.AddListener(() => { boosterModel.GenerateNewPieces(); OnTableButtonClicked(true); });
-        OnTableButtonClicked(true);
+        OnTableButtonClicked(true, false);
     }
 
     void OnDestroy()
@@ -40,7 +40,7 @@ public class UISystem : MonoBehaviour
         boostersButton.onClick.RemoveAllListeners();
     }
 
-    void OnTableButtonClicked(bool enablePieces)
+    void OnTableButtonClicked(bool enablePieces, bool sound = true)
     {
         piecesButton.interactable = !enablePieces;
         boostersButton.interactable = enablePieces;
@@ -48,5 +48,9 @@ public class UISystem : MonoBehaviour
         boostersPanel.SetActive(!enablePieces);
         piecesButton.transform.SetSiblingIndex(enablePieces? 2 : 0);
         boostersButton.transform.SetSiblingIndex(enablePieces ? 0 : 2);
+        if (sound)
+        {
+            FindObjectOfType<AudioSystem>().PlayTurnSfx();
+        }
     }
 }

@@ -62,15 +62,18 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift, piecesModel.NextPieces[index]);
         if (AreaIsAvailable(nearestArea) && eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
+            //Drop the piece
             //TODO LOW Ask for level another way. MB make entire piece level?
             gridModel.ChangeGrid(nearestArea, piecesModel.NextPieces[index].Cells[0].Level);
             gameObject.SetActive(false);
             piecesModel.RemovePiece(index);
             playerProgressionModel.TurnNumber++;
+            FindObjectOfType<AudioSystem>().PlayDropSfx();
         }
         else
         {
             piecesView.ReturnPiece(index);
+            FindObjectOfType<AudioSystem>().PlayTurnSfx();
         }
         gridView.DeleteShadow();
         piecesView.ScalePiece(index, 1.0f / scaleRate);
@@ -80,6 +83,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     {
         if (!eventData.dragging)
         {
+            FindObjectOfType<AudioSystem>().PlayTurnSfx();
             piecesModel.RotatePiece(index);
         }
     }

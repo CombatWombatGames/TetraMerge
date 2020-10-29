@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
 //Displays field to player
@@ -87,8 +88,12 @@ public class GridView : MonoBehaviour
     }
 
     Vector2Int[] oldShadowArea;
-    public void DrawShadow(Vector2Int[] area)
+    public void DrawShadow(Vector2Int[] area, bool sound = false)
     {
+        if (sound && (oldShadowArea == null || (oldShadowArea != null && !area.SequenceEqual(oldShadowArea))))
+        {
+            FindObjectOfType<AudioSystem>().PlayHighlightSfx();
+        }
         //Remove old shadow
         DeleteShadow();
         //Store shadowless state
@@ -109,6 +114,7 @@ public class GridView : MonoBehaviour
                 cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].enabled = false;
             }
         }
+        oldShadowArea = null;
     }
 
     public Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)

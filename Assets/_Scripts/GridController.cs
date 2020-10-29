@@ -49,7 +49,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             {
                 validSelectedArea = selectedArea; //OnEndDrag validSelectedArea will be merged...
                 endDragGridPosition = currentDragGridPosition; //...using endDragGridPosition
-                gridView.DrawShadow(selectedArea);
+                gridView.DrawShadow(selectedArea, true);
             }
             else
             {
@@ -171,5 +171,6 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         gridModel.ChangeGrid(area, 0);
         gridModel.ChangeGrid(upgradedArea.ToArray(), newLevel);
         playerProgressionModel.TurnNumber++;
+        FindObjectOfType<AudioSystem>().PlayMergeSfx();
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+//Takes care of saving, loading and undo
 [DefaultExecutionOrder(-1000)]
 public class SaveSystem : MonoBehaviour
 {
