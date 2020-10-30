@@ -52,6 +52,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
                 {
                     boostersModel.AddCell(nearestCell);
                 }
+                FindObjectOfType<AudioSystem>().PlayBoosterSfx();
             }
             transform.localPosition = Vector3.zero;
             gridView.DeleteShadow();

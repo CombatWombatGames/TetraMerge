@@ -55,6 +55,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     public void OnBeginDrag(PointerEventData eventData)
     {
         piecesView.ScalePiece(index, scaleRate);
+        FindObjectOfType<AudioSystem>().PlayRaiseSfx();
     }
 
     public void OnEndDrag(PointerEventData eventData)

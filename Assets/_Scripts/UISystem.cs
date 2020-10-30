@@ -50,7 +50,7 @@ public class UISystem : MonoBehaviour
         boostersButton.transform.SetSiblingIndex(enablePieces ? 0 : 2);
         if (sound)
         {
-            FindObjectOfType<AudioSystem>().PlayTurnSfx();
+            FindObjectOfType<AudioSystem>().PlayButtonSfx();
         }
     }
 }
