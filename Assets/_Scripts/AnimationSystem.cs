@@ -5,7 +5,7 @@ public class AnimationSystem
 {
     public static void RotatePiece(Transform[] transforms, Vector3[] targetPositions)
     {
-        float duration = 0.12f;
+        float duration = 0.2f;
         for (int i = 0; i < transforms.Length; i++)
         {
             DOTween.Sequence()

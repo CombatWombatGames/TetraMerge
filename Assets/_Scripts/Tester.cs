@@ -9,6 +9,7 @@ public class Tester : MonoBehaviour
     void Start()
     {
         //StartCoroutine(LateStart(1f));
+        GameObject.Find("MusicSource").SetActive(false);//GetComponent<AudioSource>().enabled = false;
     }
 
     IEnumerator LateStart(float duration)

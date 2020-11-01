@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 //Displays pieces to player
@@ -22,7 +20,6 @@ public class PiecesView : MonoBehaviour
         piecesModel.PiecesGenerated += ShowPieces;
         piecesModel.PieceRotated += RotatePiece;
         piecesModel.CollectionLevelUp += ShowPieces;
-        InitializePositions();
     }
 
     void OnDestroy()
@@ -33,6 +30,27 @@ public class PiecesView : MonoBehaviour
         piecesModel.CollectionLevelUp -= ShowPieces;
     }
 
+    void RotatePiece(int index)
+    {
+        var transforms = nextPiecesTransforms[index];
+        var targetPositions = new Vector3[transforms.Length];
+        for (int i = 0; i < targetPositions.Length; i++)
+        {
+            targetPositions[i] = nextPiecesWorldCoordinates[index][rotationLookup[i]];
+        }
+        AnimationSystem.RotatePiece(transforms, targetPositions);
+        nextPiecesWorldCoordinates[index] = targetPositions;
+    }
+
+    void ShowPieces()
+    {
+        InitializePositions();
+        for (int i = 0; i < nextPieces.Length; i++)
+        {
+            ShowPiece(piecesModel.NextPieces[i], nextPiecesImages[i]);
+        }
+    }
+
     void InitializePositions()
     {
         for (int i = 0; i < nextPieces.Length; i++)
@@ -41,7 +59,7 @@ public class PiecesView : MonoBehaviour
             var images = nextPiecesImages[i];
             var transforms = new Transform[images.Length];
             var positions = new Vector3[images.Length];
-            for (int  j = 0; j < positions.Length; j++)
+            for (int j = 0; j < positions.Length; j++)
             {
                 transforms[j] = images[j].transform;
                 positions[j] = images[j].transform.position;
@@ -49,25 +67,6 @@ public class PiecesView : MonoBehaviour
             nextPiecesTransforms[i] = transforms;
             nextPiecesWorldCoordinates[i] = positions;
         }
-    }
-
-    void ShowPieces()
-    {
-        for (int i = 0; i < nextPieces.Length; i++)
-        {
-            ShowPiece(piecesModel.NextPieces[i], nextPiecesImages[i]);
-        }
-    }
-
-    void RotatePiece(int index)
-    {
-        var transforms = nextPiecesTransforms[index];
-        var targetPositions = new Vector3[transforms.Length];
-        for (int i = 0; i < targetPositions.Length; i++)
-        {
-            targetPositions[i] = transforms[rotationLookup[i]].position;
-        }
-        AnimationSystem.RotatePiece(transforms, targetPositions);
     }
 
     void ShowPiece(Piece piece, Image[] slot)
