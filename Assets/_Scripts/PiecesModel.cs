@@ -112,7 +112,7 @@ public class PiecesModel : MonoBehaviour
         }
     }
 
-    Vector2Int[,] rotationLookupTable = new Vector2Int[,] {
+    readonly Vector2Int[,] rotationLookupTable = new Vector2Int[,] {
         { new Vector2Int(-1, 1), new Vector2Int(0, 1), new Vector2Int(1, 1) },
         { new Vector2Int(-1, 0), new Vector2Int(0, 0), new Vector2Int(1, 0) },
         { new Vector2Int(-1, -1), new Vector2Int(0, -1), new Vector2Int(1, -1) } };
@@ -125,7 +125,6 @@ public class PiecesModel : MonoBehaviour
         PieceRotated(index);
     }
 
-    //TODO LOW Make set level function and call from here and from init
     public void LevelUpCollection()
     {
         //Update collection
