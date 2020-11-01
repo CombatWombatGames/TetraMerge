@@ -4,10 +4,12 @@ using UnityEngine.UI;
 //Displays pieces to player
 public class PiecesView : MonoBehaviour
 {
-    [SerializeField] PieceController[] nextPieces = default;
     [SerializeField] Sprite[] tiles = default;
+    [SerializeField] GameObject piecePrefab = default;
+    [SerializeField] Transform[] pieceParents = default;
 
     PiecesModel piecesModel;
+    PieceController[] nextPieces = new PieceController[3];
     Image[][] nextPiecesImages = new Image[3][];
     Transform[][] nextPiecesTransforms = new Transform[3][];
     Vector3[][] nextPiecesWorldCoordinates = new Vector3[3][];
@@ -30,6 +32,22 @@ public class PiecesView : MonoBehaviour
         piecesModel.CollectionLevelUp -= ShowPieces;
     }
 
+    void SpawnPieces()
+    {
+        foreach (var parent in pieceParents)
+        {
+            for (int i = 0; i < parent.childCount; i++)
+            {
+                Destroy(parent.GetChild(i).gameObject);
+            }
+        }
+        for (int i = 0; i < pieceParents.Length; i++)
+        {
+            nextPieces[i] = Instantiate(piecePrefab, pieceParents[i]).GetComponent<PieceController>();
+            nextPieces[i].Initialize(i, gameObject);
+        }
+    }
+
     void RotatePiece(int index)
     {
         var transforms = nextPiecesTransforms[index];
@@ -44,6 +62,7 @@ public class PiecesView : MonoBehaviour
 
     void ShowPieces()
     {
+        SpawnPieces();
         InitializePositions();
         for (int i = 0; i < nextPieces.Length; i++)
         {

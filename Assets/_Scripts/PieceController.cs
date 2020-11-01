@@ -4,17 +4,22 @@ using UnityEngine.EventSystems;
 //Translates movement, rotation and dropping of the piece to models
 public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
-    [SerializeField] GridModel gridModel = default;
-    [SerializeField] GridView gridView = default;
-    [SerializeField] PiecesView piecesView = default;
-    [SerializeField] PiecesModel piecesModel = default;
-    [SerializeField] PlayerProgressionModel playerProgressionModel = default;
-    [SerializeField] int index = default;
-
+    GridModel gridModel;
+    GridView gridView;
+    PiecesView piecesView;
+    PiecesModel piecesModel;
+    PlayerProgressionModel playerProgressionModel;
+    int index;
     float scaleRate = 1.75f;
 
-    void Awake()
+    public void Initialize(int index, GameObject managersContainer)
     {
+        this.index = index;
+        gridModel = managersContainer.GetComponent<GridModel>();
+        gridView = managersContainer.GetComponent<GridView>();
+        piecesView = managersContainer.GetComponent<PiecesView>();
+        piecesModel = managersContainer.GetComponent<PiecesModel>();
+        playerProgressionModel = managersContainer.GetComponent<PlayerProgressionModel>();
         piecesModel.PiecesGenerated += ActivatePiece;
     }
 
@@ -60,6 +65,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        piecesView.ScalePiece(index, 1.0f / scaleRate);
         Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift, piecesModel.NextPieces[index]);
         if (AreaIsAvailable(nearestArea) && eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
         {
@@ -77,7 +83,6 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
             FindObjectOfType<AudioSystem>().PlayTurnSfx();
         }
         gridView.DeleteShadow();
-        piecesView.ScalePiece(index, 1.0f / scaleRate);
     }
 
     public void OnPointerClick(PointerEventData eventData)
