@@ -7,6 +7,7 @@ public class GridView : MonoBehaviour
 {
     public float CellSize { get; private set; } //In units
     public Vector3 FingerShift { get; private set; }
+    public Vector3 BoosterFingerShift { get; private set; }
 
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
@@ -49,6 +50,7 @@ public class GridView : MonoBehaviour
         float playFieldWidth = 756f * scale;
         CellSize = playFieldWidth / maximumDimension / pixelsPerUnits; //Should be equal to sprite size (126 in reference resolution)
         FingerShift = Vector3.up * CellSize * 1.5f;
+        BoosterFingerShift = FingerShift * 1.5f;
         //Create empty grid
         cells = new GameObject[grid.GetLength(0), grid.GetLength(1)];
         float offsetX = (float)(grid.GetLength(0) - 1) / 2;

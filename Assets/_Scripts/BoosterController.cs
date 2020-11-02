@@ -16,8 +16,8 @@ public class BoosterController : MonoBehaviour, IDragHandler, IEndDragHandler, I
     {
         if (eventData.pointerCurrentRaycast.worldPosition != Vector3.zero && boosterType != BoosterType.Refresh)
         {
-            transform.position = eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift;
-            Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift);
+            transform.position = eventData.pointerCurrentRaycast.worldPosition + gridView.BoosterFingerShift;
+            Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + gridView.BoosterFingerShift);
             if (CellIsAvailable(nearestCell))
             {
                 gridView.DrawShadow(new Vector2Int[] { nearestCell }, true);
@@ -33,7 +33,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IEndDragHandler, I
     {
         if (boosterType != BoosterType.Refresh)
         {
-            Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift);
+            Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + gridView.BoosterFingerShift);
             if (CellIsAvailable(nearestCell) && eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
             {
                 if (boosterType == BoosterType.Clear)
@@ -76,7 +76,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IEndDragHandler, I
     {
         if (boosterType != BoosterType.Refresh)
         {
-            transform.position = eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift;
+            transform.position = eventData.pointerCurrentRaycast.worldPosition + gridView.BoosterFingerShift;
             if (boosterType != BoosterType.Refresh)
             {
                 transform.localScale *= 0.75f;
