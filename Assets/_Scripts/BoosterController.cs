@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 //Provides methods for booster buttons
 //TODO LOW Rewrite
-public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
+public class BoosterController : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] GridModel gridModel = default;
     [SerializeField] GridView gridView = default;
@@ -28,20 +28,10 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         }
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        //TODO LOW Move to view, make method with scale parameter
-        if (boosterType != BoosterType.Refresh)
-        {
-            transform.localScale *= 0.5f;
-        }
-    }
-
     public void OnEndDrag(PointerEventData eventData)
     {
         if (boosterType != BoosterType.Refresh)
         {
-            transform.localScale /= 0.5f;
             Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift);
             if (CellIsAvailable(nearestCell) && eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
             {
@@ -86,6 +76,10 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
         if (boosterType != BoosterType.Refresh)
         {
             transform.position = eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift;
+            if (boosterType != BoosterType.Refresh)
+            {
+                transform.localScale *= 0.5f;
+            }
         }
     }
 
@@ -93,6 +87,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         if (boosterType != BoosterType.Refresh)
         {
+            transform.localScale /= 0.5f;
             transform.localPosition = Vector3.zero;
             gridView.DeleteShadow();
         }

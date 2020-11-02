@@ -59,6 +59,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        AnimationSystem.FinishPieceRotation();
         piecesView.ScalePiece(index, scaleRate);
         FindObjectOfType<AudioSystem>().PlayRaiseSfx();
     }
