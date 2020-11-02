@@ -46,8 +46,8 @@ public class GridView : MonoBehaviour
             scale = Screen.height / 1920f;
         }
         fieldOffsetY = 1.3f * scale;
-        float playFieldWidth = 752f * scale;
-        CellSize = playFieldWidth / maximumDimension / pixelsPerUnits;
+        float playFieldWidth = 756f * scale;
+        CellSize = playFieldWidth / maximumDimension / pixelsPerUnits; //Should be equal to sprite size (126 in reference resolution)
         FingerShift = Vector3.up * CellSize * 1.5f;
         //Create empty grid
         cells = new GameObject[grid.GetLength(0), grid.GetLength(1)];
