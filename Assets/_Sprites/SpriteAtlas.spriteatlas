@@ -41,13 +41,68 @@ SpriteAtlas:
       enableRotation: 0
       enableTightPacking: 0
     variantMultiplier: 1
-    packables: []
-    totalSpriteSurfaceArea: 0
+    packables:
+    - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
+    totalSpriteSurfaceArea: 5000620
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 084ecec0a18159043b7c9d6c3cf1c3a8, type: 3}
+  - {fileID: 21300000, guid: bdb0dba1c6d675442bf5a6b09d4b58aa, type: 3}
+  - {fileID: 21300000, guid: 270f66642d6d007408a22ae4d1595c00, type: 3}
+  - {fileID: 21300000, guid: 768b5b252b7781f4eb52f99d8106ef85, type: 3}
+  - {fileID: 21300000, guid: 0bba643556ece6749952c8cd846bf8e5, type: 3}
+  - {fileID: 21300000, guid: 85c83116a02c1af488e576a9969a5ae7, type: 3}
+  - {fileID: 21300000, guid: f17fc0073c772ed4c963fd0c0560b943, type: 3}
+  - {fileID: 21300000, guid: 32a111c822980e8409d7ee3dd7c1a59f, type: 3}
+  - {fileID: 21300000, guid: b8ee68ea92c38264aab6756bfe15cd1a, type: 3}
+  - {fileID: 21300000, guid: 49aa1b0ba409b0a438d3de2173a846fc, type: 3}
+  - {fileID: 21300000, guid: 1922911b20ea4e4448484cc35ac27544, type: 3}
+  - {fileID: 21300000, guid: 3d83fcfb4badd904b9359cb4d83288aa, type: 3}
+  - {fileID: 21300000, guid: 8053240c7925b30439ab49cc3c5c93d4, type: 3}
+  - {fileID: 21300000, guid: 7b2b702caea7eb240b4eb040cc23fd8d, type: 3}
+  - {fileID: 21300000, guid: 1f14389c260784e4fb5324b92b8b5a85, type: 3}
+  - {fileID: 21300000, guid: ed1fc72d61412734a94d35c7869b2ec9, type: 3}
+  - {fileID: 21300000, guid: 1f35207d59c687a40b267df63cfe6199, type: 3}
+  - {fileID: 21300000, guid: 35bccb7d28d4fd744af0bc98cbf9a04a, type: 3}
+  - {fileID: 21300000, guid: 7e1f9e9d5099f0a4399f8acce407c118, type: 3}
+  - {fileID: 21300000, guid: 356a7ccd54e7d34468c2d98a00f9ec7a, type: 3}
+  - {fileID: 21300000, guid: d43f80ddaef96a047b6b09b2c82f8515, type: 3}
+  - {fileID: 21300000, guid: 225a912ee5f6b014bbd2f1471a1eea06, type: 3}
+  - {fileID: 21300000, guid: f1aae85ed587f7c40a11cdd3cd9bd9b1, type: 3}
+  - {fileID: 21300000, guid: 8b60199e3137a8045a6781f889622a02, type: 3}
+  - {fileID: 21300000, guid: 421a07de039ab6d4396233dd73fe2829, type: 3}
+  - {fileID: 21300000, guid: c1d259cfaefb4fc408d6178db0452d96, type: 3}
+  - {fileID: 21300000, guid: 2b863dffd40024642b0a804716c40b33, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - menu_bttn_pieces_light
+  - rune_1_cln
+  - rune_3_cln
+  - shield_arrow_left
+  - rune_3
+  - stone_field
+  - menu_bttn_boost_shadow
+  - rune_4
+  - button_undo
+  - rune_1
+  - shield_menu
+  - rune_2_cln
+  - boost_bttn_3
+  - menu_field
+  - button_restart
+  - button_quit
+  - menu_bttn_boost_light
+  - boost_bttn_1
+  - score_rune_best
+  - rune_4_cln
+  - background
+  - rune_2
+  - score_rune
+  - shield_arrow_revert
+  - boost_bttn_2
+  - progress_ball
+  - menu_bttn_pieces_shadow
   m_Tag: SpriteAtlas
   m_IsVariant: 0

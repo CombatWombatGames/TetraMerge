@@ -45,7 +45,7 @@ public class GridView : MonoBehaviour
         {
             scale = Screen.height / 1920f;
         }
-        fieldOffsetY = 1.6f * scale;
+        fieldOffsetY = 1.3f * scale;
         float playFieldWidth = 752f * scale;
         CellSize = playFieldWidth / maximumDimension / pixelsPerUnits;
         FingerShift = Vector3.up * CellSize * 1.5f;

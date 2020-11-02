@@ -10,6 +10,8 @@ public class BoostersView : MonoBehaviour
     [SerializeField] Text clearsCount = default;
     [SerializeField] Text addsRaycastTarget = default;
     [SerializeField] Text clearsRaycastTarget = default;
+    [SerializeField] Image addsIcon = default;
+    [SerializeField] Image clearsIcon = default;
     [SerializeField] Slider slider = default;
 
     BoostersModel boostersModel;
@@ -72,10 +74,12 @@ public class BoostersView : MonoBehaviour
         if (count == 0)
         {
             addsRaycastTarget.raycastTarget = false;
+            addsIcon.color = new Color(0.87f, 0.87f, 0.87f, 0.5f);
         }
         else
         {
             addsRaycastTarget.raycastTarget = true;
+            addsIcon.color = new Color(1f, 1f, 1f, 1f);
         }
     }
 
@@ -85,10 +89,12 @@ public class BoostersView : MonoBehaviour
         if (count == 0)
         {
             clearsRaycastTarget.raycastTarget = false;
+            clearsIcon.color = new Color(0.87f, 0.87f, 0.87f, 0.5f);
         }
         else
         {
             clearsRaycastTarget.raycastTarget = true;
+            clearsIcon.color = new Color(1f, 1f, 1f, 1f);
         }
     }
 

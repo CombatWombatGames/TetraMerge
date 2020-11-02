@@ -31,16 +31,17 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public void OnBeginDrag(PointerEventData eventData)
     {
         //TODO LOW Move to view, make method with scale parameter
-        //if (boosterType != BoosterType.Refresh)
-        //{
-        //    transform.localScale *= gridView.CellSize;
-        //}
+        if (boosterType != BoosterType.Refresh)
+        {
+            transform.localScale *= 0.5f;
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         if (boosterType != BoosterType.Refresh)
         {
+            transform.localScale /= 0.5f;
             Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift);
             if (CellIsAvailable(nearestCell) && eventData.pointerCurrentRaycast.worldPosition != Vector3.zero)
             {
@@ -56,7 +57,6 @@ public class BoosterController : MonoBehaviour, IDragHandler, IBeginDragHandler,
             }
             transform.localPosition = Vector3.zero;
             gridView.DeleteShadow();
-            //transform.localScale /= gridView.CellSize;
         }
     }
 
