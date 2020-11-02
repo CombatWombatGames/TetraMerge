@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 //Provides methods for booster buttons
 //TODO LOW Rewrite
@@ -19,7 +20,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IEndDragHandler, I
             Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift);
             if (CellIsAvailable(nearestCell))
             {
-                gridView.DrawShadow(new Vector2Int[] { nearestCell });
+                gridView.DrawShadow(new Vector2Int[] { nearestCell }, true);
             }
             else
             {
@@ -78,8 +79,10 @@ public class BoosterController : MonoBehaviour, IDragHandler, IEndDragHandler, I
             transform.position = eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift;
             if (boosterType != BoosterType.Refresh)
             {
-                transform.localScale *= 0.5f;
+                transform.localScale *= 0.75f;
+                GetComponentInChildren<Image>().color = new Color(1f, 1f, 1f, 0.5f);
             }
+            FindObjectOfType<AudioSystem>().PlayRaiseSfx();
         }
     }
 
@@ -87,9 +90,11 @@ public class BoosterController : MonoBehaviour, IDragHandler, IEndDragHandler, I
     {
         if (boosterType != BoosterType.Refresh)
         {
-            transform.localScale /= 0.5f;
+            transform.localScale /= 0.75f;
+            GetComponentInChildren<Image>().color = new Color(1f, 1f, 1f, 1f);
             transform.localPosition = Vector3.zero;
             gridView.DeleteShadow();
+            FindObjectOfType<AudioSystem>().PlayTurnSfx();
         }
     }
 }
