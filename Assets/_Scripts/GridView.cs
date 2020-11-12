@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using DG.Tweening;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +10,12 @@ public class GridView : MonoBehaviour
     public float CellSize { get; private set; } //In units
     public Vector3 FingerShift { get; private set; }
     public Vector3 BoosterFingerShift { get; private set; }
+    public Transform Field => field;
 
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
     [SerializeField] Sprite[] tiles = default;
+    [SerializeField] Transform field = default;
 
     GridModel gridModel;
     GameObject[,] cells;
@@ -60,24 +64,31 @@ public class GridView : MonoBehaviour
             for (int j = 0; j < grid.GetLength(1); j++)
             {
                 GameObject cell = Instantiate(cellPrefab, new Vector3((i - offsetX) * CellSize, (j - offsetY) * CellSize + fieldOffsetY), Quaternion.identity, cellsParent);
-                AssembleCellView(cell, grid[i, j].Level);
+                AssembleCellView(cell, grid[i, j].Level, false);
                 cells[i, j] = cell;
             }
         }
     }
 
-    void AssembleCellView(GameObject cell, int level)
+    Dictionary<GameObject, Sequence> keyValuePairs = new Dictionary<GameObject, Sequence>();
+    void AssembleCellView(GameObject cell, int level,  bool animate)
     {
         if (level != 0)
         {
-            //cell.GetComponentInChildren<Text>().text = level.ToString();
+            if (keyValuePairs.TryGetValue(cell, out var sequence))
+            {
+                sequence.Complete(true);
+            }
             cell.GetComponentsInChildren<Image>()[cellTileImageIndex].sprite = tiles[(level - 1) % tiles.Length];
             cell.GetComponentsInChildren<Image>()[cellTileImageIndex].enabled = true;
+        }
+        else if (animate)
+        {
+            keyValuePairs[cell] = AnimationSystem.DestroyTile(cell.GetComponentsInChildren<Image>()[cellTileImageIndex]);
         }
         else
         {
             cell.GetComponentsInChildren<Image>()[cellTileImageIndex].enabled = false;
-            cell.GetComponentInChildren<Text>().text = "";
         }
     }
 
@@ -85,7 +96,7 @@ public class GridView : MonoBehaviour
     {
         for (int i = 0; i < coordinates.Length; i++)
         {
-            AssembleCellView(cells[coordinates[i].x, coordinates[i].y], level);
+            AssembleCellView(cells[coordinates[i].x, coordinates[i].y], level, true);
         }
     }
 
@@ -94,7 +105,7 @@ public class GridView : MonoBehaviour
     {
         if (sound && (oldShadowArea == null || (oldShadowArea != null && !area.SequenceEqual(oldShadowArea))))
         {
-            FindObjectOfType<AudioSystem>().PlayHighlightSfx();
+            AudioSystem.Player.PlayHighlightSfx();
         }
         //Remove old shadow
         DeleteShadow();
