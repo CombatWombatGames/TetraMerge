@@ -44,7 +44,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IEndDragHandler, I
                 {
                     boostersModel.AddCell(nearestCell);
                 }
-                FindObjectOfType<AudioSystem>().PlayBoosterSfx();
+                AudioSystem.Player.PlayBoosterSfx();
             }
             transform.localPosition = Vector3.zero;
             gridView.DeleteShadow();
@@ -82,7 +82,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IEndDragHandler, I
                 transform.localScale *= 0.75f;
                 GetComponentInChildren<Image>().color = new Color(1f, 1f, 1f, 0.5f);
             }
-            FindObjectOfType<AudioSystem>().PlayRaiseSfx();
+            AudioSystem.Player.PlayRaiseSfx();
         }
     }
 
@@ -94,7 +94,7 @@ public class BoosterController : MonoBehaviour, IDragHandler, IEndDragHandler, I
             GetComponentInChildren<Image>().color = new Color(1f, 1f, 1f, 1f);
             transform.localPosition = Vector3.zero;
             gridView.DeleteShadow();
-            FindObjectOfType<AudioSystem>().PlayTurnSfx();
+            AudioSystem.Player.PlayTurnSfx();
         }
     }
 }

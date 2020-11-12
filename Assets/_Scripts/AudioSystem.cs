@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//Plays sounds
 public class AudioSystem : MonoBehaviour
 {
     [SerializeField] AudioSource sfxSource = default;
@@ -11,6 +12,13 @@ public class AudioSystem : MonoBehaviour
     [SerializeField] AudioClip buttonSfx = default;
     [SerializeField] AudioClip boosterSfx = default;
     [SerializeField] AudioClip raiseSfx = default;
+
+    public static AudioSystem Player;
+
+    void Awake()
+    {
+        Player = this;
+    }
 
     public void PlayTurnSfx()
     {

@@ -61,7 +61,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     {
         AnimationSystem.FinishPieceRotation();
         piecesView.ScalePiece(index, scaleRate);
-        FindObjectOfType<AudioSystem>().PlayRaiseSfx();
+        AudioSystem.Player.PlayRaiseSfx();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -76,12 +76,12 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
             gameObject.SetActive(false);
             piecesModel.RemovePiece(index);
             playerProgressionModel.TurnNumber++;
-            FindObjectOfType<AudioSystem>().PlayDropSfx();
+            AudioSystem.Player.PlayDropSfx();
         }
         else
         {
             piecesView.ReturnPiece(index);
-            FindObjectOfType<AudioSystem>().PlayTurnSfx();
+            AudioSystem.Player.PlayTurnSfx();
         }
         gridView.DeleteShadow();
     }
@@ -90,7 +90,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     {
         if (!eventData.dragging)
         {
-            FindObjectOfType<AudioSystem>().PlayTurnSfx();
+            AudioSystem.Player.PlayTurnSfx();
             piecesModel.RotatePiece(index);
         }
     }
