@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -145,6 +146,7 @@ public class SaveSystem : MonoBehaviour
     {
         File.Delete(saveFilePath);
         File.Move(preveousSaveFilePath, saveFilePath);
+        DOTween.Clear();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -152,6 +154,7 @@ public class SaveSystem : MonoBehaviour
     {
         Save();
         CreateInitialSave(saveFilePath);
+        DOTween.Clear();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

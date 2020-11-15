@@ -70,21 +70,25 @@ public class GridView : MonoBehaviour
         }
     }
 
-    Dictionary<GameObject, Sequence> keyValuePairs = new Dictionary<GameObject, Sequence>();
+    Dictionary<GameObject, Sequence> destroyngTiles = new Dictionary<GameObject, Sequence>();
     void AssembleCellView(GameObject cell, int level,  bool animate)
     {
+        var mainImage = cell.GetComponentsInChildren<Image>()[cellTileImageIndex];
+        var glowImage = cell.GetComponentsInChildren<Image>()[cellTileImageIndex + 2];
         if (level != 0)
         {
-            if (keyValuePairs.TryGetValue(cell, out var sequence))
+            if (destroyngTiles.TryGetValue(cell, out var sequence))
             {
                 sequence.Complete(true);
             }
-            cell.GetComponentsInChildren<Image>()[cellTileImageIndex].sprite = tiles[(level - 1) % tiles.Length];
-            cell.GetComponentsInChildren<Image>()[cellTileImageIndex].enabled = true;
+            mainImage.sprite = tiles[(level - 1) % tiles.Length];
+            mainImage.enabled = true;
+            AnimationSystem.Glow(glowImage);
         }
         else if (animate)
         {
-            keyValuePairs[cell] = AnimationSystem.DestroyTile(cell.GetComponentsInChildren<Image>()[cellTileImageIndex]);
+            destroyngTiles[cell] = AnimationSystem.DestroyTile(mainImage);
+            AnimationSystem.StopGlow(glowImage);
         }
         else
         {

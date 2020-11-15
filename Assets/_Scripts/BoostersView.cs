@@ -13,6 +13,7 @@ public class BoostersView : MonoBehaviour
     [SerializeField] Image addsIcon = default;
     [SerializeField] Image clearsIcon = default;
     [SerializeField] Slider slider = default;
+    [SerializeField] Text plusOneText = default;
 
     BoostersModel boostersModel;
     PlayerProgressionModel playerProgressionModel;
@@ -100,6 +101,7 @@ public class BoostersView : MonoBehaviour
 
     void OnTurnChanged(int turnNumber)
     {
-        slider.value = (float)(turnNumber - boostersModel.PreviousBoosterTurnNumber) / (boostersModel.NextBoosterTurnNumber - boostersModel.PreviousBoosterTurnNumber);
+        var value = (float)(turnNumber - boostersModel.PreviousBoosterTurnNumber) / (boostersModel.NextBoosterTurnNumber - boostersModel.PreviousBoosterTurnNumber);
+        AnimationSystem.ChangeProgress(slider, value, plusOneText);
     }
 }

@@ -48,4 +48,32 @@ public class AnimationSystem
                 image.transform.DOScale(1f, 0f);
             });
     }
+
+    static Dictionary<Image, Sequence> glowSequences = new Dictionary<Image, Sequence> ();
+    public static void Glow(Image image)
+    {
+        float duaration = 3f;
+        glowSequences[image] = DOTween.Sequence().Join(image.DOFade(0.25f, duaration).SetEase(Ease.Linear).SetDelay(Random.Range(0f, duaration))).SetLoops(-1, LoopType.Yoyo);
+    }
+    public static void StopGlow(Image image)
+    {
+        glowSequences[image].Kill();
+        image.color = new Color(1f, 1f, 1f, 0f);
+    }
+
+    public static void ChangeProgress(Slider slider, float value, Text text)
+    {
+        if (value < slider.value)
+        {
+            DOTween.Sequence()
+            .Join(slider.DOValue(1f, 0.2f))
+            .AppendInterval(0.3f)
+            .Append(slider.DOValue(0f, 0.8f))
+            .Join(text.DOFade(1f, 0.5f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo));
+        }
+        else
+        {
+            slider.DOValue(value, 0.2f);
+        }
+    }
 }

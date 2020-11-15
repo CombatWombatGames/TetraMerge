@@ -43,7 +43,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
-    totalSpriteSurfaceArea: 4999100
+    totalSpriteSurfaceArea: 5034725
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -55,6 +55,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 768b5b252b7781f4eb52f99d8106ef85, type: 3}
   - {fileID: 21300000, guid: 0bba643556ece6749952c8cd846bf8e5, type: 3}
   - {fileID: 21300000, guid: 85c83116a02c1af488e576a9969a5ae7, type: 3}
+  - {fileID: 21300000, guid: 79704646cf9cfd54bbe7148cf5d71a08, type: 3}
   - {fileID: 21300000, guid: f17fc0073c772ed4c963fd0c0560b943, type: 3}
   - {fileID: 21300000, guid: 32a111c822980e8409d7ee3dd7c1a59f, type: 3}
   - {fileID: 21300000, guid: b8ee68ea92c38264aab6756bfe15cd1a, type: 3}
@@ -63,6 +64,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 3d83fcfb4badd904b9359cb4d83288aa, type: 3}
   - {fileID: 21300000, guid: 8053240c7925b30439ab49cc3c5c93d4, type: 3}
   - {fileID: 21300000, guid: 7b2b702caea7eb240b4eb040cc23fd8d, type: 3}
+  - {fileID: 21300000, guid: 66f4a67c78b686d48b92e1de30b4c33b, type: 3}
   - {fileID: 21300000, guid: 1f14389c260784e4fb5324b92b8b5a85, type: 3}
   - {fileID: 21300000, guid: ed1fc72d61412734a94d35c7869b2ec9, type: 3}
   - {fileID: 21300000, guid: 1f35207d59c687a40b267df63cfe6199, type: 3}
@@ -75,6 +77,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8b60199e3137a8045a6781f889622a02, type: 3}
   - {fileID: 21300000, guid: 421a07de039ab6d4396233dd73fe2829, type: 3}
   - {fileID: 21300000, guid: c1d259cfaefb4fc408d6178db0452d96, type: 3}
+  - {fileID: 21300000, guid: 8d3bddef6e9a95945ba44b38227f7dd3, type: 3}
   - {fileID: 21300000, guid: 2b863dffd40024642b0a804716c40b33, type: 3}
   m_PackedSpriteNamesToIndex:
   - menu_bttn_pieces_light
@@ -83,6 +86,7 @@ SpriteAtlas:
   - shield_arrow_left
   - rune_3
   - stone_field
+  - tile_glow
   - menu_bttn_boost_shadow
   - rune_4
   - button_undo
@@ -91,6 +95,7 @@ SpriteAtlas:
   - rune_2_cln
   - boost_bttn_3
   - menu_field
+  - rune_glow
   - button_restart
   - button_quit
   - menu_bttn_boost_light
@@ -103,6 +108,7 @@ SpriteAtlas:
   - shield_arrow_revert
   - boost_bttn_2
   - progress_ball
+  - selection_border
   - menu_bttn_pieces_shadow
   m_Tag: SpriteAtlas
   m_IsVariant: 0
