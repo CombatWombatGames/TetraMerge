@@ -11,11 +11,13 @@ public class GridView : MonoBehaviour
     public Vector3 FingerShift { get; private set; }
     public Vector3 BoosterFingerShift { get; private set; }
     public Transform Field => field;
+    public ParticleSystem DustParticles => dustParticles;
 
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
     [SerializeField] Sprite[] tiles = default;
     [SerializeField] Transform field = default;
+    [SerializeField] ParticleSystem dustParticles = default;
 
     GridModel gridModel;
     GameObject[,] cells;
