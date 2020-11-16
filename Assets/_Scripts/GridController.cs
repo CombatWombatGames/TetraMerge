@@ -172,6 +172,6 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         gridModel.ChangeGrid(upgradedArea.ToArray(), newLevel);
         playerProgressionModel.TurnNumber++;
         AudioSystem.Player.PlayMergeSfx();
-        AnimationSystem.ShakeField(gridView.Field, area.Length, gridView.DustParticles, gridView.CellSize);
+        AnimationSystem.ShakeField(gridView.Field, area.Length, gridView.DustParticles, gridView.ShardsParticles, gridView.CellSize);
     }
 }

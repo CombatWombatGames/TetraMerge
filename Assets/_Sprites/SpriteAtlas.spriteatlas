@@ -43,7 +43,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
-    totalSpriteSurfaceArea: 5034725
+    totalSpriteSurfaceArea: 5035749
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -72,6 +72,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7e1f9e9d5099f0a4399f8acce407c118, type: 3}
   - {fileID: 21300000, guid: 356a7ccd54e7d34468c2d98a00f9ec7a, type: 3}
   - {fileID: 21300000, guid: d43f80ddaef96a047b6b09b2c82f8515, type: 3}
+  - {fileID: 21300000, guid: a96b14fd107f696418ca0526c1214eba, type: 3}
   - {fileID: 21300000, guid: 225a912ee5f6b014bbd2f1471a1eea06, type: 3}
   - {fileID: 21300000, guid: f1aae85ed587f7c40a11cdd3cd9bd9b1, type: 3}
   - {fileID: 21300000, guid: 8b60199e3137a8045a6781f889622a02, type: 3}
@@ -103,6 +104,7 @@ SpriteAtlas:
   - score_rune_best
   - rune_4_cln
   - background
+  - shard
   - rune_2
   - score_rune
   - shield_arrow_revert
