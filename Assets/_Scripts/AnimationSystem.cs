@@ -32,11 +32,7 @@ public class AnimationSystem
         {
             field.DOShakePosition(0.4f, Vector3.one * 0.4f * scale, 2000, 90f, false, false);
             field.DOPunchScale(- Vector3.one * 0.001f * scale, 0.2f, 1000, 1f);
-            var shape = dustParticles.shape;
-            shape.scale = new Vector3(7.5f * cellSize, 7.5f * cellSize, 0f);
             dustParticles.Play();
-            shape = shardsParticles.shape;
-            shape.scale = new Vector3(7.5f * cellSize, 7.5f * cellSize, 0f);
             shardsParticles.Play();
         }
     }
