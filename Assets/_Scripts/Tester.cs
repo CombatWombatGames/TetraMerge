@@ -9,7 +9,7 @@ public class Tester : MonoBehaviour
     void Start()
     {
         //StartCoroutine(LateStart(1f));
-        GameObject.Find("MusicSource").SetActive(false);//GetComponent<AudioSource>().enabled = false;
+        GameObject.Find("MusicSource").SetActive(false);
     }
 
     IEnumerator LateStart(float duration)
@@ -22,6 +22,7 @@ public class Tester : MonoBehaviour
     {
         FindObjectOfType<PlayerProgressionModel>().UpdateBestScore();
         FindObjectOfType<SaveSystem>().StartFromScratch();
+        AudioSystem.Player.RestartMusic();
     }
 
     public void FillGrid(int level)

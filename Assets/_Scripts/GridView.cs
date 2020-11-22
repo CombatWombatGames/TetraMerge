@@ -13,6 +13,8 @@ public class GridView : MonoBehaviour
     public Transform Field => field;
     public ParticleSystem DustParticles => dustParticles;
     public ParticleSystem ShardsParticles => shardsParticles;
+    public ParticleSystem LeafParticles => leafParticles;
+    public ParticleSystem LeafParticlesBurst => leafParticlesBurst;
 
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
@@ -20,6 +22,8 @@ public class GridView : MonoBehaviour
     [SerializeField] Transform field = default;
     [SerializeField] ParticleSystem dustParticles = default;
     [SerializeField] ParticleSystem shardsParticles = default;
+    [SerializeField] ParticleSystem leafParticles = default;
+    [SerializeField] ParticleSystem leafParticlesBurst = default;
 
     GridModel gridModel;
     GameObject[,] cells;

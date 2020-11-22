@@ -14,10 +14,12 @@ public class AudioSystem : MonoBehaviour
     [SerializeField] AudioClip raiseSfx = default;
 
     public static AudioSystem Player;
+    AudioSource musicSource;
 
     void Awake()
     {
         Player = this;
+        musicSource = GameObject.Find("MusicSource").GetComponent<AudioSource>();
     }
 
     public void PlayTurnSfx()
@@ -62,5 +64,10 @@ public class AudioSystem : MonoBehaviour
     {
         sfxSource.pitch = 1f;
         sfxSource.PlayOneShot(raiseSfx, 0.15f);
+    }
+
+    public void RestartMusic()
+    {
+        musicSource.Play();
     }
 }

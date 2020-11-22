@@ -43,7 +43,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
-    totalSpriteSurfaceArea: 5608321
+    totalSpriteSurfaceArea: 5608009
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -57,7 +57,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: bdb0dba1c6d675442bf5a6b09d4b58aa, type: 3}
   - {fileID: 21300000, guid: 2b3bfb92c9a002645b472bead7f775c4, type: 3}
   - {fileID: 21300000, guid: 270f66642d6d007408a22ae4d1595c00, type: 3}
-  - {fileID: 21300000, guid: 44890574cecc89a4db055b74a84a86d8, type: 3}
   - {fileID: 21300000, guid: 20a9e5744dccebb449d6dccb46c6dddd, type: 3}
   - {fileID: 21300000, guid: adfa02250f0c3a2408f7b9a88a6d4229, type: 3}
   - {fileID: 21300000, guid: 768b5b252b7781f4eb52f99d8106ef85, type: 3}
@@ -111,7 +110,6 @@ SpriteAtlas:
   - rune_1_cln
   - rune_8_cln
   - rune_3_cln
-  - grass_3_leave_dark
   - shield_menu_press
   - rune_9_cln
   - shield_arrow_left

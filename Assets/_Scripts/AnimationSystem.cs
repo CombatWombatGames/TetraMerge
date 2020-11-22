@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.ParticleSystem;
 
 //Plays animations
 public class AnimationSystem
@@ -26,15 +27,26 @@ public class AnimationSystem
         rotatePieceSequences.Clear();
     }
 
-    public static void ShakeField(Transform field, int scale, ParticleSystem dustParticles, ParticleSystem shardsParticles, float cellSize)
+    public static void ShakeField(Transform field, int scale, ParticleSystem dustParticles, ParticleSystem shardsParticles, float cellSize, ParticleSystem leafParticles, ParticleSystem leafParticlesBurst)
     {
+        if (scale > 16)
+        {
+            dustParticles.Play();
+        }
         if (scale > 9)
         {
             field.DOShakePosition(0.4f, Vector3.one * 0.4f * scale, 2000, 90f, false, false);
             field.DOPunchScale(- Vector3.one * 0.001f * scale, 0.2f, 1000, 1f);
-            dustParticles.Play();
             shardsParticles.Play();
+            scale = 12;
         }
+        leafParticles.Stop();
+        leafParticlesBurst.emission.SetBurst(0, new Burst(0f, scale / 4, 10, 0.01f));
+        leafParticlesBurst.Play();
+        DOVirtual.DelayedCall(1f, () => 
+        {
+            leafParticles.Play();
+        });
     }
 
     public static Sequence DestroyTile(Image image)
