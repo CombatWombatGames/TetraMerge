@@ -27,7 +27,7 @@ public class AnimationSystem
         rotatePieceSequences.Clear();
     }
 
-    public static void ShakeField(Transform field, int scale, ParticleSystem dustParticles, ParticleSystem shardsParticles, float cellSize, ParticleSystem leafParticles, ParticleSystem leafParticlesBurst)
+    public static void ShakeField(Transform field, int scale, ParticleSystem dustParticles, ParticleSystem shardsParticles, ParticleSystem leafParticles, ParticleSystem leafParticlesBurst)
     {
         if (scale > 16)
         {
@@ -40,13 +40,10 @@ public class AnimationSystem
             shardsParticles.Play();
             scale = 12;
         }
-        leafParticles.Stop();
         leafParticlesBurst.emission.SetBurst(0, new Burst(0f, scale / 4, 10, 0.01f));
         leafParticlesBurst.Play();
-        DOVirtual.DelayedCall(1f, () => 
-        {
-            leafParticles.Play();
-        });
+        leafParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        leafParticles.Play();
     }
 
     public static Sequence DestroyTile(Image image)
