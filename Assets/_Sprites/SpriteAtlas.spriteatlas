@@ -54,6 +54,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 9900b3b05edfd0c479c4dea2b81aa427, type: 3}
   - {fileID: 21300000, guid: 084ecec0a18159043b7c9d6c3cf1c3a8, type: 3}
   - {fileID: 21300000, guid: b292a431fd7d75e458b8a9666f95b35f, type: 3}
+  - {fileID: 21300000, guid: 745bf0711ce9da9498b3edb1a022998c, type: 3}
   - {fileID: 21300000, guid: bdb0dba1c6d675442bf5a6b09d4b58aa, type: 3}
   - {fileID: 21300000, guid: 2b3bfb92c9a002645b472bead7f775c4, type: 3}
   - {fileID: 21300000, guid: 270f66642d6d007408a22ae4d1595c00, type: 3}
@@ -90,7 +91,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8580219d87988c644b11c1894c77a5f8, type: 3}
   - {fileID: 21300000, guid: 7e1f9e9d5099f0a4399f8acce407c118, type: 3}
   - {fileID: 21300000, guid: 356a7ccd54e7d34468c2d98a00f9ec7a, type: 3}
-  - {fileID: 21300000, guid: d43f80ddaef96a047b6b09b2c82f8515, type: 3}
   - {fileID: 21300000, guid: a96b14fd107f696418ca0526c1214eba, type: 3}
   - {fileID: 21300000, guid: 225a912ee5f6b014bbd2f1471a1eea06, type: 3}
   - {fileID: 21300000, guid: f1aae85ed587f7c40a11cdd3cd9bd9b1, type: 3}
@@ -107,6 +107,7 @@ SpriteAtlas:
   - grass_3
   - menu_bttn_pieces_light
   - shield_arrow_left_press
+  - background_1
   - rune_1_cln
   - rune_8_cln
   - rune_3_cln
@@ -143,7 +144,6 @@ SpriteAtlas:
   - shield_arrow_revert_press
   - score_rune_best
   - rune_4_cln
-  - background
   - shard
   - rune_2
   - score_rune
