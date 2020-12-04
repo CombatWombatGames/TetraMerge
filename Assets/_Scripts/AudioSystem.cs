@@ -20,6 +20,7 @@ public class AudioSystem : MonoBehaviour
     {
         Player = this;
         musicSource = GameObject.Find("MusicSource").GetComponent<AudioSource>();
+        musicSource.mute = PlayerPrefs.GetInt("Mute") == 1 ? true : false;
     }
 
     public void PlayTurnSfx()
@@ -69,5 +70,11 @@ public class AudioSystem : MonoBehaviour
     public void RestartMusic()
     {
         musicSource.Play();
+    }
+
+    public void MuteMusic()
+    {
+        musicSource.mute = !musicSource.mute;
+        PlayerPrefs.SetInt("Mute", musicSource.mute ? 1 : 0);
     }
 }

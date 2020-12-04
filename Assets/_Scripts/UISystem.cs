@@ -4,26 +4,37 @@ using UnityEngine.UI;
 // Handles button clicks
 public class UISystem : MonoBehaviour
 {
-    [SerializeField] Button quitButton = default;
-    [SerializeField] Button restartButton = default;
+    [Header("Top UI")]
+    [SerializeField] Button menuButton = default;
+    [SerializeField] Button guiRestartButton = default;
     [SerializeField] Button undoButton = default;
+    [Header("Bottom UI")]
     [SerializeField] Button piecesButton = default;
     [SerializeField] Button boostersButton = default;
     [SerializeField] GameObject piecesPanel = default;
     [SerializeField] GameObject boostersPanel = default;
+    [Header("Booster")]
     [SerializeField] Button refreshButton = default;
+    [Header("Menu")]
+    [SerializeField] Button continueButton = default;
+    [SerializeField] Button restartButton = default;
+    [SerializeField] Button muteButton = default;
+    [SerializeField] Button aboutButton = default;
+    [SerializeField] Button quitButton = default;
 
-    Tester tester;
+    Menu menu;
     SaveSystem saveSystem;
     BoostersModel boosterModel;
 
     void Awake()
     {
-        tester = GetComponent<Tester>();
+        menu = GetComponent<Menu>();
         saveSystem = GetComponent<SaveSystem>();
         boosterModel = GetComponent<BoostersModel>();
-        quitButton.onClick.AddListener(tester.Quit);
-        restartButton.onClick.AddListener(tester.RestartScene);
+        quitButton.onClick.AddListener(menu.Quit);
+        restartButton.onClick.AddListener(menu.RestartScene);
+        guiRestartButton.onClick.AddListener(menu.RestartScene);
+        muteButton.onClick.AddListener(menu.Mute);
         undoButton.onClick.AddListener(saveSystem.Undo);
         piecesButton.onClick.AddListener(() => OnTableButtonClicked(true));
         boostersButton.onClick.AddListener(() => OnTableButtonClicked(false));
@@ -38,6 +49,7 @@ public class UISystem : MonoBehaviour
         undoButton.onClick.RemoveAllListeners();
         piecesButton.onClick.RemoveAllListeners();
         boostersButton.onClick.RemoveAllListeners();
+        muteButton.onClick.RemoveAllListeners();
     }
 
     void OnTableButtonClicked(bool enablePieces, bool sound = true)

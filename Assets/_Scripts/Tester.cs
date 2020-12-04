@@ -9,7 +9,7 @@ public class Tester : MonoBehaviour
     void Start()
     {
         //StartCoroutine(LateStart(1f));
-        GameObject.Find("MusicSource").SetActive(false);
+        //GameObject.Find("MusicSource").SetActive(false);
     }
 
     IEnumerator LateStart(float duration)
@@ -17,13 +17,6 @@ public class Tester : MonoBehaviour
         yield return new WaitForSeconds(duration);
     }
 #endif
-
-    public void RestartScene()
-    {
-        FindObjectOfType<PlayerProgressionModel>().UpdateBestScore();
-        FindObjectOfType<SaveSystem>().StartFromScratch();
-        AudioSystem.Player.RestartMusic();
-    }
 
     public void FillGrid(int level)
     {
@@ -39,14 +32,5 @@ public class Tester : MonoBehaviour
             }
         }
         grid.ChangeGrid(area, level);
-    }
-
-    public void Quit()
-    {
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
     }
 }
