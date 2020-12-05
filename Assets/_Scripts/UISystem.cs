@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.UI;
 
 // Handles button clicks
@@ -6,8 +8,9 @@ public class UISystem : MonoBehaviour
 {
     [Header("Top UI")]
     [SerializeField] Button menuButton = default;
-    [SerializeField] Button guiRestartButton = default;
+    [SerializeField] Button helpButton = default;
     [SerializeField] Button undoButton = default;
+    [SerializeField] Button closeHelpButton = default;
     [Header("Bottom UI")]
     [SerializeField] Button piecesButton = default;
     [SerializeField] Button boostersButton = default;
@@ -21,44 +24,115 @@ public class UISystem : MonoBehaviour
     [SerializeField] Button muteButton = default;
     [SerializeField] Button aboutButton = default;
     [SerializeField] Button quitButton = default;
+    [SerializeField] GameObject menuCanvas = default;
+    [SerializeField] GameObject aboutCanvas = default;
+    [SerializeField] GameObject helpCanvas = default;
+    [Header("About")]
+    [SerializeField] Button mailButton = default;
+    [SerializeField] Button termsButton = default;
+    [SerializeField] Button privacyButton = default;
+    [SerializeField] Button closeAboutButton = default;
 
-    Menu menu;
     SaveSystem saveSystem;
     BoostersModel boosterModel;
+    PlayerProgressionModel playerProgressionModel;
+    Dictionary<string, GameObject> windows;
 
     void Awake()
     {
-        menu = GetComponent<Menu>();
         saveSystem = GetComponent<SaveSystem>();
         boosterModel = GetComponent<BoostersModel>();
-        quitButton.onClick.AddListener(menu.Quit);
-        restartButton.onClick.AddListener(menu.RestartScene);
-        guiRestartButton.onClick.AddListener(menu.RestartScene);
-        muteButton.onClick.AddListener(menu.Mute);
+        playerProgressionModel = GetComponent<PlayerProgressionModel>();
+
         undoButton.onClick.AddListener(saveSystem.Undo);
-        piecesButton.onClick.AddListener(() => OnTableButtonClicked(true));
-        boostersButton.onClick.AddListener(() => OnTableButtonClicked(false));
-        refreshButton.onClick.AddListener(() => { boosterModel.GenerateNewPieces(); OnTableButtonClicked(true); });
-        OnTableButtonClicked(true, false);
+        helpButton.onClick.AddListener(() => SetWindowActive(Consts.Help));
+        menuButton.onClick.AddListener(() => SetWindowActive(Consts.Menu));
+        closeHelpButton.onClick.AddListener(() => SetWindowActive(null));
+
+        continueButton.onClick.AddListener(() => SetWindowActive(null));
+        restartButton.onClick.AddListener(RestartScene);
+        muteButton.onClick.AddListener(Mute);
+        aboutButton.onClick.AddListener(() => SetWindowActive(Consts.About));
+        quitButton.onClick.AddListener(Quit);
+        
+        piecesButton.onClick.AddListener(() => SwitchTable(true));
+        boostersButton.onClick.AddListener(() => SwitchTable(false));
+        refreshButton.onClick.AddListener(() => { boosterModel.GenerateNewPieces(); SwitchTable(true); });
+
+        mailButton.onClick.RemoveAllListeners();
+        termsButton.onClick.RemoveAllListeners();
+        privacyButton.onClick.RemoveAllListeners();
+        closeAboutButton.onClick.AddListener(() => SetWindowActive(null));
+
+        SwitchTable(true, false);
+
+        windows = new Dictionary<string, GameObject> { { Consts.Menu, menuCanvas }, { Consts.About, aboutCanvas }, { Consts.Help, helpCanvas } };
     }
 
     void OnDestroy()
     {
-        quitButton.onClick.RemoveAllListeners();
-        restartButton.onClick.RemoveAllListeners();
         undoButton.onClick.RemoveAllListeners();
+        helpButton.onClick.RemoveAllListeners();
+        menuButton.onClick.RemoveAllListeners();
+        closeHelpButton.onClick.RemoveAllListeners();
+
+        continueButton.onClick.RemoveAllListeners();
+        restartButton.onClick.RemoveAllListeners();
+        muteButton.onClick.RemoveAllListeners();
+        aboutButton.onClick.RemoveAllListeners();
+        quitButton.onClick.RemoveAllListeners();
+
         piecesButton.onClick.RemoveAllListeners();
         boostersButton.onClick.RemoveAllListeners();
-        muteButton.onClick.RemoveAllListeners();
+        refreshButton.onClick.RemoveAllListeners();
+
+        mailButton.onClick.RemoveAllListeners();
+        termsButton.onClick.RemoveAllListeners();
+        privacyButton.onClick.RemoveAllListeners();
+        closeAboutButton.onClick.RemoveAllListeners();
     }
 
-    void OnTableButtonClicked(bool enablePieces, bool sound = true)
+    void SetWindowActive(string id)
+    {
+        foreach (var kvp in windows)
+        {
+            kvp.Value.SetActive(false);
+        }
+        if (!string.IsNullOrEmpty(id))
+        {
+            windows[id].SetActive(true);
+        }
+        AudioSystem.Player.PlayButtonSfx();
+    }
+
+    public void RestartScene()
+    {
+        playerProgressionModel.UpdateBestScore();
+        saveSystem.StartFromScratch();
+        AudioSystem.Player.RestartMusic();
+    }
+
+    public void Mute()
+    {
+        AudioSystem.Player.MuteMusic();
+    }
+
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    void SwitchTable(bool enablePieces, bool sound = true)
     {
         piecesButton.interactable = !enablePieces;
         boostersButton.interactable = enablePieces;
         piecesPanel.SetActive(enablePieces);
         boostersPanel.SetActive(!enablePieces);
-        piecesButton.transform.SetSiblingIndex(enablePieces? 2 : 0);
+        piecesButton.transform.SetSiblingIndex(enablePieces ? 2 : 0);
         boostersButton.transform.SetSiblingIndex(enablePieces ? 0 : 2);
         if (sound)
         {

@@ -20,7 +20,7 @@ public class AudioSystem : MonoBehaviour
     {
         Player = this;
         musicSource = GameObject.Find("MusicSource").GetComponent<AudioSource>();
-        musicSource.mute = PlayerPrefs.GetInt("Mute") == 1 ? true : false;
+        musicSource.mute = PlayerPrefs.GetInt("Mute") == 1;
     }
 
     public void PlayTurnSfx()
