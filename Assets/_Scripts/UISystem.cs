@@ -27,6 +27,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] GameObject menuCanvas = default;
     [SerializeField] GameObject aboutCanvas = default;
     [SerializeField] GameObject helpCanvas = default;
+    [SerializeField] Button closeMenuButton = default;
     [Header("About")]
     [SerializeField] Button mailButton = default;
     [SerializeField] Button termsButton = default;
@@ -54,14 +55,15 @@ public class UISystem : MonoBehaviour
         muteButton.onClick.AddListener(Mute);
         aboutButton.onClick.AddListener(() => SetWindowActive(Consts.About));
         quitButton.onClick.AddListener(Quit);
-        
+        closeMenuButton.onClick.AddListener(() => SetWindowActive(null));
+
         piecesButton.onClick.AddListener(() => SwitchTable(true));
         boostersButton.onClick.AddListener(() => SwitchTable(false));
         refreshButton.onClick.AddListener(() => { boosterModel.GenerateNewPieces(); SwitchTable(true); });
 
-        mailButton.onClick.RemoveAllListeners();
-        termsButton.onClick.RemoveAllListeners();
-        privacyButton.onClick.RemoveAllListeners();
+        mailButton.onClick.AddListener(SendEmail);
+        termsButton.onClick.AddListener(OpenTerms);
+        privacyButton.onClick.AddListener(OpenPrivacy);
         closeAboutButton.onClick.AddListener(() => SetWindowActive(null));
 
         SwitchTable(true, false);
@@ -81,6 +83,7 @@ public class UISystem : MonoBehaviour
         muteButton.onClick.RemoveAllListeners();
         aboutButton.onClick.RemoveAllListeners();
         quitButton.onClick.RemoveAllListeners();
+        closeMenuButton.onClick.RemoveAllListeners();
 
         piecesButton.onClick.RemoveAllListeners();
         boostersButton.onClick.RemoveAllListeners();
@@ -138,5 +141,20 @@ public class UISystem : MonoBehaviour
         {
             AudioSystem.Player.PlayButtonSfx();
         }
+    }
+
+    void SendEmail()
+    {
+        Application.OpenURL("mailto:combatwombat@ro.ru");
+    }
+
+    void OpenTerms()
+    {
+        Application.OpenURL("https://docs.google.com/document/d/1eige_tr6YDSQ8-XE1gdLG8ZbNeGmVvD4Mex3bHjJYxA/edit?usp=sharing");
+    }
+
+    void OpenPrivacy()
+    {
+        Application.OpenURL("https://docs.google.com/document/d/1gVyA0oGOmKJ9KjuA-RmlUS0nkkNwe3kmVs1v3bX29FA/edit?usp=sharing");
     }
 }
