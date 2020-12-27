@@ -67,11 +67,13 @@ public class BoostersModel : MonoBehaviour
         piecesModel = GetComponent<PiecesModel>();
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
         playerProgressionModel.TurnChanged += OnTurnChanged;
+        gridModel.GridChanged += OnGridChanged;
     }
 
     void OnDestroy()
     {
         playerProgressionModel.TurnChanged -= OnTurnChanged;
+        gridModel.GridChanged -= OnGridChanged;
     }
 
     public void Initialize(int refreshesCount, int addsCount, int clearsCount, int boostersGiven)
@@ -86,9 +88,10 @@ public class BoostersModel : MonoBehaviour
     {
         if (turnNumber == NextBoosterTurnNumber)
         {
-            RefreshesCount++;
-            AddsCount++;
-            ClearsCount++;
+            for (int i = 0; i < 2; i++)
+            {
+                GiveRandomBooster();
+            }
             BoostersGiven++;
         }
     }
@@ -120,6 +123,50 @@ public class BoostersModel : MonoBehaviour
             gridModel.ChangeGrid(new Vector2Int[] { position }, playerProgressionModel.LevelNumber);
             AddsCount--;
             playerProgressionModel.TurnNumber++;
+        }
+    }
+
+    void GiveRandomBooster()
+    {
+        int index = UnityEngine.Random.Range(0, 3);
+        switch (index)
+        {
+            case 0:
+                RefreshesCount++;
+                break;
+            case 1:
+                AddsCount++;
+                break;
+            case 2:
+                ClearsCount++;
+                break;
+            default:
+                break;
+        }
+    }
+
+    void OnGridChanged(Vector2Int[] area, int level)
+    {
+        if (level == 0)
+        {
+            if (area.Length > 25)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    GiveRandomBooster();
+                }
+            }
+            else if (area.Length > 16)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    GiveRandomBooster();
+                }
+            }
+            else if (area.Length > 9)
+            {
+                GiveRandomBooster();
+            }
         }
     }
 }
