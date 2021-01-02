@@ -21,18 +21,22 @@ public class UISystem : MonoBehaviour
     [Header("Menu")]
     [SerializeField] Button continueButton = default;
     [SerializeField] Button restartButton = default;
+    [SerializeField] Button collectionButton = default;
     [SerializeField] Button muteButton = default;
     [SerializeField] Button aboutButton = default;
     [SerializeField] Button quitButton = default;
     [SerializeField] GameObject menuCanvas = default;
     [SerializeField] GameObject aboutCanvas = default;
     [SerializeField] GameObject helpCanvas = default;
+    [SerializeField] GameObject collectionCanvas = default;
     [SerializeField] Button closeMenuButton = default;
     [Header("About")]
     [SerializeField] Button mailButton = default;
     [SerializeField] Button termsButton = default;
     [SerializeField] Button privacyButton = default;
     [SerializeField] Button closeAboutButton = default;
+    [Header("Collection")]
+    [SerializeField] Button closeCollectionButton = default;
 
     SaveSystem saveSystem;
     BoostersModel boosterModel;
@@ -52,6 +56,7 @@ public class UISystem : MonoBehaviour
 
         continueButton.onClick.AddListener(() => SetWindowActive(null));
         restartButton.onClick.AddListener(RestartScene);
+        collectionButton.onClick.AddListener(() => SetWindowActive(Consts.Collection));
         muteButton.onClick.AddListener(Mute);
         aboutButton.onClick.AddListener(() => SetWindowActive(Consts.About));
         quitButton.onClick.AddListener(Quit);
@@ -66,9 +71,17 @@ public class UISystem : MonoBehaviour
         privacyButton.onClick.AddListener(OpenPrivacy);
         closeAboutButton.onClick.AddListener(() => SetWindowActive(null));
 
+        closeCollectionButton.onClick.AddListener(() => SetWindowActive(null));
+
         SwitchTable(true, false);
 
-        windows = new Dictionary<string, GameObject> { { Consts.Menu, menuCanvas }, { Consts.About, aboutCanvas }, { Consts.Help, helpCanvas } };
+        windows = new Dictionary<string, GameObject> 
+        { 
+            { Consts.Menu, menuCanvas }, 
+            { Consts.About, aboutCanvas }, 
+            { Consts.Help, helpCanvas }, 
+            { Consts.Collection, collectionCanvas } 
+        };
     }
 
     void OnDestroy()
@@ -80,6 +93,7 @@ public class UISystem : MonoBehaviour
 
         continueButton.onClick.RemoveAllListeners();
         restartButton.onClick.RemoveAllListeners();
+        collectionButton.onClick.RemoveAllListeners();
         muteButton.onClick.RemoveAllListeners();
         aboutButton.onClick.RemoveAllListeners();
         quitButton.onClick.RemoveAllListeners();
@@ -93,6 +107,8 @@ public class UISystem : MonoBehaviour
         termsButton.onClick.RemoveAllListeners();
         privacyButton.onClick.RemoveAllListeners();
         closeAboutButton.onClick.RemoveAllListeners();
+
+        closeCollectionButton.onClick.RemoveAllListeners();
     }
 
     void SetWindowActive(string id)
@@ -106,6 +122,10 @@ public class UISystem : MonoBehaviour
             windows[id].SetActive(true);
         }
         AudioSystem.Player.PlayButtonSfx();
+        if (id == Consts.Collection)
+        {
+
+        }
     }
 
     public void RestartScene()
