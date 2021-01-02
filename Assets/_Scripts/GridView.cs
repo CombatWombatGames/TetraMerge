@@ -18,7 +18,6 @@ public class GridView : MonoBehaviour
 
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
-    [SerializeField] Sprite[] tiles = default;
     [SerializeField] Transform field = default;
     [SerializeField] ParticleSystem dustParticles = default;
     [SerializeField] ParticleSystem shardsParticles = default;
@@ -30,9 +29,11 @@ public class GridView : MonoBehaviour
     float fieldOffsetY;
     int cellTileImageIndex = 0;
     int cellShadowImageIndex = 1;
+    Sprite[] tiles;
 
     void Awake()
     {
+        tiles = GetComponent<Tiles>().TilesList;
         gridModel = GetComponent<GridModel>();
         gridModel.GridCreated += OnGridCreated;
         gridModel.GridChanged += OnGridChanged;

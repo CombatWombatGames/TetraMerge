@@ -19891,6 +19891,7 @@ GameObject:
   - component: {fileID: 1380896178}
   - component: {fileID: 1380896184}
   - component: {fileID: 1380896188}
+  - component: {fileID: 1380896190}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -19929,17 +19930,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a7d14ed59bf45458ffe6a0f310662c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiles:
-  - {fileID: 21300000, guid: 49aa1b0ba409b0a438d3de2173a846fc, type: 3}
-  - {fileID: 21300000, guid: 225a912ee5f6b014bbd2f1471a1eea06, type: 3}
-  - {fileID: 21300000, guid: 0bba643556ece6749952c8cd846bf8e5, type: 3}
-  - {fileID: 21300000, guid: 32a111c822980e8409d7ee3dd7c1a59f, type: 3}
-  - {fileID: 21300000, guid: ad9abda768cb1564c8d44674927fed80, type: 3}
-  - {fileID: 21300000, guid: 72f8308b3042c0a419000542a6f1c987, type: 3}
-  - {fileID: 21300000, guid: 8048a0305cf3a98428ad526d56e9b0b4, type: 3}
-  - {fileID: 21300000, guid: 3ea025b500cc5c34fa1d053004d55723, type: 3}
-  - {fileID: 21300000, guid: 2d5e195ebce94f54f8b13ca5effcadff, type: 3}
-  - {fileID: 21300000, guid: 776bd80cf839fd643a1878741ea97645, type: 3}
   piecePrefab: {fileID: 5811342879409117708, guid: b34e019b1e5fb2b4fb8a7e8cb783e661,
     type: 3}
   pieceParents:
@@ -20000,17 +19990,6 @@ MonoBehaviour:
   cellPrefab: {fileID: 6699215293390578632, guid: 0c93f72185fc9ac4db2e6b5110e49a01,
     type: 3}
   cellsParent: {fileID: 1575166983}
-  tiles:
-  - {fileID: 21300000, guid: 49aa1b0ba409b0a438d3de2173a846fc, type: 3}
-  - {fileID: 21300000, guid: 225a912ee5f6b014bbd2f1471a1eea06, type: 3}
-  - {fileID: 21300000, guid: 0bba643556ece6749952c8cd846bf8e5, type: 3}
-  - {fileID: 21300000, guid: 32a111c822980e8409d7ee3dd7c1a59f, type: 3}
-  - {fileID: 21300000, guid: ad9abda768cb1564c8d44674927fed80, type: 3}
-  - {fileID: 21300000, guid: 72f8308b3042c0a419000542a6f1c987, type: 3}
-  - {fileID: 21300000, guid: 8048a0305cf3a98428ad526d56e9b0b4, type: 3}
-  - {fileID: 21300000, guid: 3ea025b500cc5c34fa1d053004d55723, type: 3}
-  - {fileID: 21300000, guid: 2d5e195ebce94f54f8b13ca5effcadff, type: 3}
-  - {fileID: 21300000, guid: 776bd80cf839fd643a1878741ea97645, type: 3}
   field: {fileID: 1898367142}
   dustParticles: {fileID: 499657518}
   shardsParticles: {fileID: 235698044}
@@ -20104,7 +20083,10 @@ MonoBehaviour:
   termsButton: {fileID: 1273599728}
   privacyButton: {fileID: 1051349886}
   closeAboutButton: {fileID: 1396414957}
+  runePrefab: {fileID: 7156612882126893435, guid: 4889e0cc8cf8dfe489ad269b05f70b70,
+    type: 3}
   closeCollectionButton: {fileID: 697910472}
+  runesParent: {fileID: 183523126}
 --- !u!114 &1380896185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20286,6 +20268,29 @@ MonoBehaviour:
   buttonSfx: {fileID: 8300000, guid: 8dc9816c7698fe142b5e7a0e75e3677f, type: 3}
   boosterSfx: {fileID: 8300000, guid: 50879e7454e5a7d41904951cfd70c3cd, type: 3}
   raiseSfx: {fileID: 8300000, guid: 599e8216a30236b4ab12939005833bb9, type: 3}
+--- !u!114 &1380896190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380896173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1fbde21cb4d7c42a6fed9746331549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilesList:
+  - {fileID: 21300000, guid: 49aa1b0ba409b0a438d3de2173a846fc, type: 3}
+  - {fileID: 21300000, guid: 225a912ee5f6b014bbd2f1471a1eea06, type: 3}
+  - {fileID: 21300000, guid: 0bba643556ece6749952c8cd846bf8e5, type: 3}
+  - {fileID: 21300000, guid: 32a111c822980e8409d7ee3dd7c1a59f, type: 3}
+  - {fileID: 21300000, guid: ad9abda768cb1564c8d44674927fed80, type: 3}
+  - {fileID: 21300000, guid: 72f8308b3042c0a419000542a6f1c987, type: 3}
+  - {fileID: 21300000, guid: 8048a0305cf3a98428ad526d56e9b0b4, type: 3}
+  - {fileID: 21300000, guid: 3ea025b500cc5c34fa1d053004d55723, type: 3}
+  - {fileID: 21300000, guid: 2d5e195ebce94f54f8b13ca5effcadff, type: 3}
+  - {fileID: 21300000, guid: 776bd80cf839fd643a1878741ea97645, type: 3}
 --- !u!1 &1389820112
 GameObject:
   m_ObjectHideFlags: 0

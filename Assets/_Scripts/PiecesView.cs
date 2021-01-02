@@ -4,7 +4,6 @@ using UnityEngine.UI;
 //Displays pieces to player
 public class PiecesView : MonoBehaviour
 {
-    [SerializeField] Sprite[] tiles = default;
     [SerializeField] GameObject piecePrefab = default;
     [SerializeField] Transform[] pieceParents = default;
 
@@ -14,9 +13,11 @@ public class PiecesView : MonoBehaviour
     Transform[][] nextPiecesTransforms = new Transform[3][];
     Vector3[][] nextPiecesWorldCoordinates = new Vector3[3][];
     readonly int[] rotationLookup = { 2, 5, 8, 1, 4, 7, 0, 3, 6 };
+    Sprite[] tiles;
 
     void Awake()
     {
+        tiles = GetComponent<Tiles>().TilesList;
         piecesModel = GetComponent<PiecesModel>();
         piecesModel.PieceRemoved += HidePiece;
         piecesModel.PiecesGenerated += ShowPieces;

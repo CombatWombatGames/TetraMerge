@@ -36,7 +36,9 @@ public class UISystem : MonoBehaviour
     [SerializeField] Button privacyButton = default;
     [SerializeField] Button closeAboutButton = default;
     [Header("Collection")]
+    [SerializeField] Rune runePrefab = default;
     [SerializeField] Button closeCollectionButton = default;
+    [SerializeField] Transform runesParent = default;
 
     SaveSystem saveSystem;
     BoostersModel boosterModel;
@@ -124,7 +126,7 @@ public class UISystem : MonoBehaviour
         AudioSystem.Player.PlayButtonSfx();
         if (id == Consts.Collection)
         {
-
+            SpawnRunes();
         }
     }
 
@@ -176,5 +178,19 @@ public class UISystem : MonoBehaviour
     void OpenPrivacy()
     {
         Application.OpenURL("https://docs.google.com/document/d/1gVyA0oGOmKJ9KjuA-RmlUS0nkkNwe3kmVs1v3bX29FA/edit?usp=sharing");
+    }
+
+    void SpawnRunes()
+    {
+        Sprite[] tiles = GetComponent<Tiles>().TilesList;
+        for (int i = 0; i < runesParent.childCount; i++)
+        {
+            Destroy(runesParent.GetChild(i).gameObject);
+        }
+        for (int i = 0; i < 10; i++)
+        {
+            Rune rune = Instantiate(runePrefab, runesParent);
+            rune.Initialize(tiles[i], Consts.runeDescriptions[i]);
+        }
     }
 }
