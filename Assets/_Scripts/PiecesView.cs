@@ -17,7 +17,7 @@ public class PiecesView : MonoBehaviour
 
     void Awake()
     {
-        tiles = GetComponent<Tiles>().TilesList;
+        tiles = GetComponent<Resources>().TilesList;
         piecesModel = GetComponent<PiecesModel>();
         piecesModel.PieceRemoved += HidePiece;
         piecesModel.PiecesGenerated += ShowPieces;

@@ -14,13 +14,18 @@ public class PiecesModel : MonoBehaviour
     public Piece[] Pieces { get; private set; }
     public Piece[] NextPieces { get; private set; }
 
-    [SerializeField] Array2DBool[] piecesVariants = default;
-
     PlayerProgressionModel playerProgressionModel;
     Piece emptyPiece = new Piece(new Cell[0], -1);
+    Array2DBool[] piecesVariants;
+    Array2DBool[] bonusPiecesVariants;
+    int runesCount;
 
     public void Initialize(int[] nextPieces, int levelNumber)
     {
+        Resources resources = GetComponent<Resources>();
+        piecesVariants = resources.PiecesList;
+        bonusPiecesVariants = resources.BonusPiecesList;
+        runesCount = resources.TilesList.Length;
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
         InitializeCollection(levelNumber);
         NextPieces = IntegersToPieces(nextPieces);
@@ -29,13 +34,29 @@ public class PiecesModel : MonoBehaviour
 
     void InitializeCollection(int levelNumber)
     {
-        Pieces = new Piece[piecesVariants.Length];
+        int numberOfPieces = piecesVariants.Length;
+        if (levelNumber > runesCount)
+        {
+            numberOfPieces++;
+        }
+        Pieces = new Piece[numberOfPieces];
+        //Init basic pieces
         for (int i = 0; i < piecesVariants.Length; i++)
         {
             Pieces[i] = new Piece(ArrayToPiece(piecesVariants[i]), i);
             for (int j = 0; j < Pieces[i].Cells.Length; j++)
             {
                 Pieces[i].Cells[j].Level = levelNumber;
+            }
+        }
+        //Init bonus piece
+        if (levelNumber > runesCount)
+        {
+            int bonusPieceIndex = ((levelNumber - 1) / runesCount - 1) % bonusPiecesVariants.Length;
+            Pieces[piecesVariants.Length] = new Piece(ArrayToPiece(bonusPiecesVariants[bonusPieceIndex]), piecesVariants.Length);
+            for (int j = 0; j < Pieces[piecesVariants.Length].Cells.Length; j++)
+            {
+                Pieces[piecesVariants.Length].Cells[j].Level = levelNumber;
             }
         }
     }
@@ -128,10 +149,7 @@ public class PiecesModel : MonoBehaviour
     public void LevelUpCollection()
     {
         //Update collection
-        for (int i = 0; i < Pieces.Length; i++)
-        {
-            LevelUpPiece(Pieces[i]);
-        }
+        InitializeCollection(playerProgressionModel.LevelNumber);
         //Update pieces already generated
         for (int i = 0; i < NextPieces.Length; i++)
         {

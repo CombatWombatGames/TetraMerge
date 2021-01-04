@@ -33,7 +33,7 @@ public class GridView : MonoBehaviour
 
     void Awake()
     {
-        tiles = GetComponent<Tiles>().TilesList;
+        tiles = GetComponent<Resources>().TilesList;
         gridModel = GetComponent<GridModel>();
         gridModel.GridCreated += OnGridCreated;
         gridModel.GridChanged += OnGridChanged;
