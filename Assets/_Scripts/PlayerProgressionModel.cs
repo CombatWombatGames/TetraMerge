@@ -41,23 +41,20 @@ public class PlayerProgressionModel : MonoBehaviour
 
     public int BestScore
     {
-        //TODO LOW Move from Prefs to JSON
-        get { return PlayerPrefs.GetInt("BestScore", 0); }
+        get { return bestScore; }
         set
         {
-            PlayerPrefs.SetInt("BestScore", value);
+            bestScore = value;
             BestScoreChanged(value);
         }
     }
 
     public int BestLevel
     {
-        //TODO LOW Move from Prefs to JSON
-        get { return PlayerPrefs.GetInt("BestLevel", 0); }
+        get { return bestLevel; }
         set
         {
-            PlayerPrefs.SetInt("BestLevel", value);
-            BestScoreChanged(value);
+            bestLevel = value;
         }
     }
 
@@ -65,6 +62,8 @@ public class PlayerProgressionModel : MonoBehaviour
     int currentScore;
     int levelNumber;
     int turnNumber;
+    int bestScore;
+    int bestLevel;
 
     void Awake()
     {
@@ -79,11 +78,13 @@ public class PlayerProgressionModel : MonoBehaviour
         LevelNumberChanged -= UpdateBestLevel;
     }
 
-    public void Initialize(int currentScore, int levelNumber, int turnNumber)
+    public void Initialize(int currentScore, int levelNumber, int turnNumber, int bestScore, int bestLevel)
     {
         CurrentScore = currentScore;
         LevelNumber = levelNumber;
         TurnNumber = turnNumber;
+        BestScore = bestScore;
+        BestLevel = bestLevel;
     }
 
     void OnGridChanged(Vector2Int[] area, int level)
