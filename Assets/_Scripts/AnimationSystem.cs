@@ -81,11 +81,22 @@ public class AnimationSystem
             .Join(slider.DOValue(1f, 0.2f))
             .AppendInterval(0.3f)
             .Append(slider.DOValue(0f, 1.6f).SetEase(Ease.Linear))
-            .Join(text.DOFade(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo));
+            .Join(text.DOFade(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo))
+            .Join(text.transform.DOScale(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo));
         }
         else
         {
             slider.DOValue(value, 0.2f);
         }
+    }
+
+    static Sequence showBoostersIncrementSequence;
+    public static void ShowBoostersIncrement(int value, Text text)
+    {
+        text.text = $"+{value} booster{(value > 1 ? "s" : "")}!";
+        showBoostersIncrementSequence?.Complete();
+        showBoostersIncrementSequence = DOTween.Sequence()
+            .Join(text.DOFade(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo))
+            .Join(text.transform.DOScale(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo));
     }
 }

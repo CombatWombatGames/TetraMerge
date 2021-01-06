@@ -191,7 +191,7 @@ public class UISystem : MonoBehaviour
         for (int i = 0; i < unlockedCount; i++)
         {
             Rune rune = Instantiate(runePrefab, runesParent);
-            rune.Initialize(tiles[i], Consts.runeDescriptions[i]);
+            rune.Initialize(tiles[i], Consts.RuneDescriptions[i]);
         }
         if (unlockedCount < tiles.Length)
         {

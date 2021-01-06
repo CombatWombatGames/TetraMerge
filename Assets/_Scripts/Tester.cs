@@ -45,4 +45,10 @@ public class Tester : MonoBehaviour
     {
         GetComponent<BoostersModel>().ClearBasicRunes();
     }
+
+    [ContextMenu("ShowMessage")]
+    public void ShowMessage()
+    {
+        GetComponent<MessageSystem>().ShowMessage(MessageId.Victory);
+    }
 }

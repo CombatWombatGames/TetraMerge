@@ -1,12 +1,23 @@
-﻿public struct Consts
+﻿using System.Collections.Generic;
+
+public struct Consts
 {
     public const string Menu = "Menu";
     public const string About = "About";
     public const string Help = "Help";
     public const string Collection = "Collection";
 
-    //public static Dictionary<string, string> runeDescriptions = new Dictionary<string, string> { };
-    public static string[] runeDescriptions = new string[] 
+    public static Dictionary<MessageId, string> Messages = new Dictionary<MessageId, string> 
+    {
+        { MessageId.BoostersIncrement, "Random boosters earned!" },
+        { MessageId.NewRune, "New rune added to collection!" },
+        { MessageId.RuneUpdate, "Base rune updated!" },
+        { MessageId.BonusFigureUnlock, "Bonus figure unlocked!" },
+        { MessageId.BonusFigureChange, "Bonus figure changed!" },
+        { MessageId.Victory, "You have seen all the content we have prepared! So you won, congratulations!" },
+    };
+
+    public static string[] RuneDescriptions = new string[] 
     {
         "Tiwaz - the rune is named after one-handed god Týr.",//, and was identified with this god.",
         "Wynn - the denotation of the rune is \"joy\".",
@@ -21,4 +32,14 @@
     };
 
     public const string Text = "TWO FUP GMZS";
+}
+
+public enum MessageId
+{
+    BoostersIncrement,
+    NewRune,
+    RuneUpdate,
+    BonusFigureUnlock,
+    BonusFigureChange,
+    Victory,
 }
