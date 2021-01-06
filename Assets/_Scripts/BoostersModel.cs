@@ -126,6 +126,12 @@ public class BoostersModel : MonoBehaviour
         }
     }
 
+    public void ClearBasicRunes()
+    {
+        gridModel.RemoveMinimumLevelPieces();
+        playerProgressionModel.TurnNumber++;
+    }
+
     void GiveRandomBooster()
     {
         int index = UnityEngine.Random.Range(0, 3);

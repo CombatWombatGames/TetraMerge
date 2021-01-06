@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 //Holds state of the field and provides ways to change it
@@ -68,5 +69,21 @@ public class GridModel : MonoBehaviour
             }
         }
         return true;
+    }
+
+    public void RemoveMinimumLevelPieces()
+    {
+        List<Vector2Int> coordinates = new List<Vector2Int>();
+        for (int i = 0; i < Grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < Grid.GetLength(1); j++)
+            {
+                if (Grid[i, j].Level == playerProgressionModel.LevelNumber)
+                {
+                    coordinates.Add(new Vector2Int(i, j));
+                }
+            }
+        }
+        ChangeGrid(coordinates.ToArray(), 0);
     }
 }

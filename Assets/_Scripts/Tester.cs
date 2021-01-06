@@ -20,7 +20,7 @@ public class Tester : MonoBehaviour
 
     public void FillGrid(int level)
     {
-        GridModel grid = FindObjectOfType<GridModel>();
+        GridModel grid = GetComponent<GridModel>();
         int x = grid.Width;
         int y = grid.Height;
         Vector2Int[] area = new Vector2Int[x * y];
@@ -32,5 +32,17 @@ public class Tester : MonoBehaviour
             }
         }
         grid.ChangeGrid(area, level);
+    }
+
+    [ContextMenu("FillGridWithBasicRunes")]
+    public void FillGridWithBasicRunes()
+    {
+        FillGrid(GetComponent<PlayerProgressionModel>().LevelNumber);
+    }
+
+    [ContextMenu("ClearBasicRunes")]
+    public void ClearBasicRunes()
+    {
+        GetComponent<BoostersModel>().ClearBasicRunes();
     }
 }
