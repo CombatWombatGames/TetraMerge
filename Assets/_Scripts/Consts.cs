@@ -14,7 +14,8 @@ public struct Consts
         { MessageId.RuneUpdate, "Base rune updated!" },
         { MessageId.BonusFigureUnlock, "Bonus figure unlocked!" },
         { MessageId.BonusFigureChange, "Bonus figure changed!" },
-        { MessageId.Victory, "You have seen all the content we have prepared! So you won, congratulations!" },
+        { MessageId.Victory1, "You have seen all the content we have prepared!" },
+        { MessageId.Victory2, "So you won, congratulations!" },
     };
 
     public static string[] RuneDescriptions = new string[] 
@@ -41,5 +42,6 @@ public enum MessageId
     RuneUpdate,
     BonusFigureUnlock,
     BonusFigureChange,
-    Victory,
+    Victory1,
+    Victory2,
 }

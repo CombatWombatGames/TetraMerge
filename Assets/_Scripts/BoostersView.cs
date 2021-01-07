@@ -13,18 +13,18 @@ public class BoostersView : MonoBehaviour
     [SerializeField] Image addsIcon = default;
     [SerializeField] Image clearsIcon = default;
     [SerializeField] Slider slider = default;
-    [SerializeField] Text plusOneText = default;
-    [SerializeField] Text boostersPlusText = default;
 
     BoostersModel boostersModel;
     PlayerProgressionModel playerProgressionModel;
     GridModel gridModel;
+    MessageSystem messageSystem;
 
     void Awake()
     {
         boostersModel = GetComponent<BoostersModel>();
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
         gridModel = GetComponent<GridModel>();
+        messageSystem = GetComponent<MessageSystem>();
         playerProgressionModel.TurnChanged += OnTurnChanged;
         boostersModel.BoosterCountChanged += OnBoostersCountChanged;
         gridModel.GridChanged += OnGridChanged;
@@ -101,7 +101,11 @@ public class BoostersView : MonoBehaviour
     void OnTurnChanged(int turnNumber)
     {
         var value = (float)(turnNumber - boostersModel.PreviousBoosterTurnNumber) / (boostersModel.NextBoosterTurnNumber - boostersModel.PreviousBoosterTurnNumber);
-        AnimationSystem.ChangeProgress(slider, value, plusOneText);
+        AnimationSystem.ChangeProgress(slider, value);
+        if (value < slider.value)
+        {
+            messageSystem.ShowMessage(MessageId.BoostersIncrement);
+        }
     }
 
     void OnGridChanged(Vector2Int[] area, int level)
@@ -110,15 +114,15 @@ public class BoostersView : MonoBehaviour
         {
             if (area.Length > 25)
             {
-                AnimationSystem.ShowBoostersIncrement(3, boostersPlusText);
+                messageSystem.ShowMessage(MessageId.BoostersIncrement);
             }
             else if (area.Length > 16)
             {
-                AnimationSystem.ShowBoostersIncrement(2, boostersPlusText);
+                messageSystem.ShowMessage(MessageId.BoostersIncrement);
             }
             else if (area.Length > 9)
             {
-                AnimationSystem.ShowBoostersIncrement(1, boostersPlusText);
+                messageSystem.ShowMessage(MessageId.BoostersIncrement);
             }
         }
     }

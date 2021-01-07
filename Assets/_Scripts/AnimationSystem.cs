@@ -72,7 +72,7 @@ public class AnimationSystem
     }
 
     static Sequence progressSequence;
-    public static void ChangeProgress(Slider slider, float value, Text text)
+    public static void ChangeProgress(Slider slider, float value)
     {
         progressSequence?.Complete();
         if (value < slider.value)
@@ -80,9 +80,7 @@ public class AnimationSystem
             progressSequence = DOTween.Sequence()
             .Join(slider.DOValue(1f, 0.2f))
             .AppendInterval(0.3f)
-            .Append(slider.DOValue(0f, 1.6f).SetEase(Ease.Linear))
-            .Join(text.DOFade(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo))
-            .Join(text.transform.DOScale(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo));
+            .Append(slider.DOValue(0f, 1.6f).SetEase(Ease.Linear));
         }
         else
         {
@@ -90,24 +88,14 @@ public class AnimationSystem
         }
     }
 
-    static Sequence showBoostersIncrementSequence;
-    public static void ShowBoostersIncrement(int value, Text text)
+    public static void ShowMessage(Message message, float duration)
     {
-        text.text = $"+{value} booster{(value > 1 ? "s" : "")}!";
-        showBoostersIncrementSequence?.Complete();
-        showBoostersIncrementSequence = DOTween.Sequence()
-            .Join(text.DOFade(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo))
-            .Join(text.transform.DOScale(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo));
-    }
-
-    public static void ShowMessage(Message message)
-    {
-        message.Text.color = new Color(message.Text.color.r, message.Text.color.g, message.Text.color.b, 0f);
-        message.Text.transform.localScale = 0.8f * Vector3.one;
         Sequence showMessage = DOTween.Sequence()
-            .Join(message.Text.DOFade(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo))
-            .Join(message.Text.transform.DOScale(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo))
-            .AppendInterval(1f)
+            .Join(message.Text.transform.DOScale(1f, 0.2f).SetLoops(2, LoopType.Yoyo))
+            .Join(message.Background.DOFade(0.8f, 0.4f))
+            .AppendInterval(duration)
+            .Append(message.Text.transform.DOScale(0f, 0.2f))
+            .Join(message.Background.DOFade(0f, 0.2f))
             .AppendCallback(() => Object.Destroy(message.gameObject));
     }
 }
