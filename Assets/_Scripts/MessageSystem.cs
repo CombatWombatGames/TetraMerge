@@ -7,6 +7,8 @@ public class MessageSystem : MonoBehaviour
 
     public void ShowMessage(MessageId messageId)
     {
-        Instantiate(messagePrefab, messageList).Initialize(messageId);
+        Message message = Instantiate(messagePrefab, messageList);
+        message.Initialize(messageId);
+        AnimationSystem.ShowMessage(message);
     }
 }

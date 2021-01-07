@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class Message : MonoBehaviour
 {
+    public Text Text => text;
     [SerializeField] Text text = default;
 
     public void Initialize(MessageId messageId)

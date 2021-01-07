@@ -99,4 +99,15 @@ public class AnimationSystem
             .Join(text.DOFade(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo))
             .Join(text.transform.DOScale(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo));
     }
+
+    public static void ShowMessage(Message message)
+    {
+        message.Text.color = new Color(message.Text.color.r, message.Text.color.g, message.Text.color.b, 0f);
+        message.Text.transform.localScale = 0.8f * Vector3.one;
+        Sequence showMessage = DOTween.Sequence()
+            .Join(message.Text.DOFade(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo))
+            .Join(message.Text.transform.DOScale(1f, 0.8f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutExpo))
+            .AppendInterval(1f)
+            .AppendCallback(() => Object.Destroy(message.gameObject));
+    }
 }
