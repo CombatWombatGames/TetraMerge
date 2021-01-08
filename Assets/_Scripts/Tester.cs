@@ -49,7 +49,6 @@ public class Tester : MonoBehaviour
     [ContextMenu("ShowMessage")]
     public void ShowMessage()
     {
-        GetComponent<MessageSystem>().ShowMessage(MessageId.Victory1, 2f);
-        GetComponent<MessageSystem>().ShowMessage(MessageId.Victory2, 2f);
+        GetComponent<MessageSystem>().ShowMessage(MessageId.Victory1, 4f);
     }
 }

@@ -32,7 +32,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     {
         if (piecesModel.NextPieces[index].Identifier != -1)
         {
-            //TODO threw NRE sometimes?
+            //TODO LOW Investigate NRE
             gameObject?.SetActive(true);
         }
         else

@@ -7,6 +7,7 @@ public class PlayerProgressionModel : MonoBehaviour
     public event Action<int> TurnChanged;
     public event Action<int> CurrentScoreChanged;
     public event Action<int> BestScoreChanged;
+    public event Action<int> BestRuneChanged;
     public event Action<int> LevelNumberChanged;
 
     public int CurrentScore
@@ -58,12 +59,22 @@ public class PlayerProgressionModel : MonoBehaviour
         }
     }
 
+    public int BestRune
+    {
+        get { return bestRune; }
+        set
+        {
+            bestRune = value;
+        }
+    }
+
     GridModel gridModel;
     int currentScore;
     int levelNumber;
     int turnNumber;
     int bestScore;
     int bestLevel;
+    int bestRune;
 
     void Awake()
     {
@@ -78,13 +89,14 @@ public class PlayerProgressionModel : MonoBehaviour
         LevelNumberChanged -= UpdateBestLevel;
     }
 
-    public void Initialize(int currentScore, int levelNumber, int turnNumber, int bestScore, int bestLevel)
+    public void Initialize(int currentScore, int levelNumber, int turnNumber, int bestScore, int bestLevel, int bestRune)
     {
         CurrentScore = currentScore;
         LevelNumber = levelNumber;
         TurnNumber = turnNumber;
         BestScore = bestScore;
         BestLevel = bestLevel;
+        BestRune = bestRune;
     }
 
     void OnGridChanged(Vector2Int[] area, int level)
@@ -114,6 +126,13 @@ public class PlayerProgressionModel : MonoBehaviour
             }
             CurrentScore += score;
         }
+
+        //TODO LOW: Cache
+        if (level > BestRune && level <= GetComponent<Resources>().TilesList.Length)
+        {
+            BestRune = level;
+            BestRuneChanged?.Invoke(BestRune);
+        }
     }
 
     public void UpdateBestScore()
@@ -124,7 +143,7 @@ public class PlayerProgressionModel : MonoBehaviour
         }
     }
 
-    private void UpdateBestLevel(int obj)
+    void UpdateBestLevel(int obj)
     {
         if (levelNumber > BestLevel)
         {

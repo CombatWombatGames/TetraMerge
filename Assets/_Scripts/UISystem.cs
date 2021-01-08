@@ -187,7 +187,7 @@ public class UISystem : MonoBehaviour
         {
             Destroy(runesParent.GetChild(i).gameObject);
         }
-        int unlockedCount = Mathf.Clamp(playerProgressionModel.BestLevel, 0, tiles.Length);
+        int unlockedCount = Mathf.Clamp(playerProgressionModel.BestRune, 0, tiles.Length);
         for (int i = 0; i < unlockedCount; i++)
         {
             Rune rune = Instantiate(runePrefab, runesParent);

@@ -104,7 +104,7 @@ public class BoostersView : MonoBehaviour
         AnimationSystem.ChangeProgress(slider, value);
         if (value < slider.value)
         {
-            messageSystem.ShowMessage(MessageId.BoostersIncrement);
+            messageSystem.ShowMessage(MessageId.BoostersIncremented);
         }
     }
 
@@ -114,15 +114,15 @@ public class BoostersView : MonoBehaviour
         {
             if (area.Length > 25)
             {
-                messageSystem.ShowMessage(MessageId.BoostersIncrement);
+                messageSystem.ShowMessage(MessageId.BoostersIncremented);
             }
             else if (area.Length > 16)
             {
-                messageSystem.ShowMessage(MessageId.BoostersIncrement);
+                messageSystem.ShowMessage(MessageId.BoostersIncremented);
             }
             else if (area.Length > 9)
             {
-                messageSystem.ShowMessage(MessageId.BoostersIncrement);
+                messageSystem.ShowMessage(MessageId.BoostersIncremented);
             }
         }
     }

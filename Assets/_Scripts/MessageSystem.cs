@@ -4,8 +4,8 @@ public class MessageSystem : MonoBehaviour
 {
     [SerializeField] Message messagePrefab  = default;
     [SerializeField] Transform messageList  = default;
-
-    public void ShowMessage(MessageId messageId, float duration = 1f)
+    //TODO HIGH Color code for messages!
+    public void ShowMessage(MessageId messageId, float duration = 3f)
     {
         Message message = Instantiate(messagePrefab, messageList);
         message.Initialize(messageId);

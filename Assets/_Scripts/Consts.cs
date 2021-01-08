@@ -9,12 +9,12 @@ public struct Consts
 
     public static Dictionary<MessageId, string> Messages = new Dictionary<MessageId, string> 
     {
-        { MessageId.BoostersIncrement, "Random boosters earned!" },
-        { MessageId.NewRune, "New rune added to collection!" },
-        { MessageId.RuneUpdate, "Base rune updated!" },
-        { MessageId.BonusFigureUnlock, "Bonus figure unlocked!" },
-        { MessageId.BonusFigureChange, "Bonus figure changed!" },
-        { MessageId.Victory1, "You have seen all the content we have prepared!" },
+        { MessageId.BoostersIncremented, "Random boosters earned!" },
+        { MessageId.NewRuneCollected, "New rune added to collection!" },
+        { MessageId.BaseRuneUpdated, "Base rune updated!" },
+        { MessageId.BonusFigureUnlocked, "Bonus figure unlocked!" },
+        { MessageId.BonusFigureChanged, "Bonus figure changed!" },
+        { MessageId.Victory1, "You have beat all the content we have prepared!" },
         { MessageId.Victory2, "So you won, congratulations!" },
     };
 
@@ -37,11 +37,11 @@ public struct Consts
 
 public enum MessageId
 {
-    BoostersIncrement,
-    NewRune,
-    RuneUpdate,
-    BonusFigureUnlock,
-    BonusFigureChange,
+    BoostersIncremented,
+    NewRuneCollected,
+    BaseRuneUpdated,
+    BonusFigureUnlocked,
+    BonusFigureChanged,
     Victory1,
     Victory2,
 }

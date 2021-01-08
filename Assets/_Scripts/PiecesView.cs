@@ -8,6 +8,9 @@ public class PiecesView : MonoBehaviour
     [SerializeField] Transform[] pieceParents = default;
 
     PiecesModel piecesModel;
+    PlayerProgressionModel playerProgressionModel;
+    MessageSystem messageSystem;
+    Resources resources;
     PieceController[] nextPieces = new PieceController[3];
     Image[][] nextPiecesImages = new Image[3][];
     Transform[][] nextPiecesTransforms = new Transform[3][];
@@ -19,10 +22,14 @@ public class PiecesView : MonoBehaviour
     {
         tiles = GetComponent<Resources>().TilesList;
         piecesModel = GetComponent<PiecesModel>();
+        playerProgressionModel = GetComponent<PlayerProgressionModel>();
+        messageSystem = GetComponent<MessageSystem>();
+        resources = GetComponent<Resources>();
         piecesModel.PieceRemoved += HidePiece;
         piecesModel.PiecesGenerated += ShowPieces;
         piecesModel.PieceRotated += RotatePiece;
-        piecesModel.CollectionLevelUp += ShowPieces;
+        piecesModel.CollectionLevelUp += OnCollectionLevelUp;
+        playerProgressionModel.BestRuneChanged += OnBestRuneChange;
     }
 
     void OnDestroy()
@@ -30,7 +37,8 @@ public class PiecesView : MonoBehaviour
         piecesModel.PieceRemoved -= HidePiece;
         piecesModel.PiecesGenerated -= ShowPieces;
         piecesModel.PieceRotated -= RotatePiece;
-        piecesModel.CollectionLevelUp -= ShowPieces;
+        piecesModel.CollectionLevelUp -= OnCollectionLevelUp;
+        playerProgressionModel.BestRuneChanged -= OnBestRuneChange;
     }
 
     void SpawnPieces()
@@ -69,6 +77,31 @@ public class PiecesView : MonoBehaviour
         {
             ShowPiece(piecesModel.NextPieces[i], nextPiecesImages[i]);
         }
+    }
+
+    void OnCollectionLevelUp()
+    {
+        ShowPieces();
+        messageSystem.ShowMessage(MessageId.BaseRuneUpdated);
+        int tilesCount = resources.TilesList.Length;
+        if (playerProgressionModel.LevelNumber == tilesCount + 1)
+        {
+            messageSystem.ShowMessage(MessageId.BonusFigureUnlocked);
+        }
+        else if (playerProgressionModel.LevelNumber == tilesCount * (resources.BonusPiecesList.Length + 1) + 1)
+        {
+            messageSystem.ShowMessage(MessageId.Victory1, 4f);
+            messageSystem.ShowMessage(MessageId.Victory2, 6f);
+        }
+        else if (playerProgressionModel.LevelNumber > tilesCount && playerProgressionModel.LevelNumber % tilesCount == 1)
+        {
+            messageSystem.ShowMessage(MessageId.BonusFigureChanged);
+        }
+    }
+
+    void OnBestRuneChange(int level)
+    {
+        messageSystem.ShowMessage(MessageId.NewRuneCollected);
     }
 
     void InitializePositions()
