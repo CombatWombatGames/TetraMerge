@@ -183,7 +183,7 @@ public class UISystem : MonoBehaviour
     void SpawnRunes()
     {
         Sprite[] tiles = GetComponent<Resources>().TilesList;
-        for (int i = 0; i < runesParent.childCount; i++)
+        for (int i = 1; i < runesParent.childCount; i++)
         {
             Destroy(runesParent.GetChild(i).gameObject);
         }

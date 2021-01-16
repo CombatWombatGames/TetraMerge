@@ -96,6 +96,12 @@ public class AnimationSystem
             .AppendInterval(duration)
             .Append(message.Text.transform.DOScale(0f, 0.2f))
             .Join(message.Background.DOFade(0f, 0.2f))
-            .AppendCallback(() => Object.Destroy(message.gameObject));
+            .AppendCallback(() => Object.Destroy(message.gameObject))
+            .SetTarget(message);
+    }
+
+    public static void HideMessage(Message message)
+    {
+        message.DOComplete(true);
     }
 }
