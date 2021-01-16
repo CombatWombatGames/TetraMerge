@@ -43,7 +43,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
-    totalSpriteSurfaceArea: 8279534
+    totalSpriteSurfaceArea: 11751941
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -62,9 +62,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: bdb0dba1c6d675442bf5a6b09d4b58aa, type: 3}
   - {fileID: 21300000, guid: 2b3bfb92c9a002645b472bead7f775c4, type: 3}
   - {fileID: 21300000, guid: 09fdbd23de5314d43a81d6314bdb8d6a, type: 3}
+  - {fileID: 21300000, guid: 7eb80f34febd7604db3f5f1e28fd48fa, type: 3}
   - {fileID: 21300000, guid: e3faab54490ef504cb372dec2ab9e682, type: 3}
+  - {fileID: 21300000, guid: 5d84a564cf4d5ca4c83ba31dbcad97c5, type: 3}
   - {fileID: 21300000, guid: 270f66642d6d007408a22ae4d1595c00, type: 3}
   - {fileID: 21300000, guid: 20a9e5744dccebb449d6dccb46c6dddd, type: 3}
+  - {fileID: 21300000, guid: bf28b6b429928454c9a820477ddce8f6, type: 3}
   - {fileID: 21300000, guid: adfa02250f0c3a2408f7b9a88a6d4229, type: 3}
   - {fileID: 21300000, guid: 768b5b252b7781f4eb52f99d8106ef85, type: 3}
   - {fileID: 21300000, guid: 0bba643556ece6749952c8cd846bf8e5, type: 3}
@@ -89,6 +92,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 35a1d089012be634bae56387724c0c5b, type: 3}
   - {fileID: 21300000, guid: 0216880a0d7b5084ab845de50a4a259c, type: 3}
   - {fileID: 21300000, guid: 8866646a8b2e52642a7e9a006c00a99c, type: 3}
+  - {fileID: 21300000, guid: 38d6788a27ccdc34f91827310aebe3d5, type: 3}
   - {fileID: 21300000, guid: cf431d9a785abe646a9954a1f066d1c0, type: 3}
   - {fileID: 21300000, guid: b8ee68ea92c38264aab6756bfe15cd1a, type: 3}
   - {fileID: 21300000, guid: dccb7aea94a24554fb325d284ae0c467, type: 3}
@@ -140,9 +144,12 @@ SpriteAtlas:
   - rune_1_cln
   - rune_8_cln
   - chain_menu_bttn_quit_press
+  - collected_runes
   - chain_menu_bttn_mute_press
+  - collected_runes_base
   - rune_3_cln
   - shield_menu_press
+  - about
   - rune_9_cln
   - shield_arrow_left
   - rune_3
@@ -167,6 +174,7 @@ SpriteAtlas:
   - chain_menu_stone4
   - rune_6_cln
   - boost_bttn_1_press
+  - rules
   - chain_menu_bttn_continue
   - button_undo
   - chain_menu_light_circle
