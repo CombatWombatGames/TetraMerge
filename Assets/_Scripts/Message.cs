@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class Message : MonoBehaviour
 {
+    [SerializeField] Button button = default;
+
     public Text Text => text;
     [SerializeField] Text text = default;
 
@@ -12,5 +14,15 @@ public class Message : MonoBehaviour
     public void Initialize(MessageId messageId)
     {
         text.text = Consts.Messages[messageId];
+    }
+
+    private void Awake()
+    {
+        button.onClick.AddListener(() => AnimationSystem.HideMessage(this));
+    }
+
+    private void OnDestroy()
+    {
+        button.onClick.RemoveAllListeners();
     }
 }
