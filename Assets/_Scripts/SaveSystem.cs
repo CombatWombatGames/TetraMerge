@@ -109,7 +109,7 @@ public class SaveSystem : MonoBehaviour
 
     int[] CreateNextPieces()
     {
-        int piecesCount = piecesModel.CountPiecesVariants();
+        int piecesCount = GetComponent<Resources>().PiecesList.Length;
         return new int[] { Random.Range(1, piecesCount), Random.Range(1, piecesCount), Random.Range(1, piecesCount) };
     }
 
