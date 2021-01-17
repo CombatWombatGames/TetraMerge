@@ -67,13 +67,13 @@ public class BoostersModel : MonoBehaviour
         piecesModel = GetComponent<PiecesModel>();
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
         playerProgressionModel.TurnChanged += OnTurnChanged;
-        gridModel.GridChanged += OnGridChanged;
+        gridModel.CellsMerged += OnCellsMerged;
     }
 
     void OnDestroy()
     {
         playerProgressionModel.TurnChanged -= OnTurnChanged;
-        gridModel.GridChanged -= OnGridChanged;
+        gridModel.CellsMerged -= OnCellsMerged;
     }
 
     public void Initialize(int refreshesCount, int addsCount, int clearsCount, int boostersGiven)
@@ -128,6 +128,9 @@ public class BoostersModel : MonoBehaviour
 
     public void ClearBasicRunes()
     {
+        RefreshesCount = 0;
+        AddsCount = 0;
+        ClearsCount = 0;
         gridModel.RemoveMinimumLevelPieces();
         playerProgressionModel.TurnNumber++;
     }
@@ -151,28 +154,18 @@ public class BoostersModel : MonoBehaviour
         }
     }
 
-    void OnGridChanged(Vector2Int[] area, int level)
+    void OnCellsMerged(int area)
     {
-        if (level == 0)
+        if (area > 25)
         {
-            if (area.Length > 25)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    GiveRandomBooster();
-                }
-            }
-            else if (area.Length > 16)
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    GiveRandomBooster();
-                }
-            }
-            else if (area.Length > 9)
+            for (int i = 0; i < 2; i++)
             {
                 GiveRandomBooster();
             }
+        }
+        else if (area > 16)
+        {
+            GiveRandomBooster();
         }
     }
 }

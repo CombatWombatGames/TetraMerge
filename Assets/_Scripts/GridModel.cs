@@ -7,6 +7,7 @@ public class GridModel : MonoBehaviour
 {
     public event Action<Cell[,]> GridCreated;
     public event Action<Vector2Int[], int> GridChanged;
+    public event Action<int> CellsMerged;
 
     public int Width { get; } = 6;
     public int Height { get; } = 6;
@@ -37,14 +38,14 @@ public class GridModel : MonoBehaviour
         return grid;
     }
 
-    public void ChangeGrid(Vector2Int[] coordinates, int level)
+    public void ChangeGrid(Vector2Int[] coordinates, int level, bool cellsMerged = true)
     {
         for (int i = 0; i < coordinates.Length; i++)
         {
             Grid[coordinates[i].x, coordinates[i].y].Level = level;
         }
         GridChanged(coordinates, level);
-        //Happens after merge or clear booster only
+        //Happens after merge or clear booster or ultimate booster
         if (level == 0)
         {
             //TODO LOW Increase level repeatedly if needed
@@ -52,6 +53,10 @@ public class GridModel : MonoBehaviour
             {
                 playerProgressionModel.LevelNumber++;
                 piecesModel.LevelUpCollection();
+            }
+            if (cellsMerged)
+            {
+                CellsMerged(coordinates.Length);
             }
         }
     }
@@ -71,6 +76,22 @@ public class GridModel : MonoBehaviour
         return true;
     }
 
+    public int CountEmptyCells()
+    {
+        int count = 0;
+        for (int i = 0; i < Grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < Grid.GetLength(1); j++)
+            {
+                if (Grid[i, j].Level == 0)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     public void RemoveMinimumLevelPieces()
     {
         List<Vector2Int> coordinates = new List<Vector2Int>();
@@ -84,6 +105,6 @@ public class GridModel : MonoBehaviour
                 }
             }
         }
-        ChangeGrid(coordinates.ToArray(), 0);
+        ChangeGrid(coordinates.ToArray(), 0, false);
     }
 }

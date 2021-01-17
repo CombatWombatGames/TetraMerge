@@ -16,8 +16,9 @@ public class UISystem : MonoBehaviour
     [SerializeField] Button boostersButton = default;
     [SerializeField] GameObject piecesPanel = default;
     [SerializeField] GameObject boostersPanel = default;
-    [Header("Booster")]
+    [Header("Boosters")]
     [SerializeField] Button refreshButton = default;
+    [SerializeField] Button ultimateButton = default;
     [Header("Menu")]
     [SerializeField] Button continueButton = default;
     [SerializeField] Button restartButton = default;
@@ -67,6 +68,7 @@ public class UISystem : MonoBehaviour
         piecesButton.onClick.AddListener(() => SwitchTable(true));
         boostersButton.onClick.AddListener(() => SwitchTable(false));
         refreshButton.onClick.AddListener(() => { boosterModel.GenerateNewPieces(); SwitchTable(true); });
+        ultimateButton.onClick.AddListener(() => { boosterModel.ClearBasicRunes(); SwitchTable(true); });
 
         mailButton.onClick.AddListener(SendEmail);
         termsButton.onClick.AddListener(OpenTerms);
@@ -104,6 +106,7 @@ public class UISystem : MonoBehaviour
         piecesButton.onClick.RemoveAllListeners();
         boostersButton.onClick.RemoveAllListeners();
         refreshButton.onClick.RemoveAllListeners();
+        ultimateButton.onClick.RemoveAllListeners();
 
         mailButton.onClick.RemoveAllListeners();
         termsButton.onClick.RemoveAllListeners();

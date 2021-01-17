@@ -4,6 +4,7 @@ using UnityEngine.UI;
 //Shows amount of boosters to player
 public class BoostersView : MonoBehaviour
 {
+    [SerializeField] Button ultimateButton = default;
     [SerializeField] Button refreshButton = default;
     [SerializeField] Text refreshesCount = default;
     [SerializeField] Text addsCount = default;
@@ -27,14 +28,14 @@ public class BoostersView : MonoBehaviour
         messageSystem = GetComponent<MessageSystem>();
         playerProgressionModel.TurnChanged += OnTurnChanged;
         boostersModel.BoosterCountChanged += OnBoostersCountChanged;
-        gridModel.GridChanged += OnGridChanged;
+        gridModel.CellsMerged += OnCellsMerged;
     }
 
     void OnDestroy()
     {
         playerProgressionModel.TurnChanged -= OnTurnChanged;
         boostersModel.BoosterCountChanged -= OnBoostersCountChanged;
-        gridModel.GridChanged -= OnGridChanged;
+        gridModel.CellsMerged -= OnCellsMerged;
     }
 
     void OnBoostersCountChanged(int count, BoosterType type)
@@ -106,24 +107,19 @@ public class BoostersView : MonoBehaviour
         {
             messageSystem.ShowMessage(MessageId.BoostersIncremented);
         }
+        bool showUltimateButton = gridModel.CountEmptyCells() <= 12 && (boostersModel.AddsCount > 0 || boostersModel.ClearsCount > 0 || boostersModel.RefreshesCount > 0);
+        ultimateButton.gameObject.SetActive(showUltimateButton);
     }
 
-    void OnGridChanged(Vector2Int[] area, int level)
+    void OnCellsMerged(int area)
     {
-        if (level == 0)
+        if (area > 25)
         {
-            if (area.Length > 25)
-            {
-                messageSystem.ShowMessage(MessageId.BoostersIncremented);
-            }
-            else if (area.Length > 16)
-            {
-                messageSystem.ShowMessage(MessageId.BoostersIncremented);
-            }
-            else if (area.Length > 9)
-            {
-                messageSystem.ShowMessage(MessageId.BoostersIncremented);
-            }
+            messageSystem.ShowMessage(MessageId.BoostersIncremented);
+        }
+        else if (area > 16)
+        {
+            messageSystem.ShowMessage(MessageId.BoostersIncremented);
         }
     }
 }
