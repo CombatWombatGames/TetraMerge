@@ -25,6 +25,11 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     void OnDestroy()
     {
+        Unsubscribe();
+    }
+
+    public void Unsubscribe()
+    {
         piecesModel.PiecesGenerated -= ActivatePiece;
     }
 
@@ -32,8 +37,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     {
         if (piecesModel.NextPieces[index].Identifier != -1)
         {
-            //TODO LOW Investigate NRE
-            gameObject?.SetActive(true);
+            gameObject.SetActive(true);
         }
         else
         {

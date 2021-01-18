@@ -47,6 +47,9 @@ public class PiecesView : MonoBehaviour
         {
             for (int i = 0; i < parent.childCount; i++)
             {
+                //Fixes lack of OnDestroy for always inactive objects
+                //May cause double unsubscribe, it's ok 
+                parent.GetChild(i).GetComponent<PieceController>().Unsubscribe();
                 Destroy(parent.GetChild(i).gameObject);
             }
         }
