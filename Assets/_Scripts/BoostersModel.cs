@@ -33,7 +33,8 @@ public class BoostersModel : MonoBehaviour
             BoosterCountChanged(value, BoosterType.Clear);
         }
     }
-    public int BoostersGiven { get; set; }
+    public int BoostersGiven { get; private set; }
+    public bool UltimateUsed { get; private set; }
     public int NextBoosterTurnNumber
     {
         get
@@ -47,8 +48,6 @@ public class BoostersModel : MonoBehaviour
     {
         get
         {
-            //Gives boosters on turn 10, 21, 33, 46, 60... Gap increases every time
-            //BoostersGiven + 1 because it starts from zero
             return BoostersGiven * (BoostersGiven + 19) / 2;
         }
     }
@@ -76,12 +75,13 @@ public class BoostersModel : MonoBehaviour
         gridModel.CellsMerged -= OnCellsMerged;
     }
 
-    public void Initialize(int refreshesCount, int addsCount, int clearsCount, int boostersGiven)
+    public void Initialize(int refreshesCount, int addsCount, int clearsCount, int boostersGiven, bool ultimateUsed)
     {
         RefreshesCount = refreshesCount;
         AddsCount = addsCount;
         ClearsCount = clearsCount;
         BoostersGiven = boostersGiven;
+        UltimateUsed = ultimateUsed;
     }
 
     void OnTurnChanged(int turnNumber)
@@ -128,6 +128,7 @@ public class BoostersModel : MonoBehaviour
 
     public void ClearBasicRunes()
     {
+        UltimateUsed = true;
         RefreshesCount = 0;
         AddsCount = 0;
         ClearsCount = 0;

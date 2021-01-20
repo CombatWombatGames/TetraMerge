@@ -107,8 +107,7 @@ public class BoostersView : MonoBehaviour
         {
             messageSystem.ShowMessage(MessageId.BoostersIncremented);
         }
-        bool showUltimateButton = gridModel.CountEmptyCells() <= 12; // && (boostersModel.AddsCount > 0 || boostersModel.ClearsCount > 0 || boostersModel.RefreshesCount > 0);
-        ultimateButton.gameObject.SetActive(showUltimateButton);
+        ultimateButton.gameObject.SetActive(!boostersModel.UltimateUsed);
     }
 
     void OnCellsMerged(int area)

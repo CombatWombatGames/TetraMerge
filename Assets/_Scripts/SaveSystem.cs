@@ -56,7 +56,7 @@ public class SaveSystem : MonoBehaviour
     {
         gridModel.Initialize(stateData.Grid);
         piecesModel.Initialize(stateData.NextPieces, stateData.LevelNumber);
-        boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven);
+        boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.UltimateUsed);
         playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber, stateData.BestScore, stateData.BestLevel, stateData.BestRune);
         if (File.Exists(preveousSaveFilePath))
         {
@@ -80,6 +80,7 @@ public class SaveSystem : MonoBehaviour
             AddsCount = 0,
             ClearsCount = 0,
             BoostersGiven = 0,
+            UltimateUsed = false,
         };
         WriteSaveFile(stateData, path);
     }
@@ -143,6 +144,7 @@ public class SaveSystem : MonoBehaviour
             AddsCount = boostersModel.AddsCount,
             ClearsCount = boostersModel.ClearsCount,
             BoostersGiven = boostersModel.BoostersGiven,
+            UltimateUsed = boostersModel.UltimateUsed,
         };
         WriteSaveFile(stateData, saveFilePath);
         undoButton.interactable = true;
@@ -208,4 +210,5 @@ public struct StateData
     public int AddsCount;
     public int ClearsCount;
     public int BoostersGiven;
+    public bool UltimateUsed;
 }
