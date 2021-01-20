@@ -9,7 +9,6 @@ public class Tester : MonoBehaviour
     void Start()
     {
         //StartCoroutine(LateStart(1f));
-        //GameObject.Find("MusicSource").SetActive(false);
     }
 
     IEnumerator LateStart(float duration)
@@ -44,11 +43,5 @@ public class Tester : MonoBehaviour
     public void ClearBasicRunes()
     {
         GetComponent<BoostersModel>().ClearBasicRunes();
-    }
-
-    [ContextMenu("ShowMessage")]
-    public void ShowMessage()
-    {
-        GetComponent<MessageSystem>().ShowMessage(MessageId.Victory1, 4f);
     }
 }

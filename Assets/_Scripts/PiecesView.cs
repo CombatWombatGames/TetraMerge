@@ -89,16 +89,16 @@ public class PiecesView : MonoBehaviour
         int tilesCount = resources.TilesList.Length;
         if (playerProgressionModel.LevelNumber == tilesCount + 1)
         {
-            messageSystem.ShowMessage(MessageId.BonusFigureUnlocked);
+            messageSystem.ShowMessage(MessageId.BonusFigureUnlocked, 10f);
         }
         else if (playerProgressionModel.LevelNumber == tilesCount * (resources.BonusPiecesList.Length + 1) + 1)
         {
-            messageSystem.ShowMessage(MessageId.Victory1, 4f);
-            messageSystem.ShowMessage(MessageId.Victory2, 6f);
+            messageSystem.ShowMessage(MessageId.Victory1, 20f);
+            messageSystem.ShowMessage(MessageId.Victory2, 25f);
         }
         else if (playerProgressionModel.LevelNumber > tilesCount && playerProgressionModel.LevelNumber % tilesCount == 1)
         {
-            messageSystem.ShowMessage(MessageId.BonusFigureChanged);
+            messageSystem.ShowMessage(MessageId.BonusFigureChanged, 10f);
         }
     }
 
