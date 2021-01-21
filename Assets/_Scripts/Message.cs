@@ -11,9 +11,10 @@ public class Message : MonoBehaviour
     public Image Background => background;
     [SerializeField] Image background = default;
 
-    public void Initialize(MessageId messageId)
+    public void Initialize(MessageId messageId, Color color)
     {
         text.text = Consts.Messages[messageId];
+        text.color = color;
     }
 
     private void Awake()

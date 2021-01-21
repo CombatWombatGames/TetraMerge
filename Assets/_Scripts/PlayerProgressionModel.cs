@@ -53,19 +53,19 @@ public class PlayerProgressionModel : MonoBehaviour
     public int BestLevel
     {
         get { return bestLevel; }
-        set
-        {
-            bestLevel = value;
-        }
+        set { bestLevel = value; }
     }
 
     public int BestRune
     {
         get { return bestRune; }
-        set
-        {
-            bestRune = value;
-        }
+        set { bestRune = value; }
+    }
+
+    public int Stage
+    {
+        get { return stage; }
+        set { stage = value; }
     }
 
     GridModel gridModel;
@@ -75,6 +75,7 @@ public class PlayerProgressionModel : MonoBehaviour
     int bestScore;
     int bestLevel;
     int bestRune;
+    int stage;
 
     void Awake()
     {
@@ -89,7 +90,7 @@ public class PlayerProgressionModel : MonoBehaviour
         LevelNumberChanged -= UpdateBestLevel;
     }
 
-    public void Initialize(int currentScore, int levelNumber, int turnNumber, int bestScore, int bestLevel, int bestRune)
+    public void Initialize(int currentScore, int levelNumber, int turnNumber, int bestScore, int bestLevel, int bestRune, int stage)
     {
         CurrentScore = currentScore;
         LevelNumber = levelNumber;
@@ -97,6 +98,7 @@ public class PlayerProgressionModel : MonoBehaviour
         BestScore = bestScore;
         BestLevel = bestLevel;
         BestRune = bestRune;
+        Stage = stage;
     }
 
     void OnGridChanged(Vector2Int[] area, int level)

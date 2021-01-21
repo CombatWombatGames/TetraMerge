@@ -11,4 +11,10 @@ public class Resources : MonoBehaviour
 
     public Array2DBool[] BonusPiecesList => bonusPiecesList;
     [SerializeField] Array2DBool[] bonusPiecesList = default;
+
+    public Array2DBool[] StagesList => stagesList;
+    [SerializeField] Array2DBool[] stagesList = default;
+
+    public Color[] ColorsList => colorsList;
+    [SerializeField] Color[] colorsList = default;
 }

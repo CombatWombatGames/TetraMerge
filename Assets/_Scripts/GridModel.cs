@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Array2DEditor;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -106,5 +107,29 @@ public class GridModel : MonoBehaviour
             }
         }
         ChangeGrid(coordinates.ToArray(), 0, false);
+    }
+
+    public void StageComplete()
+    {
+        var stagesList = GetComponent<Resources>().StagesList;
+        ChangeGrid(ArrayToField(stagesList[playerProgressionModel.Stage]), playerProgressionModel.LevelNumber, false);
+        playerProgressionModel.Stage = (playerProgressionModel.Stage + 1) % stagesList.Length;
+    }
+
+    Vector2Int[] ArrayToField(Array2DBool array2DBool)
+    {
+        List<Vector2Int> field = new List<Vector2Int>();
+        bool[,] arrayCells = array2DBool.GetCells();
+        for (int i = 0; i < array2DBool.GridSize.x; i++)
+        {
+            for (int j = 0; j < array2DBool.GridSize.y; j++)
+            {
+                if (arrayCells[i, j])
+                {
+                    field.Add(new Vector2Int(j, Height - 1 - i));
+                }
+            }
+        }
+        return field.ToArray();
     }
 }

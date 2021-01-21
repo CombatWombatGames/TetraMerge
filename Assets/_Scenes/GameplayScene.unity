@@ -21127,6 +21127,30 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ee63eece0667bf4a9a155f81800c134, type: 2}
   - {fileID: 11400000, guid: cc447f6325817dd4da7bb8b9381d59f7, type: 2}
   - {fileID: 11400000, guid: 3fd4d7c3a89fe9c49a7227af4b96c4dd, type: 2}
+  stagesList:
+  - {fileID: 11400000, guid: 3e5377ee26b1d1a40a657d303597ed23, type: 2}
+  - {fileID: 11400000, guid: a0fff62cfcdaf5f4fa2aa841a4e4171d, type: 2}
+  - {fileID: 11400000, guid: db7187a4bff14914686cb65bdd32fd74, type: 2}
+  - {fileID: 11400000, guid: 282b0104b0fbb0040842c84ce305afa8, type: 2}
+  - {fileID: 11400000, guid: b4258b1ea0612df429415c96614dd6e1, type: 2}
+  - {fileID: 11400000, guid: fc02bd4128dfcc941b80ca62a0fea4ab, type: 2}
+  - {fileID: 11400000, guid: b744fc064dfdea8408fc61cfd48dffe6, type: 2}
+  - {fileID: 11400000, guid: 6268c5c79ea118549841661516f191e0, type: 2}
+  - {fileID: 11400000, guid: 3402ef0bda21a0d4a9327419916b9240, type: 2}
+  - {fileID: 11400000, guid: 9aa0f00a667082846983a063e5cfc1ae, type: 2}
+  - {fileID: 11400000, guid: 5cbc66d00ee1d864f98665f03ad2e6e8, type: 2}
+  - {fileID: 11400000, guid: d1a69078b7cc9eb45be9775a78677ed5, type: 2}
+  - {fileID: 11400000, guid: 8354abeeea9a8ff4d8222d70565ade96, type: 2}
+  - {fileID: 11400000, guid: 3059cd2952c0a684abaec58ffbedea8d, type: 2}
+  colorsList:
+  - {r: 1, g: 0.95, b: 0.7, a: 1}
+  - {r: 0.79999995, g: 1, b: 0.7, a: 1}
+  - {r: 0.7, g: 1, b: 0.85, a: 1}
+  - {r: 0.7, g: 0.9, b: 1, a: 1}
+  - {r: 0.74999994, g: 0.7, b: 1, a: 1}
+  - {r: 1, g: 0.69803923, b: 0.69803923, a: 1}
+  - {r: 1, g: 0.7, b: 1, a: 1}
+  - {r: 1, g: 0.7, b: 1, a: 1}
 --- !u!114 &1380896191
 MonoBehaviour:
   m_ObjectHideFlags: 0

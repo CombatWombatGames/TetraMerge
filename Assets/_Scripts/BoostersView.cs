@@ -120,5 +120,9 @@ public class BoostersView : MonoBehaviour
         {
             messageSystem.ShowMessage(MessageId.BoostersIncremented);
         }
+        else if (area > 9)
+        {
+            messageSystem.ShowMessage(MessageId.BoostersIncremented);
+        }
     }
 }

@@ -169,7 +169,15 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         }
         int newLevel = gridModel.Grid[beginPosition.x, beginPosition.y].Level + 1;
         gridModel.ChangeGrid(area, 0);
-        gridModel.ChangeGrid(upgradedArea.ToArray(), newLevel);
+        if (area.Length == gridModel.Height * gridModel.Width)
+        {
+            gridModel.StageComplete();
+            FindObjectOfType<MessageSystem>().ShowMessage(MessageId.StageChanged, 10f);
+        }
+        else
+        {
+            gridModel.ChangeGrid(upgradedArea.ToArray(), newLevel);
+        }
         playerProgressionModel.TurnNumber++;
         AudioSystem.Player.PlayMergeSfx();
         AnimationSystem.ShakeField(gridView.Field, area.Length, gridView.DustParticles, gridView.ShardsParticles, gridView.LeafParticles, gridView.LeafParticlesBurst);
