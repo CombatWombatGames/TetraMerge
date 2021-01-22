@@ -34,7 +34,7 @@ public class BoostersModel : MonoBehaviour
         }
     }
     public int BoostersGiven { get; private set; }
-    public bool UltimateUsed { get; private set; }
+    public bool UltimateUsed { get; set; }
     public int NextBoosterTurnNumber
     {
         get
@@ -88,7 +88,7 @@ public class BoostersModel : MonoBehaviour
     {
         if (turnNumber == NextBoosterTurnNumber)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 GiveRandomBooster();
             }

@@ -15,11 +15,13 @@ public class GridModel : MonoBehaviour
     public Cell[,] Grid { get; private set; }
 
     PiecesModel piecesModel;
+    BoostersModel boostersModel;
     PlayerProgressionModel playerProgressionModel;
 
     public void Initialize(int[] grid)
     {
         piecesModel = GetComponent<PiecesModel>();
+        boostersModel = GetComponent<BoostersModel>();
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
         Grid = IntegersToCells(grid);
         GridCreated(Grid);
@@ -111,9 +113,11 @@ public class GridModel : MonoBehaviour
 
     public void StageComplete()
     {
+        //TODO LOW make event
         var stagesList = GetComponent<Resources>().StagesList;
         ChangeGrid(ArrayToField(stagesList[playerProgressionModel.Stage]), playerProgressionModel.LevelNumber, false);
         playerProgressionModel.Stage = (playerProgressionModel.Stage + 1) % stagesList.Length;
+        boostersModel.UltimateUsed = false;
     }
 
     Vector2Int[] ArrayToField(Array2DBool array2DBool)
