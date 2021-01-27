@@ -70,20 +70,30 @@ public class GridView : MonoBehaviour
         cells = new GameObject[grid.GetLength(0), grid.GetLength(1)];
         float offsetX = (float)(grid.GetLength(0) - 1) / 2;
         float offsetY = (float)(grid.GetLength(1) - 1) / 2;
+        //Spawn tiles in random order
+        var rngTable = new SortedDictionary<float, (int, int)>();
         for (int i = 0; i < grid.GetLength(0); i++)
         {
             for (int j = 0; j < grid.GetLength(1); j++)
             {
-                GameObject cell = Instantiate(cellPrefab, new Vector3((i - offsetX) * CellSize, (j - offsetY) * CellSize + fieldOffsetY), Quaternion.identity, cellsParent);
-                AssembleCellView(cell, grid[i, j].Level, false);
-                cells[i, j] = cell;
+                rngTable.Add(Random.value, (i, j));
             }
         }
+        AnimationSystem.FallDelay = 0f;
+        foreach (var kvp in rngTable)
+        {
+            int i = kvp.Value.Item1;
+            int j = kvp.Value.Item2;
+            GameObject cell = Instantiate(cellPrefab, new Vector3((i - offsetX) * CellSize, (j - offsetY) * CellSize + fieldOffsetY), Quaternion.identity, cellsParent);
+            AssembleCellView(cell, grid[i, j].Level, false, true);
+            cells[i, j] = cell;
+        }
+        AnimationSystem.ShakeField(Field, grid.GetLength(0) * grid.GetLength(1) - gridModel.CountEmptyCells(), DustParticles, ShardsParticles, LeafParticles, LeafParticlesBurst, 0.2f);
         AnimationSystem.GrowVines(vines);
     }
 
     Dictionary<GameObject, Sequence> destroyngTiles = new Dictionary<GameObject, Sequence>();
-    void AssembleCellView(GameObject cell, int level,  bool animate)
+    void AssembleCellView(GameObject cell, int level,  bool animateDestroy, bool animateFall)
     {
         var mainImage = cell.GetComponentsInChildren<Image>()[cellTileImageIndex];
         var glowImage = cell.GetComponentsInChildren<Image>()[cellTileImageIndex + 2];
@@ -94,10 +104,17 @@ public class GridView : MonoBehaviour
                 sequence.Complete(true);
             }
             mainImage.sprite = tiles[(level - 1) % tiles.Length];
-            mainImage.enabled = true;
+            if (animateFall)
+            {
+                AnimationSystem.SpawnTile(mainImage);
+            }
+            else
+            {
+                mainImage.enabled = true;
+            }
             AnimationSystem.Glow(glowImage);
         }
-        else if (animate)
+        else if (animateDestroy)
         {
             destroyngTiles[cell] = AnimationSystem.DestroyTile(mainImage);
             AnimationSystem.StopGlow(glowImage);
@@ -112,7 +129,7 @@ public class GridView : MonoBehaviour
     {
         for (int i = 0; i < coordinates.Length; i++)
         {
-            AssembleCellView(cells[coordinates[i].x, coordinates[i].y], level, true);
+            AssembleCellView(cells[coordinates[i].x, coordinates[i].y], level, true, false);
         }
         AnimationSystem.HideVines(vines);
     }

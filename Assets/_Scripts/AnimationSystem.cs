@@ -18,6 +18,7 @@ public class AnimationSystem
             .Join(transforms[i].DOBlendableScaleBy(0.1f * Vector3.one, duration / 2).SetLoops(2, LoopType.Yoyo)));
         }
     }
+
     public static void FinishPieceRotation()
     {
         foreach (var sequence in rotatePieceSequences)
@@ -27,23 +28,42 @@ public class AnimationSystem
         rotatePieceSequences.Clear();
     }
 
-    public static void ShakeField(Transform field, int scale, ParticleSystem dustParticles, ParticleSystem shardsParticles, ParticleSystem leafParticles, ParticleSystem leafParticlesBurst)
+    public static void ShakeField(Transform field, int scale, ParticleSystem dustParticles, ParticleSystem shardsParticles, ParticleSystem leafParticles, ParticleSystem leafParticlesBurst, float delay = 0f)
     {
-        if (scale > 16)
+        DOVirtual.DelayedCall(delay, () =>
         {
-            dustParticles.Play();
-        }
-        if (scale > 9)
-        {
-            field.DOShakePosition(0.4f, Vector3.one * 0.4f * scale, 2000, 90f, false, false);
-            field.DOPunchScale(- Vector3.one * 0.001f * scale, 0.2f, 1000, 1f);
-            shardsParticles.Play();
-            scale = 12;
-        }
-        leafParticlesBurst.emission.SetBurst(0, new Burst(0f, scale / 4, 10, 0.01f));
-        leafParticlesBurst.Play();
-        leafParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        leafParticles.Play();
+            if (scale > 16)
+            {
+                dustParticles.Play();
+            }
+            if (scale > 9)
+            {
+                field.DOShakePosition(0.4f, Vector3.one * 0.4f * scale, 2000, 90f, false, false);
+                field.DOPunchScale(-Vector3.one * 0.001f * scale, 0.2f, 1000, 1f);
+                shardsParticles.Play();
+                scale = 12;
+            }
+            leafParticlesBurst.emission.SetBurst(0, new Burst(0f, scale / 4, 10, 0.01f));
+            leafParticlesBurst.Play();
+            leafParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            leafParticles.Play();
+        });
+    }
+
+    public static float FallDelay { get; set; }
+    public static void SpawnTile(Image image)
+    {
+        float scale = 1.2f;
+        image.transform.localScale = Vector2.one * scale;
+        var position = image.GetComponentInParent<Transform>().position;
+        image.GetComponentInParent<Transform>().position = image.transform.position * scale;
+        image.enabled = true;
+        float duration = 0.5f;
+        DOTween.Sequence()
+            .AppendInterval(FallDelay)
+            .Append(image.transform.DOScale(1f, duration).SetEase(Ease.OutBounce))
+            .Join(image.transform.DOLocalMove(position, duration).SetEase(Ease.OutBounce));
+        FallDelay += 0.01f;
     }
 
     public static Sequence DestroyTile(Image image)
@@ -65,6 +85,7 @@ public class AnimationSystem
         float duaration = 3f;
         image.DOFade(0.25f, duaration).SetEase(Ease.Linear).SetDelay(Random.Range(0f, duaration)).SetLoops(-1, LoopType.Yoyo);
     }
+
     public static void StopGlow(Image image)
     {
         image.DOKill();
