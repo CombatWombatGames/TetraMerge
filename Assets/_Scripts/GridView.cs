@@ -15,6 +15,7 @@ public class GridView : MonoBehaviour
     public ParticleSystem ShardsParticles => shardsParticles;
     public ParticleSystem LeafParticles => leafParticles;
     public ParticleSystem LeafParticlesBurst => leafParticlesBurst;
+    public Image[] Vines => vines;
 
     [SerializeField] GameObject cellPrefab = default;
     [SerializeField] Transform cellsParent = default;
@@ -23,6 +24,7 @@ public class GridView : MonoBehaviour
     [SerializeField] ParticleSystem shardsParticles = default;
     [SerializeField] ParticleSystem leafParticles = default;
     [SerializeField] ParticleSystem leafParticlesBurst = default;
+    [SerializeField] Image[] vines = default;
 
     GridModel gridModel;
     GameObject[,] cells;
@@ -77,6 +79,7 @@ public class GridView : MonoBehaviour
                 cells[i, j] = cell;
             }
         }
+        AnimationSystem.GrowVines(vines);
     }
 
     Dictionary<GameObject, Sequence> destroyngTiles = new Dictionary<GameObject, Sequence>();
@@ -111,6 +114,7 @@ public class GridView : MonoBehaviour
         {
             AssembleCellView(cells[coordinates[i].x, coordinates[i].y], level, true);
         }
+        AnimationSystem.HideVines(vines);
     }
 
     Vector2Int[] oldShadowArea;

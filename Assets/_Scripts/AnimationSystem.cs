@@ -104,4 +104,27 @@ public class AnimationSystem
     {
         message.DOComplete(true);
     }
+
+    public static void GrowVines(Image[] vines)
+    {
+        float duration;
+        float size;
+        foreach (var vine in vines)
+        {
+            duration = Random.Range(10f, 20f);
+            size = Random.Range(80f, 100f);
+            vine.rectTransform.DOSizeDelta(new Vector2(vine.rectTransform.sizeDelta.x, size), duration).SetEase(Ease.InOutQuad);
+        }
+    }
+
+    public static void HideVines(Image[] vines)
+    {
+        float durtion = 0.3f;
+        foreach (var vine in vines)
+        {
+            vine.rectTransform.DOKill();
+            vine.rectTransform.DOSizeDelta(new Vector2(vine.rectTransform.sizeDelta.x, 30f), durtion);
+        }
+        DOVirtual.DelayedCall(durtion + 0.1f, () => GrowVines(vines));
+    }
 }
