@@ -57,7 +57,7 @@ public class SaveSystem : MonoBehaviour
         gridModel.Initialize(stateData.Grid);
         piecesModel.Initialize(stateData.NextPieces, stateData.LevelNumber);
         boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.UltimateUsed);
-        playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber, stateData.BestScore, stateData.BestLevel, stateData.BestRune, stateData.Stage);
+        playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber, stateData.BestScore, stateData.BestLevel, stateData.BestRune, stateData.Stage, stateData.TotalMerged);
         if (File.Exists(preveousSaveFilePath))
         {
             undoButton.interactable = true;
@@ -75,6 +75,7 @@ public class SaveSystem : MonoBehaviour
             BestLevel = playerProgressionModel.BestLevel,
             BestRune = playerProgressionModel.BestRune,
             Stage = 0,
+            TotalMerged = playerProgressionModel.TotalMerged,
             TurnNumber = 0,
             LevelNumber = 1,
             RefreshesCount = 0,
@@ -142,6 +143,7 @@ public class SaveSystem : MonoBehaviour
             BestLevel = playerProgressionModel.BestLevel,
             BestRune = playerProgressionModel.BestRune,
             Stage = playerProgressionModel.Stage,
+            TotalMerged = playerProgressionModel.TotalMerged,
             RefreshesCount = boostersModel.RefreshesCount,
             AddsCount = boostersModel.AddsCount,
             ClearsCount = boostersModel.ClearsCount,
@@ -208,6 +210,7 @@ public struct StateData
     public int BestLevel;
     public int BestRune;
     public int Stage;
+    public int TotalMerged;
     //Booster model
     public int RefreshesCount;
     public int AddsCount;

@@ -159,18 +159,18 @@ public class BoostersModel : MonoBehaviour
     {
         if (area > 25)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                GiveRandomBooster();
-            }
-        }
-        if (area > 16)
-        {
             for (int i = 0; i < 2; i++)
             {
                 GiveRandomBooster();
             }
         }
+        //if (area > 16)
+        //{
+        //    for (int i = 0; i < 2; i++)
+        //    {
+        //        GiveRandomBooster();
+        //    }
+        //}
         else if (area > 9)
         {
             GiveRandomBooster();

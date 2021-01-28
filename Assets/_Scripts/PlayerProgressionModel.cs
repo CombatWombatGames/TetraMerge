@@ -50,47 +50,33 @@ public class PlayerProgressionModel : MonoBehaviour
         }
     }
 
-    public int BestLevel
-    {
-        get { return bestLevel; }
-        set { bestLevel = value; }
-    }
-
-    public int BestRune
-    {
-        get { return bestRune; }
-        set { bestRune = value; }
-    }
-
-    public int Stage
-    {
-        get { return stage; }
-        set { stage = value; }
-    }
+    public int BestLevel { get; set; }
+    public int BestRune { get; set; }
+    public int Stage { get; set; }
+    public int TotalMerged { get; set; }
 
     GridModel gridModel;
     int currentScore;
     int levelNumber;
     int turnNumber;
     int bestScore;
-    int bestLevel;
-    int bestRune;
-    int stage;
 
     void Awake()
     {
         gridModel = GetComponent<GridModel>();
         gridModel.GridChanged += OnGridChanged;
+        gridModel.CellsMerged += OnCellsMerged;
         LevelNumberChanged += UpdateBestLevel;
     }
 
     void OnDestroy()
     {
         gridModel.GridChanged -= OnGridChanged;
+        gridModel.CellsMerged -= OnCellsMerged;
         LevelNumberChanged -= UpdateBestLevel;
     }
 
-    public void Initialize(int currentScore, int levelNumber, int turnNumber, int bestScore, int bestLevel, int bestRune, int stage)
+    public void Initialize(int currentScore, int levelNumber, int turnNumber, int bestScore, int bestLevel, int bestRune, int stage, int totalMerged)
     {
         CurrentScore = currentScore;
         LevelNumber = levelNumber;
@@ -99,6 +85,7 @@ public class PlayerProgressionModel : MonoBehaviour
         BestLevel = bestLevel;
         BestRune = bestRune;
         Stage = stage;
+        TotalMerged = totalMerged;
     }
 
     void OnGridChanged(Vector2Int[] area, int level)
@@ -135,6 +122,11 @@ public class PlayerProgressionModel : MonoBehaviour
             BestRune = level;
             BestRuneChanged?.Invoke(BestRune);
         }
+    }
+
+    void OnCellsMerged(int count)
+    {
+        TotalMerged += count;
     }
 
     public void UpdateBestScore()

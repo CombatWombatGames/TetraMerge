@@ -31,6 +31,8 @@ public class UISystem : MonoBehaviour
     [SerializeField] GameObject helpCanvas = default;
     [SerializeField] GameObject collectionCanvas = default;
     [SerializeField] Button closeMenuButton = default;
+    [SerializeField] Image menuBackground = default;
+    [SerializeField] Transform menuPanel = default;
     [Header("About")]
     [SerializeField] Button mailButton = default;
     [SerializeField] Button termsButton = default;
@@ -40,6 +42,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] Rune runePrefab = default;
     [SerializeField] Button closeCollectionButton = default;
     [SerializeField] Transform runesParent = default;
+    [SerializeField] Text collectedRunes = default;
 
     SaveSystem saveSystem;
     BoostersModel boosterModel;
@@ -54,7 +57,7 @@ public class UISystem : MonoBehaviour
 
         undoButton.onClick.AddListener(saveSystem.Undo);
         helpButton.onClick.AddListener(() => SetWindowActive(Consts.Help));
-        menuButton.onClick.AddListener(() => SetWindowActive(Consts.Menu));
+        menuButton.onClick.AddListener(SetMenuActive);
         closeHelpButton.onClick.AddListener(() => SetWindowActive(null));
 
         continueButton.onClick.AddListener(() => SetWindowActive(null));
@@ -133,6 +136,16 @@ public class UISystem : MonoBehaviour
         }
     }
 
+    void SetMenuActive()
+    {
+        AudioSystem.Player.PlayButtonSfx();
+        foreach (var kvp in windows)
+        {
+            kvp.Value.SetActive(false);
+        }
+        AnimationSystem.OpenMenu(windows[Consts.Menu], menuBackground, menuPanel);
+    }
+
     public void RestartScene()
     {
         playerProgressionModel.UpdateBestScore();
@@ -200,5 +213,6 @@ public class UISystem : MonoBehaviour
         {
             Instantiate(runePrefab, runesParent);
         }
+        collectedRunes.text = $"You have collected {playerProgressionModel.TotalMerged} runes";
     }
 }

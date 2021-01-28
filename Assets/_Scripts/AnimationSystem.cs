@@ -62,7 +62,9 @@ public class AnimationSystem
         DOTween.Sequence()
             .AppendInterval(FallDelay)
             .Append(image.transform.DOScale(1f, duration).SetEase(Ease.OutBounce))
-            .Join(image.transform.DOLocalMove(position, duration).SetEase(Ease.OutBounce));
+            .Join(image.transform.DOLocalMove(position, duration).SetEase(Ease.OutBounce))
+            //DOTween doesn't return exact position by itself
+            .AppendCallback(() => image.GetComponentInParent<Transform>().position = position);
         FallDelay += 0.01f;
     }
 
@@ -147,5 +149,17 @@ public class AnimationSystem
             vine.rectTransform.DOSizeDelta(new Vector2(vine.rectTransform.sizeDelta.x, 30f), durtion);
         }
         DOVirtual.DelayedCall(durtion + 0.1f, () => GrowVines(vines));
+    }
+
+    public static void OpenMenu(GameObject canvas, Image background, Transform panel)
+    {
+        float durtion = 0.4f;
+        var position = panel.localPosition;
+        panel.localPosition = new Vector2(panel.localPosition.x, panel.localPosition.y + 1000f);
+        background.DOFade(0f, 0f);
+        canvas.SetActive(true);
+        DOTween.Sequence()
+            .Join(background.DOFade(0.66f, durtion))
+            .Join(panel.DOLocalMove(position, durtion).SetEase(Ease.OutBack));
     }
 }
