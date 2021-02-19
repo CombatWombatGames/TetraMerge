@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 
 //Plays sounds
 public class AudioSystem : MonoBehaviour
 {
     [SerializeField] AudioSource sfxSource = default;
+    [SerializeField] AudioClip[] Music = default;
     [SerializeField] AudioClip turnSfx = default;
     [SerializeField] AudioClip dropSfx = default;
     [SerializeField] AudioClip highlightSfx = default;
@@ -21,6 +23,10 @@ public class AudioSystem : MonoBehaviour
         Player = this;
         musicSource = GameObject.Find("MusicSource").GetComponent<AudioSource>();
         musicSource.mute = PlayerPrefs.GetInt("Mute") == 1;
+        if (musicSource.clip == null)
+        {
+            StartMusic();
+        }
     }
 
     public void PlayTurnSfx()
@@ -67,9 +73,42 @@ public class AudioSystem : MonoBehaviour
         sfxSource.PlayOneShot(raiseSfx, 0.15f);
     }
 
+    public void StartMusic()
+    {
+        musicSource.clip = Music[0]; //Music[Random.Range(0, Music.Length)];
+        musicSource.Play();
+    }
+
     public void RestartMusic()
     {
+        if (musicSource.clip == Music[0])
+        {
+            musicSource.clip = Music[1];
+        }
+        else
+        {
+            musicSource.clip = Music[0];
+        }
         musicSource.Play();
+    }
+
+    public void RestartMusicWithFading()
+    {
+        DOTween.Sequence()
+            .Append(musicSource.DOFade(0f, 0.5f))
+            .AppendCallback(() =>
+            {
+                if (musicSource.clip == Music[0])
+                {
+                    musicSource.clip = Music[1];
+                }
+                else
+                {
+                    musicSource.clip = Music[0];
+                }
+                musicSource.volume = 1f;
+                musicSource.Play();
+            });
     }
 
     public void MuteMusic()

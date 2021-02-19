@@ -150,7 +150,7 @@ public class UISystem : MonoBehaviour
     {
         playerProgressionModel.UpdateBestScore();
         saveSystem.StartFromScratch();
-        AudioSystem.Player.RestartMusic();
+        AudioSystem.Player.RestartMusicWithFading();
     }
 
     public void Mute()

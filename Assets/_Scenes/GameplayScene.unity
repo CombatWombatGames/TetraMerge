@@ -21189,6 +21189,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 115843319}
+  Music:
+  - {fileID: 8300000, guid: df2750e023b2c78459dd0ff60097327c, type: 3}
+  - {fileID: 8300000, guid: c5068dc461a449d4d87d1dec22161080, type: 3}
   turnSfx: {fileID: 8300000, guid: 5e9ebcfb95e78ab498aa082bf28df49e, type: 3}
   dropSfx: {fileID: 8300000, guid: 186d817fd1b230648bfd8128d55886f3, type: 3}
   highlightSfx: {fileID: 8300000, guid: e3630643271c5144f926d5bfa7787707, type: 3}
@@ -30175,8 +30178,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: df2750e023b2c78459dd0ff60097327c, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1

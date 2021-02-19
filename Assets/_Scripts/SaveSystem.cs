@@ -82,7 +82,7 @@ public class SaveSystem : MonoBehaviour
             AddsCount = 0,
             ClearsCount = 0,
             BoostersGiven = 0,
-            UltimateUsed = false,
+            UltimateUsed = true,
         };
         WriteSaveFile(stateData, path);
     }

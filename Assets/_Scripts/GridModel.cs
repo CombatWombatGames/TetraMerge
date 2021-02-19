@@ -56,6 +56,7 @@ public class GridModel : MonoBehaviour
             {
                 playerProgressionModel.LevelNumber++;
                 piecesModel.LevelUpCollection();
+                AudioSystem.Player.RestartMusicWithFading();
             }
             if (cellsMerged)
             {
