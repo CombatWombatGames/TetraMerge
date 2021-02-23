@@ -103,6 +103,7 @@ public class BoostersModel : MonoBehaviour
             piecesModel.GenerateNextPieces();
             RefreshesCount--;
             playerProgressionModel.TurnNumber++;
+            AnalyticsSystem.BoosterUsed(BoosterType.Refresh);
         }
     }
 
@@ -113,6 +114,7 @@ public class BoostersModel : MonoBehaviour
             gridModel.ChangeGrid(new Vector2Int[] { position }, 0);
             ClearsCount--;
             playerProgressionModel.TurnNumber++;
+            AnalyticsSystem.BoosterUsed(BoosterType.Clear);
         }
     }
 
@@ -123,6 +125,7 @@ public class BoostersModel : MonoBehaviour
             gridModel.ChangeGrid(new Vector2Int[] { position }, playerProgressionModel.LevelNumber);
             AddsCount--;
             playerProgressionModel.TurnNumber++;
+            AnalyticsSystem.BoosterUsed(BoosterType.Add);
         }
     }
 
@@ -134,6 +137,7 @@ public class BoostersModel : MonoBehaviour
         ClearsCount = 0;
         gridModel.RemoveMinimumLevelPieces();
         playerProgressionModel.TurnNumber++;
+        AnalyticsSystem.BoosterUsed(BoosterType.Ultimate);
     }
 
     void GiveRandomBooster()
@@ -143,12 +147,15 @@ public class BoostersModel : MonoBehaviour
         {
             case 0:
                 RefreshesCount++;
+                AnalyticsSystem.BoosterAcquired(BoosterType.Refresh);
                 break;
             case 1:
                 AddsCount++;
+                AnalyticsSystem.BoosterAcquired(BoosterType.Add);
                 break;
             case 2:
                 ClearsCount++;
+                AnalyticsSystem.BoosterAcquired(BoosterType.Clear);
                 break;
             default:
                 break;
@@ -178,4 +185,4 @@ public class BoostersModel : MonoBehaviour
     }
 }
 
-public enum BoosterType { Refresh, Add, Clear }
+public enum BoosterType { Refresh, Add, Clear, Ultimate }

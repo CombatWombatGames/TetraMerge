@@ -137,7 +137,7 @@ public class PlayerProgressionModel : MonoBehaviour
         }
     }
 
-    void UpdateBestLevel(int obj)
+    void UpdateBestLevel(int level)
     {
         if (levelNumber > BestLevel)
         {

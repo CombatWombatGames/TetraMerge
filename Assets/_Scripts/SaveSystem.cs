@@ -32,6 +32,7 @@ public class SaveSystem : MonoBehaviour
         piecesModel = GetComponent<PiecesModel>();
         playerProgressionModel.TurnChanged += OnTurnChanged;
         PrepareStateData();
+        AnalyticsSystem.Initialize(playerProgressionModel);
     }
 
     void OnDestroy()
@@ -168,6 +169,7 @@ public class SaveSystem : MonoBehaviour
         CreateInitialSave(saveFilePath);
         DOTween.Clear();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        AnalyticsSystem.Restart(playerProgressionModel.LevelNumber);
     }
 
     //Produces array from field left to right top to bottom

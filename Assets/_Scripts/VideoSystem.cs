@@ -5,4 +5,10 @@ using UnityEngine.Video;
 
 public class VideoSystem : MonoBehaviour
 {
+    [SerializeField] VideoPlayer player = default;
+
+    void Start()
+    {
+        player.Prepare();
+    }
 }

@@ -151,15 +151,23 @@ public class AnimationSystem
         DOVirtual.DelayedCall(durtion + 0.1f, () => GrowVines(vines));
     }
 
-    public static void OpenMenu(GameObject canvas, Image background, Transform panel)
+    public static void OpenMenu(GameObject canvas, Image background, Transform panel, Transform ravenEye)
     {
-        float durtion = 0.4f;
+        float duration = 0.4f;
         var position = panel.localPosition;
         panel.localPosition = new Vector2(panel.localPosition.x, panel.localPosition.y + 1000f);
         background.DOFade(0f, 0f);
         canvas.SetActive(true);
         DOTween.Sequence()
-            .Join(background.DOFade(0.66f, durtion))
-            .Join(panel.DOLocalMove(position, durtion).SetEase(Ease.OutBack));
+            .Join(background.DOFade(0.66f, duration))
+            .Join(panel.DOLocalMove(position, duration).SetEase(Ease.OutBack))
+            .Join(ravenEye.DOScaleY(0f, duration))
+            .Append(ravenEye.DOScaleY(1f, 0.1f));
+    }
+
+    public static void RavenBlink(Transform eye)
+    {
+        eye.DOKill(true);
+        eye.DOScaleY(0f, 0.05f).SetLoops(2, LoopType.Yoyo);
     }
 }

@@ -3,53 +3,52 @@ using UnityEngine.Analytics;
 
 public class AnalyticsSystem
 {
-    static void LevelStart(int level)
+    static PlayerProgressionModel playerProgressionModel;
+
+    static Dictionary<string, object> parameters { get { return new Dictionary<string, object> {
+            { "Turn", playerProgressionModel.TurnNumber },
+            { "Level", playerProgressionModel.LevelNumber },
+            { "Stage", playerProgressionModel.Stage },
+            { "Score", playerProgressionModel.CurrentScore },
+    };}}
+
+    public static void Initialize(PlayerProgressionModel playerProgressionModel)
     {
-        //Add boosters
-        //Add score
-        //Add stage
-        AnalyticsEvent.LevelStart(level);
+        AnalyticsSystem.playerProgressionModel = playerProgressionModel;
     }
 
-    static void StageStart(int stage)
+    public static void LevelStart(int level)
     {
-        //Add boosters
-        //Add score
-        //Add level
-        AnalyticsEvent.LevelUp(stage);
+        AnalyticsEvent.LevelStart(level, parameters);
     }
 
-    static void Restart(int level)
+    public static void StageStart(int stage)
     {
-        //Add boosters
-        //Add score
-        //Add stage
-        AnalyticsEvent.LevelFail(level);
+        AnalyticsEvent.LevelUp(stage, parameters);
     }
 
-    static void WindowOpen(string name)
+    public static void Restart(int level)
+    {
+        AnalyticsEvent.LevelFail(level, parameters);
+    }
+
+    public static void WindowOpen(string name)
     {
         AnalyticsEvent.ScreenVisit(name);
     }
 
-    static void BoosterAcquired(string name)
+    public static void BoosterAcquired(BoosterType type)
     {
-        //Add level
-        //Add stage
-        AnalyticsEvent.Custom("BoosterAcquired", new Dictionary<string, object> { { "Name", name } });
+        AnalyticsEvent.Custom("BoosterAcquired", new Dictionary<string, object> (parameters) { { "Name", type } });
     }
 
-    static void BoosterUsed(string name)
+    public static void BoosterUsed(BoosterType type)
     {
-        //Add level
-        //Add stage
-        AnalyticsEvent.Custom("BoosterUsed", new Dictionary<string, object> { { "Name", name } });
+        AnalyticsEvent.Custom("BoosterUsed", new Dictionary<string, object>(parameters) { { "Name", type } });
     }
 
-    static void Merge(int diagonal)
+    public static void Merge(int count)
     {
-        //Add level
-        //Add stage
-        AnalyticsEvent.Custom("Merge", new Dictionary<string, object> { { "Name", diagonal } });
+        AnalyticsEvent.Custom("Merge", new Dictionary<string, object>(parameters) { { "Name", count } });
     }
 }

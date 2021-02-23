@@ -57,9 +57,11 @@ public class GridModel : MonoBehaviour
                 playerProgressionModel.LevelNumber++;
                 piecesModel.LevelUpCollection();
                 AudioSystem.Player.RestartMusicWithFading();
+                AnalyticsSystem.LevelStart(playerProgressionModel.LevelNumber);
             }
             if (cellsMerged)
             {
+                AnalyticsSystem.Merge(coordinates.Length);
                 CellsMerged(coordinates.Length);
             }
         }
@@ -119,6 +121,8 @@ public class GridModel : MonoBehaviour
         ChangeGrid(ArrayToField(stagesList[playerProgressionModel.Stage]), playerProgressionModel.LevelNumber, false);
         playerProgressionModel.Stage = (playerProgressionModel.Stage + 1) % stagesList.Length;
         boostersModel.UltimateUsed = false;
+        AnalyticsSystem.BoosterAcquired(BoosterType.Ultimate);
+        AnalyticsSystem.StageStart(playerProgressionModel.Stage);
     }
 
     Vector2Int[] ArrayToField(Array2DBool array2DBool)

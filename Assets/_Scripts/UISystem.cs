@@ -26,6 +26,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] Button muteButton = default;
     [SerializeField] Button aboutButton = default;
     [SerializeField] Button quitButton = default;
+    [SerializeField] Button ravenButton = default;
     [SerializeField] GameObject menuCanvas = default;
     [SerializeField] GameObject aboutCanvas = default;
     [SerializeField] GameObject helpCanvas = default;
@@ -33,6 +34,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] Button closeMenuButton = default;
     [SerializeField] Image menuBackground = default;
     [SerializeField] Transform menuPanel = default;
+    [SerializeField] Transform ravenEye = default;
     [Header("About")]
     [SerializeField] Button mailButton = default;
     [SerializeField] Button termsButton = default;
@@ -57,7 +59,7 @@ public class UISystem : MonoBehaviour
 
         undoButton.onClick.AddListener(saveSystem.Undo);
         helpButton.onClick.AddListener(() => SetWindowActive(Consts.Help));
-        menuButton.onClick.AddListener(SetMenuActive);
+        menuButton.onClick.AddListener(OpenMenu);
         closeHelpButton.onClick.AddListener(() => SetWindowActive(null));
 
         continueButton.onClick.AddListener(() => SetWindowActive(null));
@@ -66,6 +68,7 @@ public class UISystem : MonoBehaviour
         muteButton.onClick.AddListener(Mute);
         aboutButton.onClick.AddListener(() => SetWindowActive(Consts.About));
         quitButton.onClick.AddListener(Quit);
+        ravenButton.onClick.AddListener(() => AnimationSystem.RavenBlink(ravenEye));
         closeMenuButton.onClick.AddListener(() => SetWindowActive(null));
 
         piecesButton.onClick.AddListener(() => SwitchTable(true));
@@ -81,6 +84,8 @@ public class UISystem : MonoBehaviour
         closeCollectionButton.onClick.AddListener(() => SetWindowActive(null));
 
         SwitchTable(true, false);
+
+        playerProgressionModel.TurnChanged += OnTurnChanged;
 
         windows = new Dictionary<string, GameObject> 
         { 
@@ -104,6 +109,7 @@ public class UISystem : MonoBehaviour
         muteButton.onClick.RemoveAllListeners();
         aboutButton.onClick.RemoveAllListeners();
         quitButton.onClick.RemoveAllListeners();
+        ravenButton.onClick.RemoveAllListeners();
         closeMenuButton.onClick.RemoveAllListeners();
 
         piecesButton.onClick.RemoveAllListeners();
@@ -117,6 +123,8 @@ public class UISystem : MonoBehaviour
         closeAboutButton.onClick.RemoveAllListeners();
 
         closeCollectionButton.onClick.RemoveAllListeners();
+
+        playerProgressionModel.TurnChanged -= OnTurnChanged;
     }
 
     void SetWindowActive(string id)
@@ -128,22 +136,23 @@ public class UISystem : MonoBehaviour
         if (!string.IsNullOrEmpty(id))
         {
             windows[id].SetActive(true);
+            AnalyticsSystem.WindowOpen(id);
         }
         AudioSystem.Player.PlayButtonSfx();
         if (id == Consts.Collection)
         {
-            SpawnRunes();
+            InitializeRuneCollection();
         }
     }
 
-    void SetMenuActive()
+    void OpenMenu()
     {
         AudioSystem.Player.PlayButtonSfx();
         foreach (var kvp in windows)
         {
             kvp.Value.SetActive(false);
         }
-        AnimationSystem.OpenMenu(windows[Consts.Menu], menuBackground, menuPanel);
+        AnimationSystem.OpenMenu(windows[Consts.Menu], menuBackground, menuPanel, ravenEye);
     }
 
     public void RestartScene()
@@ -196,7 +205,7 @@ public class UISystem : MonoBehaviour
         Application.OpenURL("https://docs.google.com/document/d/1gVyA0oGOmKJ9KjuA-RmlUS0nkkNwe3kmVs1v3bX29FA/edit?usp=sharing");
     }
 
-    void SpawnRunes()
+    void InitializeRuneCollection()
     {
         Sprite[] tiles = GetComponent<Resources>().TilesList;
         for (int i = 1; i < runesParent.childCount; i++)
@@ -214,5 +223,14 @@ public class UISystem : MonoBehaviour
             Instantiate(runePrefab, runesParent);
         }
         collectedRunes.text = $"You have collected {playerProgressionModel.TotalMerged} runes";
+    }
+
+    void OnTurnChanged(int turn)
+    {
+        if (boosterModel.BoostersGiven == 0)
+        {
+            piecesButton.gameObject.SetActive(false);
+            boostersButton.gameObject.SetActive(false);
+        }
     }
 }
