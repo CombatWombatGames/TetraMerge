@@ -112,15 +112,15 @@ public class BoostersView : MonoBehaviour
 
     void OnCellsMerged(int area)
     {
-        if (area > 25)
-        {
-            messageSystem.ShowMessage(MessageId.BoostersIncremented);
-        }
-        else if (area > 16)
-        {
-            messageSystem.ShowMessage(MessageId.BoostersIncremented);
-        }
-        else if (area > 9)
+        //if (area > 25)
+        //{
+        //    messageSystem.ShowMessage(MessageId.BoostersIncremented);
+        //}
+        //else if (area > 16)
+        //{
+        //    messageSystem.ShowMessage(MessageId.BoostersIncremented);
+        //}
+        if (area > 9)
         {
             messageSystem.ShowMessage(MessageId.BoostersIncremented);
         }

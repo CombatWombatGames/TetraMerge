@@ -9,7 +9,7 @@ public struct Consts
 
     public static Dictionary<MessageId, string> Messages = new Dictionary<MessageId, string> 
     {
-        { MessageId.BoostersIncremented, "Random boosters earned!" },
+        { MessageId.BoostersIncremented, "Random booster earned!" },
         { MessageId.NewRuneCollected, "New rune added to collection!" },
         { MessageId.BaseRuneUpdated, "Base rune updated!" },
         { MessageId.StageChanged, "New stage!" },
@@ -21,16 +21,16 @@ public struct Consts
 
     public static string[] RuneDescriptions = new string[] 
     {
-        "Tiwaz - the rune is named after one-handed god Týr.",//, and was identified with this god.",
+        "Tiwaz - the rune is named after one-handed god Tyr.",//Týr
         "Wynn - the denotation of the rune is \"joy\".",
         "Odal - its reconstructed name means \"heritage\".",
         "Fehu - its name means \"livestock\".",
         "Ur - the reconstructed name of the rune means \"water\".",
-        "Peorð - the name could be referring to a fruit-tree.",
+        "Peorth - the name could be referring to a fruit-tree.",//Peorð
         "Gyfu - means \"gift\".",
         "Mannaz -  it is derived from the reconstructed word for \"man\".",
         "Algiz - from the word for \"moose\".",
-        "Sowilō - means \"Sun\"."
+        "Sowilo - means \"Sun\"."//Sowilō
     };
 
     public const string Text = "TWO FUP GMZS";

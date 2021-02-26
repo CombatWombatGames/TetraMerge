@@ -66,12 +66,14 @@ public class BoostersModel : MonoBehaviour
         piecesModel = GetComponent<PiecesModel>();
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
         playerProgressionModel.TurnChanged += OnTurnChanged;
+        piecesModel.CollectionLevelUp += OnCollectionLevelUp;
         gridModel.CellsMerged += OnCellsMerged;
     }
 
     void OnDestroy()
     {
         playerProgressionModel.TurnChanged -= OnTurnChanged;
+        piecesModel.CollectionLevelUp -= OnCollectionLevelUp;
         gridModel.CellsMerged -= OnCellsMerged;
     }
 
@@ -164,13 +166,13 @@ public class BoostersModel : MonoBehaviour
 
     void OnCellsMerged(int area)
     {
-        if (area > 25)
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                GiveRandomBooster();
-            }
-        }
+        //if (area > 25)
+        //{
+        //    for (int i = 0; i < 2; i++)
+        //    {
+        //        GiveRandomBooster();
+        //    }
+        //}
         //if (area > 16)
         //{
         //    for (int i = 0; i < 2; i++)
@@ -178,10 +180,15 @@ public class BoostersModel : MonoBehaviour
         //        GiveRandomBooster();
         //    }
         //}
-        else if (area > 9)
+        if (area > 9)
         {
             GiveRandomBooster();
         }
+    }
+
+    void OnCollectionLevelUp()
+    {
+        GiveRandomBooster();
     }
 }
 

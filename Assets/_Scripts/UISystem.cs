@@ -232,5 +232,10 @@ public class UISystem : MonoBehaviour
             piecesButton.gameObject.SetActive(false);
             boostersButton.gameObject.SetActive(false);
         }
+        else if (boosterModel.BoostersGiven == 1)
+        {
+            piecesButton.gameObject.SetActive(true);
+            boostersButton.gameObject.SetActive(true);
+        }
     }
 }
