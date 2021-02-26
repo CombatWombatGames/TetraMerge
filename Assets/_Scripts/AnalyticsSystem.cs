@@ -49,6 +49,6 @@ public class AnalyticsSystem
 
     public static void Merge(int count)
     {
-        AnalyticsEvent.Custom("Merge", new Dictionary<string, object>(parameters) { { "Name", count } });
+        AnalyticsEvent.Custom("Merge", new Dictionary<string, object>(parameters) { { "Count", count } });
     }
 }

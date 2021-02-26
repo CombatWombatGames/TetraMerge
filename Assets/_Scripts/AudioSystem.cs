@@ -95,7 +95,7 @@ public class AudioSystem : MonoBehaviour
     public void RestartMusicWithFading()
     {
         DOTween.Sequence()
-            .Append(musicSource.DOFade(0f, 0.5f))
+            .Append(musicSource.DOFade(0f, 1f))
             .AppendCallback(() =>
             {
                 if (musicSource.clip == Music[0])

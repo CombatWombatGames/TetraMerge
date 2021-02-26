@@ -135,7 +135,7 @@ public class AnimationSystem
         foreach (var vine in vines)
         {
             duration = Random.Range(10f, 20f);
-            size = Random.Range(80f, 100f);
+            size = Random.Range(60f, 80f);
             vine.rectTransform.DOSizeDelta(new Vector2(vine.rectTransform.sizeDelta.x, size), duration).SetEase(Ease.InOutQuad);
         }
     }
