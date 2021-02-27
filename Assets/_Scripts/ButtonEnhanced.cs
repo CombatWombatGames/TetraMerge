@@ -17,4 +17,12 @@ public class ButtonEnhanced : Button
         base.OnPointerUp(eventData);
         onPointerUp.Invoke();
     }
+
+    protected override void OnDestroy()
+    {
+        onPointerDown.RemoveAllListeners();
+        onPointerUp.RemoveAllListeners();
+        onClick.RemoveAllListeners();
+        base.OnDestroy();
+    }
 }

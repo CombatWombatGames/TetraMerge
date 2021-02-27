@@ -7,31 +7,30 @@ using UnityEngine.UI;
 public class UISystem : MonoBehaviour
 {
     [Header("Top UI")]
-    [SerializeField] Button menuButton = default;
-    [SerializeField] Button helpButton = default;
-    [SerializeField] Button undoButton = default;
+    [SerializeField] ButtonEnhanced menuButton = default;
+    [SerializeField] ButtonEnhanced helpButton = default;
+    [SerializeField] ButtonEnhanced undoButton = default;
     [SerializeField] Button closeHelpButton = default;
     [Header("Bottom UI")]
-    [SerializeField] Button piecesButton = default;
-    [SerializeField] Button boostersButton = default;
+    [SerializeField] ButtonEnhanced piecesButton = default;
+    [SerializeField] ButtonEnhanced boostersButton = default;
     [SerializeField] GameObject piecesPanel = default;
     [SerializeField] GameObject boostersPanel = default;
-    [Header("Boosters")]
-    [SerializeField] Button refreshButton = default;
-    [SerializeField] Button ultimateButton = default;
+    [SerializeField] ButtonEnhanced refreshButton = default;
+    [SerializeField] ButtonEnhanced ultimateButton = default;
     [Header("Menu")]
-    [SerializeField] Button continueButton = default;
-    [SerializeField] Button restartButton = default;
-    [SerializeField] Button collectionButton = default;
-    [SerializeField] Button muteButton = default;
-    [SerializeField] Button aboutButton = default;
-    [SerializeField] Button quitButton = default;
+    [SerializeField] ButtonEnhanced continueButton = default;
+    [SerializeField] ButtonEnhanced restartButton = default;
+    [SerializeField] ButtonEnhanced collectionButton = default;
+    [SerializeField] ButtonEnhanced muteButton = default;
+    [SerializeField] ButtonEnhanced aboutButton = default;
+    [SerializeField] ButtonEnhanced quitButton = default;
     [SerializeField] ButtonEnhanced ravenButton = default;
+    [SerializeField] Button closeMenuButton = default;
     [SerializeField] GameObject menuCanvas = default;
     [SerializeField] GameObject aboutCanvas = default;
     [SerializeField] GameObject helpCanvas = default;
     [SerializeField] GameObject collectionCanvas = default;
-    [SerializeField] Button closeMenuButton = default;
     [SerializeField] Image menuBackground = default;
     [SerializeField] Transform menuPanel = default;
     [SerializeField] Transform ravenEye = default;
@@ -53,75 +52,70 @@ public class UISystem : MonoBehaviour
 
     void Awake()
     {
+        windows = new Dictionary<string, GameObject>
+        {
+            { Consts.Menu, menuCanvas },
+            { Consts.About, aboutCanvas },
+            { Consts.Help, helpCanvas },
+            { Consts.Collection, collectionCanvas }
+        };
         saveSystem = GetComponent<SaveSystem>();
         boosterModel = GetComponent<BoostersModel>();
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
-
+        //Top
         undoButton.onClick.AddListener(saveSystem.Undo);
+        undoButton.onPointerDown.AddListener(() => { if (undoButton.interactable) AudioSystem.Player.PlayButtonSfx(); });
         helpButton.onClick.AddListener(() => SetWindowActive(Consts.Help));
+        helpButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
         menuButton.onClick.AddListener(OpenMenu);
+        menuButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
         closeHelpButton.onClick.AddListener(() => SetWindowActive(null));
-
-        continueButton.onClick.AddListener(() => SetWindowActive(null));
-        restartButton.onClick.AddListener(RestartScene);
-        collectionButton.onClick.AddListener(() => SetWindowActive(Consts.Collection));
-        muteButton.onClick.AddListener(Mute);
-        aboutButton.onClick.AddListener(() => SetWindowActive(Consts.About));
-        quitButton.onClick.AddListener(Quit);
-        closeMenuButton.onClick.AddListener(() => SetWindowActive(null));
-        ravenButton.onPointerDown.AddListener(() => AnimationSystem.RavenBlink(ravenEye));
-
-        piecesButton.onClick.AddListener(() => SwitchTable(true));
-        boostersButton.onClick.AddListener(() => SwitchTable(false));
+        //Bottom
+        piecesButton.onPointerDown.AddListener(() => SwitchTable(true));
+        boostersButton.onPointerDown.AddListener(() => SwitchTable(false));
         refreshButton.onClick.AddListener(() => { boosterModel.GenerateNewPieces(); SwitchTable(true); });
         ultimateButton.onClick.AddListener(() => { boosterModel.ClearBasicRunes(); SwitchTable(true); });
-
+        ultimateButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayBoosterSfx());
+        //Menu
+        continueButton.onClick.AddListener(() => SetWindowActive(null));
+        continueButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        restartButton.onClick.AddListener(RestartScene);
+        restartButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        collectionButton.onClick.AddListener(() => SetWindowActive(Consts.Collection));
+        collectionButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        muteButton.onClick.AddListener(Mute);
+        muteButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        aboutButton.onClick.AddListener(() => SetWindowActive(Consts.About));
+        aboutButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        quitButton.onClick.AddListener(Quit);
+        quitButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        closeMenuButton.onClick.AddListener(() => SetWindowActive(null));
+        ravenButton.onPointerDown.AddListener(() => AnimationSystem.RavenBlink(ravenEye));
+        //About
         mailButton.onClick.AddListener(SendEmail);
         termsButton.onClick.AddListener(OpenTerms);
         privacyButton.onClick.AddListener(OpenPrivacy);
         closeAboutButton.onClick.AddListener(() => SetWindowActive(null));
-
+        //Collection
         closeCollectionButton.onClick.AddListener(() => SetWindowActive(null));
 
         SwitchTable(true, false);
-
         playerProgressionModel.TurnChanged += OnTurnChanged;
-
-        windows = new Dictionary<string, GameObject> 
-        { 
-            { Consts.Menu, menuCanvas }, 
-            { Consts.About, aboutCanvas }, 
-            { Consts.Help, helpCanvas }, 
-            { Consts.Collection, collectionCanvas } 
-        };
     }
 
     void OnDestroy()
     {
-        undoButton.onClick.RemoveAllListeners();
-        helpButton.onClick.RemoveAllListeners();
-        menuButton.onClick.RemoveAllListeners();
+        //ButtonEnhanced removes all listeners on destroy by itself
+        //Top
         closeHelpButton.onClick.RemoveAllListeners();
-
-        continueButton.onClick.RemoveAllListeners();
-        restartButton.onClick.RemoveAllListeners();
-        collectionButton.onClick.RemoveAllListeners();
-        muteButton.onClick.RemoveAllListeners();
-        aboutButton.onClick.RemoveAllListeners();
-        quitButton.onClick.RemoveAllListeners();
+        //Menu
         closeMenuButton.onClick.RemoveAllListeners();
-        ravenButton.onPointerDown.RemoveAllListeners();
-
-        piecesButton.onClick.RemoveAllListeners();
-        boostersButton.onClick.RemoveAllListeners();
-        refreshButton.onClick.RemoveAllListeners();
-        ultimateButton.onClick.RemoveAllListeners();
-
+        //About
         mailButton.onClick.RemoveAllListeners();
         termsButton.onClick.RemoveAllListeners();
         privacyButton.onClick.RemoveAllListeners();
         closeAboutButton.onClick.RemoveAllListeners();
-
+        //Collection
         closeCollectionButton.onClick.RemoveAllListeners();
 
         playerProgressionModel.TurnChanged -= OnTurnChanged;
@@ -138,7 +132,6 @@ public class UISystem : MonoBehaviour
             windows[id].SetActive(true);
             AnalyticsSystem.WindowOpen(id);
         }
-        AudioSystem.Player.PlayButtonSfx();
         if (id == Consts.Collection)
         {
             InitializeRuneCollection();
@@ -147,7 +140,6 @@ public class UISystem : MonoBehaviour
 
     void OpenMenu()
     {
-        AudioSystem.Player.PlayButtonSfx();
         foreach (var kvp in windows)
         {
             kvp.Value.SetActive(false);

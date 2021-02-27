@@ -80,6 +80,7 @@ public class GridView : MonoBehaviour
             }
         }
         AnimationSystem.FallDelay = 0f;
+        int runesDropped = 0;
         foreach (var kvp in rngTable)
         {
             int i = kvp.Value.Item1;
@@ -87,6 +88,18 @@ public class GridView : MonoBehaviour
             GameObject cell = Instantiate(cellPrefab, new Vector3((i - offsetX) * CellSize, (j - offsetY) * CellSize + fieldOffsetY), Quaternion.identity, cellsParent);
             AssembleCellView(cell, grid[i, j].Level, false, true);
             cells[i, j] = cell;
+            if (grid[i, j].Level > 0)
+            {
+                runesDropped++;
+            }
+        }
+        if (runesDropped > 0)
+        {
+            AudioSystem.Player.PlayDropSfx();
+        }
+        else
+        {
+            AudioSystem.Player.PlayBoosterSfx();
         }
         AnimationSystem.ShakeField(Field, grid.GetLength(0) * grid.GetLength(1) - gridModel.CountEmptyCells(), DustParticles, ShardsParticles, LeafParticles, LeafParticlesBurst, 0.2f);
         AnimationSystem.GrowVines(vines);

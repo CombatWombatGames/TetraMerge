@@ -59,10 +59,7 @@ public class SaveSystem : MonoBehaviour
         piecesModel.Initialize(stateData.NextPieces, stateData.LevelNumber);
         boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.UltimateUsed);
         playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber, stateData.BestScore, stateData.BestLevel, stateData.BestRune, stateData.Stage, stateData.TotalMerged);
-        if (File.Exists(preveousSaveFilePath))
-        {
-            undoButton.interactable = true;
-        }
+        undoButton.interactable = File.Exists(preveousSaveFilePath);
     }                            
                                  
     void CreateInitialSave(string path)
