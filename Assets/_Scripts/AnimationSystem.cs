@@ -161,13 +161,13 @@ public class AnimationSystem
         DOTween.Sequence()
             .Join(background.DOFade(0.66f, duration))
             .Join(panel.DOLocalMove(position, duration).SetEase(Ease.OutBack))
-            .Join(ravenEye.DOScaleY(0f, duration))
+            .Join(ravenEye.DOScaleY(0f, 0f))
             .Append(ravenEye.DOScaleY(1f, 0.1f));
     }
 
     public static void RavenBlink(Transform eye)
     {
         eye.DOKill(true);
-        eye.DOScaleY(0f, 0.05f).SetLoops(2, LoopType.Yoyo);
+        eye.DOScaleY(0f, 0.07f).SetLoops(2, LoopType.Yoyo);
     }
 }

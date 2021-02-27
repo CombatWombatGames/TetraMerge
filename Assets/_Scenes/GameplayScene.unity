@@ -13373,7 +13373,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 720937412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: a1688c591bde5584084c96a2e9272183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -13405,6 +13405,12 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 720937415}
   m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onPointerDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onPointerUp:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &734647166

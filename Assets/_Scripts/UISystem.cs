@@ -26,7 +26,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] Button muteButton = default;
     [SerializeField] Button aboutButton = default;
     [SerializeField] Button quitButton = default;
-    [SerializeField] Button ravenButton = default;
+    [SerializeField] ButtonEnhanced ravenButton = default;
     [SerializeField] GameObject menuCanvas = default;
     [SerializeField] GameObject aboutCanvas = default;
     [SerializeField] GameObject helpCanvas = default;
@@ -68,8 +68,8 @@ public class UISystem : MonoBehaviour
         muteButton.onClick.AddListener(Mute);
         aboutButton.onClick.AddListener(() => SetWindowActive(Consts.About));
         quitButton.onClick.AddListener(Quit);
-        ravenButton.onClick.AddListener(() => AnimationSystem.RavenBlink(ravenEye));
         closeMenuButton.onClick.AddListener(() => SetWindowActive(null));
+        ravenButton.onPointerDown.AddListener(() => AnimationSystem.RavenBlink(ravenEye));
 
         piecesButton.onClick.AddListener(() => SwitchTable(true));
         boostersButton.onClick.AddListener(() => SwitchTable(false));
@@ -109,8 +109,8 @@ public class UISystem : MonoBehaviour
         muteButton.onClick.RemoveAllListeners();
         aboutButton.onClick.RemoveAllListeners();
         quitButton.onClick.RemoveAllListeners();
-        ravenButton.onClick.RemoveAllListeners();
         closeMenuButton.onClick.RemoveAllListeners();
+        ravenButton.onPointerDown.RemoveAllListeners();
 
         piecesButton.onClick.RemoveAllListeners();
         boostersButton.onClick.RemoveAllListeners();
