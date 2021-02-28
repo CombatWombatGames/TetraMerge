@@ -106,7 +106,7 @@ public class AudioSystem : MonoBehaviour
                 {
                     musicSource.clip = Music[0];
                 }
-                musicSource.volume = 0.4f;
+                musicSource.volume = 0.6f;
                 musicSource.Play();
             });
     }

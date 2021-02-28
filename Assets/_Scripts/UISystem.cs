@@ -71,8 +71,8 @@ public class UISystem : MonoBehaviour
         menuButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
         closeHelpButton.onClick.AddListener(() => SetWindowActive(null));
         //Bottom
-        piecesButton.onPointerDown.AddListener(() => SwitchTable(true));
-        boostersButton.onPointerDown.AddListener(() => SwitchTable(false));
+        piecesButton.onPointerDown.AddListener(() => { if (piecesButton.interactable) SwitchTable(true); });
+        boostersButton.onPointerDown.AddListener(() => { if (boostersButton.interactable) SwitchTable(false); });
         refreshButton.onClick.AddListener(() => { boosterModel.GenerateNewPieces(); SwitchTable(true); });
         ultimateButton.onClick.AddListener(() => { boosterModel.ClearBasicRunes(); SwitchTable(true); });
         ultimateButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayBoosterSfx());

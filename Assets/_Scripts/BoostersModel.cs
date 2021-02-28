@@ -188,6 +188,7 @@ public class BoostersModel : MonoBehaviour
 
     void OnCollectionLevelUp()
     {
+        //TODO MED Show message
         GiveRandomBooster();
     }
 }
