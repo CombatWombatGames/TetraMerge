@@ -43,7 +43,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
-    totalSpriteSurfaceArea: 11908137
+    totalSpriteSurfaceArea: 11687037
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -82,7 +82,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d3d91e2683abbe24dbfd3570d57c6493, type: 3}
   - {fileID: 21300000, guid: 79704646cf9cfd54bbe7148cf5d71a08, type: 3}
   - {fileID: 21300000, guid: b6ba4556bcbf7fa4dbaab9b2d6b0d29d, type: 3}
-  - {fileID: 21300000, guid: 5126a95614c333c489502e885f5f8c4d, type: 3}
   - {fileID: 21300000, guid: 8bda717697f7129479e10caf92b19585, type: 3}
   - {fileID: 21300000, guid: 3e05f0a67883c274289344eca2db5039, type: 3}
   - {fileID: 21300000, guid: f17fc0073c772ed4c963fd0c0560b943, type: 3}
@@ -97,7 +96,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8866646a8b2e52642a7e9a006c00a99c, type: 3}
   - {fileID: 21300000, guid: 38d6788a27ccdc34f91827310aebe3d5, type: 3}
   - {fileID: 21300000, guid: cf431d9a785abe646a9954a1f066d1c0, type: 3}
-  - {fileID: 21300000, guid: b8ee68ea92c38264aab6756bfe15cd1a, type: 3}
   - {fileID: 21300000, guid: dccb7aea94a24554fb325d284ae0c467, type: 3}
   - {fileID: 21300000, guid: 49aa1b0ba409b0a438d3de2173a846fc, type: 3}
   - {fileID: 21300000, guid: 1922911b20ea4e4448484cc35ac27544, type: 3}
@@ -110,11 +108,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: dfbd0b3c842e6f747aa3ac4b8f907ca1, type: 3}
   - {fileID: 21300000, guid: 66f4a67c78b686d48b92e1de30b4c33b, type: 3}
   - {fileID: 21300000, guid: a004c18c189b14744ac405c0fd877400, type: 3}
-  - {fileID: 21300000, guid: 1f14389c260784e4fb5324b92b8b5a85, type: 3}
   - {fileID: 21300000, guid: af6dc5cc6199aaa4084976e516c169ef, type: 3}
   - {fileID: 21300000, guid: 8ae626dc6ab67714cae928231655ff60, type: 3}
   - {fileID: 21300000, guid: d77f00ecec8c9a5438bb27587bba34f5, type: 3}
-  - {fileID: 21300000, guid: ed1fc72d61412734a94d35c7869b2ec9, type: 3}
   - {fileID: 21300000, guid: 1f35207d59c687a40b267df63cfe6199, type: 3}
   - {fileID: 21300000, guid: 35bccb7d28d4fd744af0bc98cbf9a04a, type: 3}
   - {fileID: 21300000, guid: 8580219d87988c644b11c1894c77a5f8, type: 3}
@@ -168,7 +164,6 @@ SpriteAtlas:
   - rune_7_cln
   - tile_glow
   - chain_menu_bttn_restart
-  - chain_menu_raven
   - grass_2_top
   - grass_3_leave
   - menu_bttn_boost_shadow
@@ -183,7 +178,6 @@ SpriteAtlas:
   - boost_bttn_1_press
   - rules
   - chain_menu_bttn_continue
-  - button_undo
   - chain_menu_light_circle
   - rune_1
   - shield_menu
@@ -196,11 +190,9 @@ SpriteAtlas:
   - skull_boost
   - rune_glow
   - shield_rules_press
-  - button_restart
   - chain_menu_bttn_mute
   - rune_5_cln
   - chain_menu_bttn_continue_press
-  - button_quit
   - menu_bttn_boost_light
   - boost_bttn_1
   - shield_arrow_revert_press
