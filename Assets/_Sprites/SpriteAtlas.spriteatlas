@@ -40,6 +40,7 @@ SpriteAtlas:
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
+    secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
@@ -212,5 +213,6 @@ SpriteAtlas:
   - progress_ball
   - selection_border
   - menu_bttn_pieces_shadow
+  m_RenderDataMap: {}
   m_Tag: SpriteAtlas
   m_IsVariant: 0
