@@ -136,6 +136,10 @@ public class UISystem : MonoBehaviour
         {
             InitializeRuneCollection();
         }
+        if (id == Consts.Help || id == Consts.Collection || id == Consts.About)
+        {
+            AudioSystem.Player.PlayPaperSlowSfx();
+        }
     }
 
     void OpenMenu()
@@ -145,6 +149,7 @@ public class UISystem : MonoBehaviour
             kvp.Value.SetActive(false);
         }
         AnimationSystem.OpenMenu(windows[Consts.Menu], menuBackground, menuPanel, ravenEye);
+        AudioSystem.Player.PlayChainSfx();
     }
 
     public void RestartScene()
@@ -219,6 +224,10 @@ public class UISystem : MonoBehaviour
 
     void OnTurnChanged(int turn)
     {
+        if (turn == 3 && playerProgressionModel.TotalMerged == 0)
+        {
+            SetWindowActive(Consts.Help);
+        }
         if (boosterModel.BoostersGiven == 0)
         {
             piecesButton.gameObject.SetActive(false);

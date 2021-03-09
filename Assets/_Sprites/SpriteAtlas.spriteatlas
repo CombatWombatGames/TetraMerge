@@ -44,7 +44,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
-    totalSpriteSurfaceArea: 11687037
+    totalSpriteSurfaceArea: 11947225
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -61,8 +61,10 @@ SpriteAtlas:
   - {fileID: 21300000, guid: a2ae3b31d80f6a14680143081023d5fd, type: 3}
   - {fileID: 21300000, guid: 745bf0711ce9da9498b3edb1a022998c, type: 3}
   - {fileID: 21300000, guid: bdb0dba1c6d675442bf5a6b09d4b58aa, type: 3}
+  - {fileID: 21300000, guid: 3f258c4279ed8964bb737bb002db0912, type: 3}
   - {fileID: 21300000, guid: 2b3bfb92c9a002645b472bead7f775c4, type: 3}
   - {fileID: 21300000, guid: 09fdbd23de5314d43a81d6314bdb8d6a, type: 3}
+  - {fileID: 21300000, guid: 2b84a29356aa76a4ba315f123f03d942, type: 3}
   - {fileID: 21300000, guid: a62072b3cc5d6fa40824379e79d471dc, type: 3}
   - {fileID: 21300000, guid: 7eb80f34febd7604db3f5f1e28fd48fa, type: 3}
   - {fileID: 21300000, guid: e3faab54490ef504cb372dec2ab9e682, type: 3}
@@ -127,6 +129,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 82c4b5be62bfb7f45be9b5f02044cb9d, type: 3}
   - {fileID: 21300000, guid: 230a54ce60358db40abe65c8bedae90d, type: 3}
   - {fileID: 21300000, guid: 421a07de039ab6d4396233dd73fe2829, type: 3}
+  - {fileID: 21300000, guid: 43f5f0eefeb3a624ab8bdd605e2f7743, type: 3}
   - {fileID: 21300000, guid: fb917a0f9accc064384290de9775858d, type: 3}
   - {fileID: 21300000, guid: c1d259cfaefb4fc408d6178db0452d96, type: 3}
   - {fileID: 21300000, guid: 8d3bddef6e9a95945ba44b38227f7dd3, type: 3}
@@ -143,9 +146,11 @@ SpriteAtlas:
   - chain_menu_stone5
   - background_1
   - rune_1_cln
+  - Eye
   - rune_8_cln
   - chain_menu_bttn_quit_press
-  - Eye
+  - Raven
+  - raven_eye
   - collected_runes
   - chain_menu_bttn_mute_press
   - collected_runes_base
@@ -175,7 +180,7 @@ SpriteAtlas:
   - rune_4
   - chain_menu_stone4
   - rune_6_cln
-  - Raven
+  - raven_blink
   - boost_bttn_1_press
   - rules
   - chain_menu_bttn_continue
@@ -209,6 +214,7 @@ SpriteAtlas:
   - grass_2_down
   - chain_menu_blocks
   - boost_bttn_2
+  - chain_menu_raven
   - chain_menu_bttn_about
   - progress_ball
   - selection_border

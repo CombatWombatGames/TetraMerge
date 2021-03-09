@@ -14,6 +14,9 @@ public class AudioSystem : MonoBehaviour
     [SerializeField] AudioClip buttonSfx = default;
     [SerializeField] AudioClip boosterSfx = default;
     [SerializeField] AudioClip raiseSfx = default;
+    [SerializeField] AudioClip paperFastSfx = default;
+    [SerializeField] AudioClip paperSlowSfx = default;
+    [SerializeField] AudioClip chainSfx = default;
 
     public static AudioSystem Player;
     AudioSource musicSource;
@@ -71,6 +74,24 @@ public class AudioSystem : MonoBehaviour
     {
         sfxSource.pitch = 1f;
         sfxSource.PlayOneShot(raiseSfx, 0.15f);
+    }
+
+    public void PlayPaperFastSfx()
+    {
+        sfxSource.pitch = 1f;
+        sfxSource.PlayOneShot(paperFastSfx, 0.15f);
+    }
+
+    public void PlayPaperSlowSfx()
+    {
+        sfxSource.pitch = 1f;
+        sfxSource.PlayOneShot(paperSlowSfx, 0.6f);
+    }
+
+    public void PlayChainSfx()
+    {
+        sfxSource.pitch = 1f;
+        sfxSource.PlayOneShot(chainSfx, 0.4f);
     }
 
     public void StartMusic()
