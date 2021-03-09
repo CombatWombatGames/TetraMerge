@@ -6,10 +6,10 @@ public class AnalyticsSystem
     static PlayerProgressionModel playerProgressionModel;
 
     static Dictionary<string, object> parameters { get { return new Dictionary<string, object> {
-            { "Turn", playerProgressionModel.TurnNumber },
-            { "Level", playerProgressionModel.LevelNumber },
-            { "Stage", playerProgressionModel.Stage },
-            { "Score", playerProgressionModel.CurrentScore },
+            { "turn", playerProgressionModel.TurnNumber },
+            { "level", playerProgressionModel.LevelNumber },
+            { "stage", playerProgressionModel.Stage },
+            { "score", playerProgressionModel.CurrentScore },
     };}}
 
     public static void Initialize(PlayerProgressionModel playerProgressionModel)
@@ -39,16 +39,16 @@ public class AnalyticsSystem
 
     public static void BoosterAcquired(BoosterType type)
     {
-        AnalyticsEvent.Custom("BoosterAcquired", new Dictionary<string, object> (parameters) { { "Name", type } });
+        AnalyticsEvent.Custom("booster_acquired", new Dictionary<string, object> (parameters) { { "name", type } });
     }
 
     public static void BoosterUsed(BoosterType type)
     {
-        AnalyticsEvent.Custom("BoosterUsed", new Dictionary<string, object>(parameters) { { "Name", type } });
+        AnalyticsEvent.Custom("booster_used", new Dictionary<string, object>(parameters) { { "name", type } });
     }
 
     public static void Merge(int count)
     {
-        AnalyticsEvent.Custom("Merge", new Dictionary<string, object>(parameters) { { "Count", count } });
+        AnalyticsEvent.Custom("merge", new Dictionary<string, object>(parameters) { { "count", count } });
     }
 }
