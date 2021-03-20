@@ -44,7 +44,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
-    totalSpriteSurfaceArea: 11947225
+    totalSpriteSurfaceArea: 13183090
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -61,10 +61,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: a2ae3b31d80f6a14680143081023d5fd, type: 3}
   - {fileID: 21300000, guid: 745bf0711ce9da9498b3edb1a022998c, type: 3}
   - {fileID: 21300000, guid: bdb0dba1c6d675442bf5a6b09d4b58aa, type: 3}
-  - {fileID: 21300000, guid: 3f258c4279ed8964bb737bb002db0912, type: 3}
   - {fileID: 21300000, guid: 2b3bfb92c9a002645b472bead7f775c4, type: 3}
   - {fileID: 21300000, guid: 09fdbd23de5314d43a81d6314bdb8d6a, type: 3}
-  - {fileID: 21300000, guid: 2b84a29356aa76a4ba315f123f03d942, type: 3}
   - {fileID: 21300000, guid: a62072b3cc5d6fa40824379e79d471dc, type: 3}
   - {fileID: 21300000, guid: 7eb80f34febd7604db3f5f1e28fd48fa, type: 3}
   - {fileID: 21300000, guid: e3faab54490ef504cb372dec2ab9e682, type: 3}
@@ -77,6 +75,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 768b5b252b7781f4eb52f99d8106ef85, type: 3}
   - {fileID: 21300000, guid: 0bba643556ece6749952c8cd846bf8e5, type: 3}
   - {fileID: 21300000, guid: 9de21b4584feaa04b80c6f600f13d8ff, type: 3}
+  - {fileID: 21300000, guid: 39fb3a5503accec46af37d2dd9bfc1e9, type: 3}
   - {fileID: 21300000, guid: 6f90e785e6d0c294498c28f71c1f65bd, type: 3}
   - {fileID: 21300000, guid: 3ea025b500cc5c34fa1d053004d55723, type: 3}
   - {fileID: 21300000, guid: 791dedc5ecf94ae459e5d0fa56b0ae38, type: 3}
@@ -146,10 +145,8 @@ SpriteAtlas:
   - chain_menu_stone5
   - background_1
   - rune_1_cln
-  - Eye
   - rune_8_cln
   - chain_menu_bttn_quit_press
-  - Raven
   - raven_eye
   - collected_runes
   - chain_menu_bttn_mute_press
@@ -162,6 +159,7 @@ SpriteAtlas:
   - shield_arrow_left
   - rune_3
   - chain_menu_stone3
+  - tetra_megre_logo
   - chain_menu_bttn_about_press
   - rune_8
   - chain_menu_bttn_collection

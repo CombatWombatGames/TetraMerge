@@ -52,6 +52,7 @@ public class UISystem : MonoBehaviour
 
     void Awake()
     {
+
         windows = new Dictionary<string, GameObject>
         {
             { Consts.Menu, menuCanvas },
@@ -78,17 +79,17 @@ public class UISystem : MonoBehaviour
         ultimateButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayBoosterSfx());
         //Menu
         continueButton.onClick.AddListener(() => SetWindowActive(null));
-        continueButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        continueButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
         restartButton.onClick.AddListener(RestartScene);
-        restartButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        restartButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
         collectionButton.onClick.AddListener(() => SetWindowActive(Consts.Collection));
-        collectionButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        collectionButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
         muteButton.onClick.AddListener(Mute);
-        muteButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        muteButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
         aboutButton.onClick.AddListener(() => SetWindowActive(Consts.About));
-        aboutButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        aboutButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
         quitButton.onClick.AddListener(Quit);
-        quitButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        quitButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
         closeMenuButton.onClick.AddListener(() => SetWindowActive(null));
         ravenButton.onPointerDown.AddListener(() => AnimationSystem.RavenBlink(ravenEye));
         //About
@@ -183,7 +184,7 @@ public class UISystem : MonoBehaviour
         boostersButton.transform.SetSiblingIndex(enablePieces ? 0 : 2);
         if (sound)
         {
-            AudioSystem.Player.PlayButtonSfx();
+            AudioSystem.Player.PlayWoodSfx();
         }
     }
 
