@@ -11992,6 +11992,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508119322}
   m_CullTransparentMesh: 0
+--- !u!1 &509631233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 509631234}
+  - component: {fileID: 509631236}
+  - component: {fileID: 509631235}
+  m_Layer: 5
+  m_Name: MainRulesBackground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &509631234
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509631233}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1557607075}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 722.31006}
+  m_SizeDelta: {x: 810, y: 300}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &509631235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509631233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.6666667}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &509631236
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509631233}
+  m_CullTransparentMesh: 1
 --- !u!1 &516696019
 GameObject:
   m_ObjectHideFlags: 0
@@ -19532,12 +19607,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1557607075}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -549}
-  m_SizeDelta: {x: 675.8, y: 489.33}
+  m_AnchoredPosition: {x: 0, y: -685.5}
+  m_SizeDelta: {x: 912.1, y: 255.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1151213802
 MonoBehaviour:
@@ -19566,7 +19641,7 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 47
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -19582,9 +19657,8 @@ MonoBehaviour:
     "Remove"
     booster destroys a rune.
 
-
-    Ultimate booster destroys all basic runes and
-    boosters, but available once per stage.
+    Ultimate booster destroys all basic runes and boosters,
+    but available once per stage.
 
     Merge entire field to complete stage.
 
@@ -27334,10 +27408,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1151213801}
   - {fileID: 2088849944}
   - {fileID: 1729842933}
+  - {fileID: 509631234}
   - {fileID: 1819767856}
-  - {fileID: 1151213801}
   m_Father: {fileID: 506858639}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -28567,12 +28642,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1557607075}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 390}
-  m_SizeDelta: {x: 720, y: 720}
+  m_AnchoredPosition: {x: 0, y: 153.67}
+  m_SizeDelta: {x: 810, y: 1440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1729842934
 MonoBehaviour:
@@ -28629,7 +28704,7 @@ VideoPlayer:
   m_AspectRatio: 0
   m_DataSource: 0
   m_PlaybackSpeed: 1
-  m_AudioOutputMode: 2
+  m_AudioOutputMode: 0
   m_TargetAudioSources: []
   m_DirectAudioVolumes: []
   m_Url: 
@@ -28897,11 +28972,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1557607075}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -156.34}
+  m_AnchoredPosition: {x: 14, y: 720.31}
   m_SizeDelta: {x: 729.1, y: 296}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1819767857
@@ -28917,7 +28992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21568629, g: 0.21568629, b: 0.20784315, a: 1}
+  m_Color: {r: 0.98823535, g: 0.9176471, b: 0.81568635, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -28944,7 +29019,7 @@ MonoBehaviour:
     3. Select
     square area to merge.
 
-    <color=green>4. Get rid of all basic runes!</color>'
+    <color=yellow>4. Get rid of all basic runes!</color>'
 --- !u!222 &1819767858
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30496,12 +30571,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1557607075}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 390}
-  m_SizeDelta: {x: 745, y: 745}
+  m_AnchoredPosition: {x: 0, y: 153.67}
+  m_SizeDelta: {x: 835, y: 1465}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2088849945
 MonoBehaviour:
