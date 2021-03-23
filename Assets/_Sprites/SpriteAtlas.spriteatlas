@@ -44,7 +44,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
-    totalSpriteSurfaceArea: 13183090
+    totalSpriteSurfaceArea: 11816529
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -75,7 +75,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 768b5b252b7781f4eb52f99d8106ef85, type: 3}
   - {fileID: 21300000, guid: 0bba643556ece6749952c8cd846bf8e5, type: 3}
   - {fileID: 21300000, guid: 9de21b4584feaa04b80c6f600f13d8ff, type: 3}
-  - {fileID: 21300000, guid: 39fb3a5503accec46af37d2dd9bfc1e9, type: 3}
   - {fileID: 21300000, guid: 6f90e785e6d0c294498c28f71c1f65bd, type: 3}
   - {fileID: 21300000, guid: 3ea025b500cc5c34fa1d053004d55723, type: 3}
   - {fileID: 21300000, guid: 791dedc5ecf94ae459e5d0fa56b0ae38, type: 3}
@@ -159,7 +158,6 @@ SpriteAtlas:
   - shield_arrow_left
   - rune_3
   - chain_menu_stone3
-  - tetra_merge_logo
   - chain_menu_bttn_about_press
   - rune_8
   - chain_menu_bttn_collection
