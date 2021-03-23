@@ -6,10 +6,10 @@ public class AudioSystem : MonoBehaviour
 {
     [SerializeField] AudioSource sfxSource = default;
     [SerializeField] AudioClip[] Music = default;
+    [SerializeField] AudioClip[] mergeStoneSfx = default;
     [SerializeField] AudioClip turnSfx = default;
     [SerializeField] AudioClip dropSfx = default;
     [SerializeField] AudioClip highlightSfx = default;
-    [SerializeField] AudioClip mergeStoneSfx = default;
     [SerializeField] AudioClip mergeMagicSfx = default;
     [SerializeField] AudioClip buttonSfx = default;
     [SerializeField] AudioClip woodSfx = default;
@@ -52,12 +52,20 @@ public class AudioSystem : MonoBehaviour
         sfxSource.PlayOneShot(highlightSfx, 0.6f);
     }
 
-    public void PlayMergeSfx()
+    public void PlayMergeSfx(int scale)
     {
-        sfxSource.pitch = 1.2f;
-        sfxSource.PlayOneShot(mergeStoneSfx, 0.08f);
-        sfxSource.pitch = 0.7f;
-        sfxSource.PlayOneShot(mergeMagicSfx, 0.4f);
+        int force = 0;
+        if (scale > 16)
+        {
+            force = 2;
+        }
+        else if (scale > 9)
+        {
+            force = 1;
+        }
+        sfxSource.pitch = Random.Range(0.7f, 0.9f);
+        sfxSource.PlayOneShot(mergeStoneSfx[force], 0.2f);
+        sfxSource.PlayOneShot(mergeMagicSfx, 0.1f);
     }
 
     public void PlayButtonSfx()

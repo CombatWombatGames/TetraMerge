@@ -179,7 +179,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             gridModel.ChangeGrid(upgradedArea.ToArray(), newLevel);
         }
         playerProgressionModel.TurnNumber++;
-        AudioSystem.Player.PlayMergeSfx();
+        AudioSystem.Player.PlayMergeSfx(area.Length);
         AnimationSystem.ShakeField(gridView.Field, area.Length, gridView.DustParticles, gridView.ShardsParticles, gridView.LeafParticles, gridView.LeafParticlesBurst);
     }
 }

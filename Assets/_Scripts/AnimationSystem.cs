@@ -151,16 +151,16 @@ public class AnimationSystem
         DOVirtual.DelayedCall(durtion + 0.1f, () => GrowVines(vines));
     }
 
-    public static void OpenMenu(GameObject canvas, Image background, Transform panel, Transform ravenEye)
+    public static void OpenMenu(Window window, Transform ravenEye)
     {
         float duration = 0.4f;
-        var position = panel.localPosition;
-        panel.localPosition = new Vector2(panel.localPosition.x, panel.localPosition.y + 1000f);
-        background.DOFade(0f, 0f);
-        canvas.SetActive(true);
+        var position = window.Panel.localPosition;
+        window.Panel.localPosition = new Vector2(window.Panel.localPosition.x, window.Panel.localPosition.y + 1000f);
+        window.Background.DOFade(0f, 0f);
+        window.Canvas.SetActive(true);
         DOTween.Sequence()
-            .Join(background.DOFade(0.66f, duration))
-            .Join(panel.DOLocalMove(position, duration).SetEase(Ease.OutBack))
+            .Join(window.Background.DOFade(0.66f, duration))
+            .Join(window.Panel.DOLocalMove(position, duration).SetEase(Ease.OutBack))
             .Join(ravenEye.DOScaleY(0f, 0f))
             .Append(ravenEye.DOScaleY(1f, 0.1f));
     }
@@ -169,5 +169,16 @@ public class AnimationSystem
     {
         eye.DOKill(true);
         eye.DOScaleY(0f, 0.07f).SetLoops(2, LoopType.Yoyo);
+    }
+
+    public static void OpenScroll(Window window)
+    {
+        float duration = 0.4f;
+        window.Background.DOFade(0f, 0f);
+        window.Panel.DOScaleY(0f, 0f);
+        window.Canvas.SetActive(true);
+        DOTween.Sequence()
+            .Join(window.Background.DOFade(0.66f, duration))
+            .Join(window.Panel.DOScaleY(1f, 0.2f));
     }
 }

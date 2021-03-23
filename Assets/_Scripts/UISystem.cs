@@ -27,12 +27,10 @@ public class UISystem : MonoBehaviour
     [SerializeField] ButtonEnhanced quitButton = default;
     [SerializeField] ButtonEnhanced ravenButton = default;
     [SerializeField] Button closeMenuButton = default;
-    [SerializeField] GameObject menuCanvas = default;
-    [SerializeField] GameObject aboutCanvas = default;
-    [SerializeField] GameObject helpCanvas = default;
-    [SerializeField] GameObject collectionCanvas = default;
-    [SerializeField] Image menuBackground = default;
-    [SerializeField] Transform menuPanel = default;
+    [SerializeField] Window menuCanvas = default;
+    [SerializeField] Window aboutCanvas = default;
+    [SerializeField] Window helpCanvas = default;
+    [SerializeField] Window collectionCanvas = default;
     [SerializeField] Transform ravenEye = default;
     [Header("About")]
     [SerializeField] Button mailButton = default;
@@ -48,12 +46,11 @@ public class UISystem : MonoBehaviour
     SaveSystem saveSystem;
     BoostersModel boosterModel;
     PlayerProgressionModel playerProgressionModel;
-    Dictionary<string, GameObject> windows;
+    Dictionary<string, Window> windows;
 
     void Awake()
     {
-
-        windows = new Dictionary<string, GameObject>
+        windows = new Dictionary<string, Window>
         {
             { Consts.Menu, menuCanvas },
             { Consts.About, aboutCanvas },
@@ -66,11 +63,11 @@ public class UISystem : MonoBehaviour
         //Top
         undoButton.onClick.AddListener(saveSystem.Undo);
         undoButton.onPointerDown.AddListener(() => { if (undoButton.interactable) AudioSystem.Player.PlayButtonSfx(); });
-        helpButton.onClick.AddListener(() => SetWindowActive(Consts.Help));
+        helpButton.onClick.AddListener(() => OpenScroll(Consts.Help));
         helpButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
         menuButton.onClick.AddListener(OpenMenu);
         menuButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
-        closeHelpButton.onClick.AddListener(() => SetWindowActive(null));
+        closeHelpButton.onClick.AddListener(() => CloseScroll());
         //Bottom
         piecesButton.onPointerDown.AddListener(() => { if (piecesButton.interactable) SwitchTable(true); });
         boostersButton.onPointerDown.AddListener(() => { if (boostersButton.interactable) SwitchTable(false); });
@@ -78,27 +75,27 @@ public class UISystem : MonoBehaviour
         ultimateButton.onClick.AddListener(() => { boosterModel.ClearBasicRunes(); SwitchTable(true); });
         ultimateButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayBoosterSfx());
         //Menu
-        continueButton.onClick.AddListener(() => SetWindowActive(null));
+        continueButton.onClick.AddListener(() => CloseMenu());
         continueButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
         restartButton.onClick.AddListener(RestartScene);
         restartButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
-        collectionButton.onClick.AddListener(() => SetWindowActive(Consts.Collection));
+        collectionButton.onClick.AddListener(() => OpenScroll(Consts.Collection));
         collectionButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
         muteButton.onClick.AddListener(Mute);
         muteButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
-        aboutButton.onClick.AddListener(() => SetWindowActive(Consts.About));
+        aboutButton.onClick.AddListener(() => OpenScroll(Consts.About));
         aboutButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
         quitButton.onClick.AddListener(Quit);
         quitButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
-        closeMenuButton.onClick.AddListener(() => SetWindowActive(null));
+        closeMenuButton.onClick.AddListener(() => CloseMenu());
         ravenButton.onPointerDown.AddListener(() => AnimationSystem.RavenBlink(ravenEye));
         //About
         mailButton.onClick.AddListener(SendEmail);
         termsButton.onClick.AddListener(OpenTerms);
         privacyButton.onClick.AddListener(OpenPrivacy);
-        closeAboutButton.onClick.AddListener(() => SetWindowActive(null));
+        closeAboutButton.onClick.AddListener(() => CloseScroll());
         //Collection
-        closeCollectionButton.onClick.AddListener(() => SetWindowActive(null));
+        closeCollectionButton.onClick.AddListener(() => CloseScroll());
 
         SwitchTable(true, false);
         playerProgressionModel.TurnChanged += OnTurnChanged;
@@ -122,35 +119,47 @@ public class UISystem : MonoBehaviour
         playerProgressionModel.TurnChanged -= OnTurnChanged;
     }
 
-    void SetWindowActive(string id)
-    {
-        foreach (var kvp in windows)
-        {
-            kvp.Value.SetActive(false);
-        }
-        if (!string.IsNullOrEmpty(id))
-        {
-            windows[id].SetActive(true);
-            AnalyticsSystem.WindowOpen(id);
-        }
-        if (id == Consts.Collection)
-        {
-            InitializeRuneCollection();
-        }
-        if (id == Consts.Help || id == Consts.Collection || id == Consts.About)
-        {
-            AudioSystem.Player.PlayPaperSlowSfx();
-        }
-    }
-
     void OpenMenu()
     {
         foreach (var kvp in windows)
         {
-            kvp.Value.SetActive(false);
+            kvp.Value.Canvas.SetActive(false);
         }
-        AnimationSystem.OpenMenu(windows[Consts.Menu], menuBackground, menuPanel, ravenEye);
+        AnimationSystem.OpenMenu(windows[Consts.Menu], ravenEye);
         AudioSystem.Player.PlayChainSfx();
+        AnalyticsSystem.WindowOpen(Consts.Menu);
+    }
+
+    void OpenScroll(string id)
+    {
+        foreach (var kvp in windows)
+        {
+            kvp.Value.Canvas.SetActive(false);
+        }
+        AnimationSystem.OpenScroll(windows[id]);
+        AudioSystem.Player.PlayPaperSlowSfx();
+        AnalyticsSystem.WindowOpen(id);
+        if (id == Consts.Collection)
+        {
+            InitializeRuneCollection();
+        }
+    }
+
+    void CloseMenu()
+    {
+        foreach (var kvp in windows)
+        {
+            kvp.Value.Canvas.SetActive(false);
+        }
+    }
+
+    void CloseScroll()
+    {
+        foreach (var kvp in windows)
+        {
+            kvp.Value.Canvas.SetActive(false);
+        }
+        AudioSystem.Player.PlayPaperFastSfx();
     }
 
     public void RestartScene()
@@ -225,9 +234,9 @@ public class UISystem : MonoBehaviour
 
     void OnTurnChanged(int turn)
     {
-        if (turn == 3 && playerProgressionModel.TotalMerged == 0)
+        if (turn == 0 && playerProgressionModel.TotalMerged == 0)
         {
-            SetWindowActive(Consts.Help);
+            OpenScroll(Consts.Help);
         }
         if (boosterModel.BoostersGiven == 0)
         {
