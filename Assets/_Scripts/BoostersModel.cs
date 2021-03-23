@@ -180,7 +180,7 @@ public class BoostersModel : MonoBehaviour
         //        GiveRandomBooster();
         //    }
         //}
-        if (area > 9)
+        if (9 < area && area < 36)
         {
             GiveRandomBooster();
         }
@@ -189,7 +189,10 @@ public class BoostersModel : MonoBehaviour
     void OnCollectionLevelUp()
     {
         //TODO MED Show message
-        GiveRandomBooster();
+        for (int i = 0; i < 2; i++)
+        {
+            GiveRandomBooster();
+        }
     }
 }
 
