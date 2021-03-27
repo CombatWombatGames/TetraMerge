@@ -44,7 +44,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
-    totalSpriteSurfaceArea: 11816529
+    totalSpriteSurfaceArea: 13239222
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -52,13 +52,11 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 3ebe331060b06d144a303e30413a01cb, type: 3}
   - {fileID: 21300000, guid: 8048a0305cf3a98428ad526d56e9b0b4, type: 3}
-  - {fileID: 21300000, guid: 229bba609dfa82c4ab7e8d096d6586d0, type: 3}
   - {fileID: 21300000, guid: 6a8dd98025eecad42a874ad491387223, type: 3}
   - {fileID: 21300000, guid: ccb8de808b770f14d9e0cadc17192a88, type: 3}
   - {fileID: 21300000, guid: 9900b3b05edfd0c479c4dea2b81aa427, type: 3}
   - {fileID: 21300000, guid: 084ecec0a18159043b7c9d6c3cf1c3a8, type: 3}
   - {fileID: 21300000, guid: b292a431fd7d75e458b8a9666f95b35f, type: 3}
-  - {fileID: 21300000, guid: a2ae3b31d80f6a14680143081023d5fd, type: 3}
   - {fileID: 21300000, guid: 745bf0711ce9da9498b3edb1a022998c, type: 3}
   - {fileID: 21300000, guid: bdb0dba1c6d675442bf5a6b09d4b58aa, type: 3}
   - {fileID: 21300000, guid: 2b3bfb92c9a002645b472bead7f775c4, type: 3}
@@ -74,11 +72,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: adfa02250f0c3a2408f7b9a88a6d4229, type: 3}
   - {fileID: 21300000, guid: 768b5b252b7781f4eb52f99d8106ef85, type: 3}
   - {fileID: 21300000, guid: 0bba643556ece6749952c8cd846bf8e5, type: 3}
-  - {fileID: 21300000, guid: 9de21b4584feaa04b80c6f600f13d8ff, type: 3}
   - {fileID: 21300000, guid: 6f90e785e6d0c294498c28f71c1f65bd, type: 3}
   - {fileID: 21300000, guid: 3ea025b500cc5c34fa1d053004d55723, type: 3}
   - {fileID: 21300000, guid: 791dedc5ecf94ae459e5d0fa56b0ae38, type: 3}
-  - {fileID: 21300000, guid: b32cb806e7bb926439252d6303d10d58, type: 3}
   - {fileID: 21300000, guid: 85c83116a02c1af488e576a9969a5ae7, type: 3}
   - {fileID: 21300000, guid: d3d91e2683abbe24dbfd3570d57c6493, type: 3}
   - {fileID: 21300000, guid: 79704646cf9cfd54bbe7148cf5d71a08, type: 3}
@@ -91,11 +87,10 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ad9abda768cb1564c8d44674927fed80, type: 3}
   - {fileID: 21300000, guid: b0aeaab8dd726a54b8b8ea71f1f9456a, type: 3}
   - {fileID: 21300000, guid: 32a111c822980e8409d7ee3dd7c1a59f, type: 3}
-  - {fileID: 21300000, guid: 35a1d089012be634bae56387724c0c5b, type: 3}
   - {fileID: 21300000, guid: 0216880a0d7b5084ab845de50a4a259c, type: 3}
   - {fileID: 21300000, guid: 7e2ea63a567fce648988e1e056c9a19b, type: 3}
   - {fileID: 21300000, guid: 8866646a8b2e52642a7e9a006c00a99c, type: 3}
-  - {fileID: 21300000, guid: 38d6788a27ccdc34f91827310aebe3d5, type: 3}
+  - {fileID: 21300000, guid: 39ce9a8aa32a5004c9739238b8a921ba, type: 3}
   - {fileID: 21300000, guid: cf431d9a785abe646a9954a1f066d1c0, type: 3}
   - {fileID: 21300000, guid: dccb7aea94a24554fb325d284ae0c467, type: 3}
   - {fileID: 21300000, guid: 49aa1b0ba409b0a438d3de2173a846fc, type: 3}
@@ -123,11 +118,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f1aae85ed587f7c40a11cdd3cd9bd9b1, type: 3}
   - {fileID: 21300000, guid: 2d5e195ebce94f54f8b13ca5effcadff, type: 3}
   - {fileID: 21300000, guid: 8b60199e3137a8045a6781f889622a02, type: 3}
-  - {fileID: 21300000, guid: 57292baea23ef0b43b1ce1f85b1cc378, type: 3}
   - {fileID: 21300000, guid: 82c4b5be62bfb7f45be9b5f02044cb9d, type: 3}
   - {fileID: 21300000, guid: 230a54ce60358db40abe65c8bedae90d, type: 3}
   - {fileID: 21300000, guid: 421a07de039ab6d4396233dd73fe2829, type: 3}
-  - {fileID: 21300000, guid: 43f5f0eefeb3a624ab8bdd605e2f7743, type: 3}
   - {fileID: 21300000, guid: fb917a0f9accc064384290de9775858d, type: 3}
   - {fileID: 21300000, guid: c1d259cfaefb4fc408d6178db0452d96, type: 3}
   - {fileID: 21300000, guid: 8d3bddef6e9a95945ba44b38227f7dd3, type: 3}
@@ -135,13 +128,11 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - rune_10_cln
   - rune_7
-  - chain_menu_stone1
   - chain_menu_bttn_restart_press
   - chain_menu_dark_circle
   - grass_3
   - menu_bttn_pieces_light
   - shield_arrow_left_press
-  - chain_menu_stone5
   - background_1
   - rune_1_cln
   - rune_8_cln
@@ -157,11 +148,9 @@ SpriteAtlas:
   - rune_9_cln
   - shield_arrow_left
   - rune_3
-  - chain_menu_stone3
   - chain_menu_bttn_about_press
   - rune_8
   - chain_menu_bttn_collection
-  - chain_menu_stone6
   - stone_field
   - rune_7_cln
   - tile_glow
@@ -174,11 +163,10 @@ SpriteAtlas:
   - rune_5
   - rune_0
   - rune_4
-  - chain_menu_stone4
   - rune_6_cln
   - raven_blink
   - boost_bttn_1_press
-  - rules
+  - tutorial
   - chain_menu_bttn_continue
   - chain_menu_light_circle
   - rune_1
@@ -206,11 +194,9 @@ SpriteAtlas:
   - score_rune
   - rune_9
   - shield_arrow_revert
-  - chain_menu_stone2
   - grass_2_down
   - chain_menu_blocks
   - boost_bttn_2
-  - chain_menu_raven
   - chain_menu_bttn_about
   - progress_ball
   - selection_border
