@@ -237,16 +237,23 @@ public class UISystem : MonoBehaviour
         if (turn == 0 && playerProgressionModel.TotalMerged == 0)
         {
             OpenScroll(Consts.Help);
+            GetComponent<InputDisabler>().DisableInput(2f);
         }
-        if (boosterModel.BoostersGiven == 0)
+        if (piecesButton.gameObject.activeSelf)
         {
-            piecesButton.gameObject.SetActive(false);
-            boostersButton.gameObject.SetActive(false);
+            if (playerProgressionModel.TotalMerged == 0)
+            {
+                piecesButton.gameObject.SetActive(false);
+                boostersButton.gameObject.SetActive(false);
+            }
         }
-        else if (boosterModel.BoostersGiven == 1)
+        else
         {
-            piecesButton.gameObject.SetActive(true);
-            boostersButton.gameObject.SetActive(true);
+            if (boosterModel.AddsCount > 0 || boosterModel.ClearsCount > 0 || boosterModel.RefreshesCount > 0)
+            {
+                piecesButton.gameObject.SetActive(true);
+                boostersButton.gameObject.SetActive(true);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class InputDisabler : MonoBehaviour
 {
@@ -11,6 +12,18 @@ public class InputDisabler : MonoBehaviour
 
     public void EnableInput()
     {
+        BlockingCanvas.SetActive(false);
+    }
+
+    public void DisableInput(float seconds)
+    {
+        StartCoroutine(ActivateBlocker(seconds));
+    }
+
+    IEnumerator ActivateBlocker(float seconds)
+    {
+        BlockingCanvas.SetActive(true);
+        yield return new WaitForSeconds(seconds);
         BlockingCanvas.SetActive(false);
     }
 }

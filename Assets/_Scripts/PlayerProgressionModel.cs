@@ -80,12 +80,12 @@ public class PlayerProgressionModel : MonoBehaviour
     {
         CurrentScore = currentScore;
         LevelNumber = levelNumber;
-        TurnNumber = turnNumber;
         BestScore = bestScore;
         BestLevel = bestLevel;
         BestRune = bestRune;
         Stage = stage;
         TotalMerged = totalMerged;
+        TurnNumber = turnNumber;
     }
 
     void OnGridChanged(Vector2Int[] area, int level)
