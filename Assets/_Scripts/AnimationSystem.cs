@@ -181,4 +181,41 @@ public class AnimationSystem
             .Join(window.Background.DOFade(0.66f, duration))
             .Join(window.Panel.DOScaleY(1f, 0.2f));
     }
+
+    public static void ShowButtons(ButtonEnhanced leftButton, ButtonEnhanced rightButton)
+    {
+        float duration = 0.8f;
+        var leftPosition = leftButton.transform.localPosition;
+        var rightPosition = rightButton.transform.localPosition;
+        leftButton.transform.localPosition = new Vector2(leftButton.transform.localPosition.x - 1000f, leftButton.transform.localPosition.y);
+        rightButton.transform.localPosition = new Vector2(rightButton.transform.localPosition.x + 1000f, rightButton.transform.localPosition.y);
+        leftButton.gameObject.SetActive(true);
+        rightButton.gameObject.SetActive(true);
+        DOTween.Sequence()
+            .Join(leftButton.transform.DOLocalMove(leftPosition, duration).SetEase(Ease.OutBack))
+            .Join(rightButton.transform.DOLocalMove(rightPosition, duration).SetEase(Ease.OutBack));
+    }
+
+    public static void HideBorder(LineRenderer topLine, LineRenderer bottomLine, Vector2 start, Vector2 end)
+    {
+        //Three lines?
+        float firstDuration = 0.1f;
+        float secondDuration = 0.3f;
+        float startWidth = 0.1f;
+        topLine.SetPositions(new Vector3[] { new Vector3 (start.x, start.y), new Vector3(start.x, end.y), new Vector3(end.x, end.y) });
+        topLine.startWidth = startWidth;
+        topLine.endWidth = startWidth;
+        topLine.gameObject.SetActive(true);
+        bottomLine.SetPositions(new Vector3[] { new Vector3 (start.x, start.y), new Vector3(end.x, start.y), new Vector3(end.x, end.y) });
+        bottomLine.startWidth = startWidth;
+        bottomLine.endWidth = startWidth;
+        bottomLine.gameObject.SetActive(true);
+        DOTween.Sequence()
+            .Join(topLine.DOColor(new Color2(Color.white, Color.white), new Color2(Color.black, Color.black), secondDuration))
+            .Join(DOTween.To(() => topLine.startWidth, x => topLine.startWidth = x, 0f, firstDuration))
+            .Join(DOTween.To(() => bottomLine.startWidth, x => bottomLine.startWidth = x, 0f, firstDuration))
+            .Append(DOTween.To(() => topLine.endWidth, x => topLine.endWidth = x, 0f, secondDuration))
+            .Join(DOTween.To(() => bottomLine.endWidth, x => bottomLine.endWidth = x, 0f, secondDuration));
+        //topLine.widthCurve.keys[1].value = 0f;
+    }
 }

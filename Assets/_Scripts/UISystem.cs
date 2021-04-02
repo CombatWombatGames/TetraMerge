@@ -251,8 +251,7 @@ public class UISystem : MonoBehaviour
         {
             if (boosterModel.AddsCount > 0 || boosterModel.ClearsCount > 0 || boosterModel.RefreshesCount > 0)
             {
-                piecesButton.gameObject.SetActive(true);
-                boostersButton.gameObject.SetActive(true);
+                AnimationSystem.ShowButtons(piecesButton, boostersButton);
             }
         }
     }

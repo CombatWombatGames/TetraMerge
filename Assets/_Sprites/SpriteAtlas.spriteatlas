@@ -44,7 +44,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 9ae27eddbb7c3d14e9d3464ab35652ac, type: 3}
-    totalSpriteSurfaceArea: 13239222
+    totalSpriteSurfaceArea: 13239238
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -87,6 +87,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ad9abda768cb1564c8d44674927fed80, type: 3}
   - {fileID: 21300000, guid: b0aeaab8dd726a54b8b8ea71f1f9456a, type: 3}
   - {fileID: 21300000, guid: 32a111c822980e8409d7ee3dd7c1a59f, type: 3}
+  - {fileID: 21300000, guid: 44e39629cdccab6498bc841d11a675cc, type: 3}
   - {fileID: 21300000, guid: 0216880a0d7b5084ab845de50a4a259c, type: 3}
   - {fileID: 21300000, guid: 7e2ea63a567fce648988e1e056c9a19b, type: 3}
   - {fileID: 21300000, guid: 8866646a8b2e52642a7e9a006c00a99c, type: 3}
@@ -163,6 +164,7 @@ SpriteAtlas:
   - rune_5
   - rune_0
   - rune_4
+  - trace
   - rune_6_cln
   - raven_blink
   - boost_bttn_1_press

@@ -10,6 +10,8 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     [SerializeField] GridView gridView = default;
     [SerializeField] PlayerProgressionModel playerProgressionModel = default;
     [SerializeField] Image selectionBox = default;
+    [SerializeField] LineRenderer topLine = default;
+    [SerializeField] LineRenderer bottomLine = default;
 
     //Shared variables for communication of methods from interfaces
     Vector3 beginDragWorldPosition;
@@ -109,6 +111,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     public void OnEndDrag(PointerEventData eventData)
     {
         selectionBox.gameObject.SetActive(false);
+        //AnimationSystem.HideBorder(topLine, bottomLine, beginDragWorldPosition, eventData.pointerCurrentRaycast.worldPosition);
         gridView.DeleteShadow();
         if (validSelectedArea != null)
         {
