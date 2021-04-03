@@ -196,12 +196,13 @@ public class AnimationSystem
             .Join(rightButton.transform.DOLocalMove(rightPosition, duration).SetEase(Ease.OutBack));
     }
 
-    public static void HideBorder(LineRenderer topLine, LineRenderer bottomLine, Vector2 start, Vector2 end)
+    public static void HideBorder(LineRenderer topLine, LineRenderer middleLine, LineRenderer bottomLine, Vector2 start, Vector2 end, bool merge)
     {
         //Three lines?
-        float firstDuration = 0.1f;
-        float secondDuration = 0.3f;
-        float startWidth = 0.1f;
+        float duration = 0.15f;
+        float startWidth = 0.06f;
+        Color transparent = new Color(0f, 0f, 0f, 0f);
+        Color2 white = new Color2(Color.white, Color.white);
         topLine.SetPositions(new Vector3[] { new Vector3 (start.x, start.y), new Vector3(start.x, end.y), new Vector3(end.x, end.y) });
         topLine.startWidth = startWidth;
         topLine.endWidth = startWidth;
@@ -210,12 +211,23 @@ public class AnimationSystem
         bottomLine.startWidth = startWidth;
         bottomLine.endWidth = startWidth;
         bottomLine.gameObject.SetActive(true);
+        if (merge)
+        {
+            middleLine.SetPositions(new Vector3[] { new Vector3(start.x, start.y), new Vector3(end.x, end.y) });
+            middleLine.startWidth = startWidth;
+            middleLine.endWidth = startWidth;
+            middleLine.gameObject.SetActive(true);
+            DOTween.Sequence()
+            .Join(middleLine.DOColor(new Color2(Color.white, Color.white), new Color2(transparent, Color.white), duration).SetEase(Ease.Linear))
+            .Join(DOTween.To(() => middleLine.startWidth, x => middleLine.startWidth = x, 0f, duration).SetEase(Ease.Linear))
+            .Append(DOTween.To(() => middleLine.endWidth, x => middleLine.endWidth = x, 0f, duration).SetEase(Ease.Linear));
+        }
         DOTween.Sequence()
-            .Join(topLine.DOColor(new Color2(Color.white, Color.white), new Color2(Color.black, Color.black), secondDuration))
-            .Join(DOTween.To(() => topLine.startWidth, x => topLine.startWidth = x, 0f, firstDuration))
-            .Join(DOTween.To(() => bottomLine.startWidth, x => bottomLine.startWidth = x, 0f, firstDuration))
-            .Append(DOTween.To(() => topLine.endWidth, x => topLine.endWidth = x, 0f, secondDuration))
-            .Join(DOTween.To(() => bottomLine.endWidth, x => bottomLine.endWidth = x, 0f, secondDuration));
-        //topLine.widthCurve.keys[1].value = 0f;
+            .Join(topLine.DOColor(new Color2(Color.white, Color.white), new Color2(transparent, Color.white), duration).SetEase(Ease.Linear))
+            .Join(bottomLine.DOColor(new Color2(Color.white, Color.white), new Color2(transparent, Color.white), duration).SetEase(Ease.Linear))
+            .Join(DOTween.To(() => topLine.startWidth, x => topLine.startWidth = x, 0f, duration).SetEase(Ease.Linear))
+            .Join(DOTween.To(() => bottomLine.startWidth, x => bottomLine.startWidth = x, 0f, duration).SetEase(Ease.Linear))
+            .Append(DOTween.To(() => topLine.endWidth, x => topLine.endWidth = x, 0f, duration).SetEase(Ease.Linear))
+            .Join(DOTween.To(() => bottomLine.endWidth, x => bottomLine.endWidth = x, 0f, duration).SetEase(Ease.Linear));
     }
 }
