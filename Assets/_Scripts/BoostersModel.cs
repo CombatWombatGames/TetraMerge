@@ -35,6 +35,7 @@ public class BoostersModel : MonoBehaviour
     }
     public int BoostersGiven { get; private set; }
     public bool UltimateUsed { get; set; }
+    public bool BoostersOpen { get; set; }
     public int NextBoosterTurnNumber
     {
         get
@@ -77,13 +78,14 @@ public class BoostersModel : MonoBehaviour
         gridModel.CellsMerged -= OnCellsMerged;
     }
 
-    public void Initialize(int refreshesCount, int addsCount, int clearsCount, int boostersGiven, bool ultimateUsed)
+    public void Initialize(int refreshesCount, int addsCount, int clearsCount, int boostersGiven, bool ultimateUsed, bool boostersOpen)
     {
         RefreshesCount = refreshesCount;
         AddsCount = addsCount;
         ClearsCount = clearsCount;
         BoostersGiven = boostersGiven;
         UltimateUsed = ultimateUsed;
+        BoostersOpen = boostersOpen;
     }
 
     void OnTurnChanged(int turnNumber)
@@ -95,6 +97,11 @@ public class BoostersModel : MonoBehaviour
                 GiveRandomBooster();
             }
             BoostersGiven++;
+        }
+
+        if (playerProgressionModel.Stage == 0 && BoostersOpen && !AnyBoosterAvailable())
+        {
+            UltimateUsed = false;
         }
     }
 
@@ -142,6 +149,11 @@ public class BoostersModel : MonoBehaviour
         AnalyticsSystem.BoosterUsed(BoosterType.Ultimate);
     }
 
+    public bool AnyBoosterAvailable()
+    {
+        return AddsCount > 0 || ClearsCount > 0 || RefreshesCount > 0;
+    }
+
     void GiveRandomBooster()
     {
         int index = UnityEngine.Random.Range(0, 3);
@@ -166,20 +178,6 @@ public class BoostersModel : MonoBehaviour
 
     void OnCellsMerged(int area)
     {
-        //if (area > 25)
-        //{
-        //    for (int i = 0; i < 2; i++)
-        //    {
-        //        GiveRandomBooster();
-        //    }
-        //}
-        //if (area > 16)
-        //{
-        //    for (int i = 0; i < 2; i++)
-        //    {
-        //        GiveRandomBooster();
-        //    }
-        //}
         if (9 < area && area < 36)
         {
             GiveRandomBooster();

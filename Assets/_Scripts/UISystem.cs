@@ -250,9 +250,9 @@ public class UISystem : MonoBehaviour
             helpButtons[i].onClick.RemoveAllListeners();
         }
         InitializeButton(0, true);
-        InitializeButton(1, true);
-        InitializeButton(2, false);
-        InitializeButton(3, false);
+        InitializeButton(1, boosterModel.BoostersOpen);
+        InitializeButton(2, playerProgressionModel.TurnNumber >= 20);
+        InitializeButton(3, playerProgressionModel.Stage > 0);
     }
 
     void InitializeButton(int index, bool open)
@@ -283,20 +283,16 @@ public class UISystem : MonoBehaviour
             OpenScroll(Consts.Help);
             GetComponent<InputDisabler>().DisableInput(2f);
         }
-        if (piecesButton.gameObject.activeSelf)
+        //TODO Merge once and restart will spawn buttons
+        if (piecesButton.gameObject.activeSelf && !boosterModel.BoostersOpen)
         {
-            if (playerProgressionModel.TotalMerged == 0)
-            {
-                piecesButton.gameObject.SetActive(false);
-                boostersButton.gameObject.SetActive(false);
-            }
+            piecesButton.gameObject.SetActive(false);
+            boostersButton.gameObject.SetActive(false);
         }
-        else
+        if (!piecesButton.gameObject.activeSelf && (boosterModel.BoostersOpen || boosterModel.AnyBoosterAvailable()))
         {
-            if (boosterModel.AddsCount > 0 || boosterModel.ClearsCount > 0 || boosterModel.RefreshesCount > 0)
-            {
-                AnimationSystem.ShowButtons(piecesButton, boostersButton);
-            }
+            AnimationSystem.ShowButtons(piecesButton, boostersButton);
+            boosterModel.BoostersOpen = true;
         }
     }
 }

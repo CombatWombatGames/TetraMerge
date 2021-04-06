@@ -30,7 +30,6 @@ public class SaveSystem : MonoBehaviour
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
         boostersModel = GetComponent<BoostersModel>();
         piecesModel = GetComponent<PiecesModel>();
-        playerProgressionModel.TurnChanged += OnTurnChanged;
         PrepareStateData();
         AnalyticsSystem.Initialize(playerProgressionModel);
     }
@@ -42,6 +41,8 @@ public class SaveSystem : MonoBehaviour
 
     void Start()
     {
+        //HACK subscribing in Start so saving would be called last
+        playerProgressionModel.TurnChanged += OnTurnChanged;
         Load();
     }
 
@@ -57,7 +58,7 @@ public class SaveSystem : MonoBehaviour
     {
         gridModel.Initialize(stateData.Grid);
         piecesModel.Initialize(stateData.NextPieces, stateData.LevelNumber);
-        boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.UltimateUsed);
+        boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.UltimateUsed, stateData.BoostersOpen);
         playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber, stateData.BestScore, stateData.BestLevel, stateData.BestRune, stateData.Stage, stateData.TotalMerged);
         undoButton.interactable = File.Exists(preveousSaveFilePath);
     }                            
@@ -81,6 +82,7 @@ public class SaveSystem : MonoBehaviour
             ClearsCount = 0,
             BoostersGiven = 0,
             UltimateUsed = true,
+            BoostersOpen = false,
         };
         WriteSaveFile(stateData, path);
     }
@@ -147,6 +149,7 @@ public class SaveSystem : MonoBehaviour
             ClearsCount = boostersModel.ClearsCount,
             BoostersGiven = boostersModel.BoostersGiven,
             UltimateUsed = boostersModel.UltimateUsed,
+            BoostersOpen = boostersModel.BoostersOpen,
         };
         WriteSaveFile(stateData, saveFilePath);
         undoButton.interactable = true;
@@ -216,4 +219,5 @@ public struct StateData
     public int ClearsCount;
     public int BoostersGiven;
     public bool UltimateUsed;
+    public bool BoostersOpen;
 }
