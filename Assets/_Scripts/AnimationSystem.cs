@@ -198,8 +198,7 @@ public class AnimationSystem
 
     public static void HideBorder(LineRenderer topLine, LineRenderer middleLine, LineRenderer bottomLine, Vector2 start, Vector2 end, bool merge)
     {
-        //Three lines?
-        float duration = 0.15f;
+        float duration = merge ? 0.2f : 0.1f;
         float startWidth = 0.06f;
         Color transparent = new Color(0f, 0f, 0f, 0f);
         Color2 white = new Color2(Color.white, Color.white);
@@ -229,5 +228,20 @@ public class AnimationSystem
             .Join(DOTween.To(() => bottomLine.startWidth, x => bottomLine.startWidth = x, 0f, duration).SetEase(Ease.Linear))
             .Append(DOTween.To(() => topLine.endWidth, x => topLine.endWidth = x, 0f, duration).SetEase(Ease.Linear))
             .Join(DOTween.To(() => bottomLine.endWidth, x => bottomLine.endWidth = x, 0f, duration).SetEase(Ease.Linear));
+    }
+
+    public static void MoveSelection(Transform selection, Vector3 position)
+    {
+        float duration = 0.2f;
+        selection.DOMove(position, duration);
+    }
+
+    public static void Rotate(Transform transform)
+    {
+        float duration = 0.1f;
+        float amplitude = 25f;
+        DOTween.Sequence()
+            .Join(transform.DOBlendableRotateBy(-amplitude * Vector3.forward, duration).SetLoops(2, LoopType.Yoyo))
+            .Append(transform.DOBlendableRotateBy(amplitude * Vector3.forward, duration).SetLoops(2, LoopType.Yoyo));
     }
 }

@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 // Handles button clicks
 public class UISystem : MonoBehaviour
@@ -42,6 +43,11 @@ public class UISystem : MonoBehaviour
     [SerializeField] Button closeCollectionButton = default;
     [SerializeField] Transform runesParent = default;
     [SerializeField] Text collectedRunes = default;
+    [Header("Help")]
+    [SerializeField] ButtonEnhanced[] helpButtons = default;
+    [SerializeField] VideoClip[] videos = default;
+    [SerializeField] VideoPlayer videoPlayer = default;
+    [SerializeField] Transform selection = default;
 
     SaveSystem saveSystem;
     BoostersModel boosterModel;
@@ -142,6 +148,10 @@ public class UISystem : MonoBehaviour
         if (id == Consts.Collection)
         {
             InitializeRuneCollection();
+        } 
+        else if (id == Consts.Help)
+        {
+            InitializeHelp();
         }
     }
 
@@ -230,6 +240,40 @@ public class UISystem : MonoBehaviour
             Instantiate(runePrefab, runesParent);
         }
         collectedRunes.text = $"You have collected {playerProgressionModel.TotalMerged} runes";
+    }
+
+    void InitializeHelp()
+    {
+        selection.position = helpButtons[0].transform.position;
+        for (int i = 0; i < helpButtons.Length; i++)
+        {
+            helpButtons[i].onClick.RemoveAllListeners();
+        }
+        InitializeButton(0, true);
+        InitializeButton(1, true);
+        InitializeButton(2, false);
+        InitializeButton(3, false);
+    }
+
+    void InitializeButton(int index, bool open)
+    {
+        helpButtons[index].GetComponent<GalleryButton>().Initialize(open, () => OnHelpButtonClicked(index, open));
+    }
+
+    void OnHelpButtonClicked(int index, bool open)
+    {
+        if (open)
+        {
+            AudioSystem.Player.PlayStoneSfx();
+            AnimationSystem.MoveSelection(selection, helpButtons[index].transform.position);
+            videoPlayer.Stop();
+            videoPlayer.clip = videos[index];
+            videoPlayer.Play();
+        }
+        else
+        {
+            AnimationSystem.Rotate(helpButtons[index].GetComponentInChildren<Text>().transform);
+        }
     }
 
     void OnTurnChanged(int turn)
