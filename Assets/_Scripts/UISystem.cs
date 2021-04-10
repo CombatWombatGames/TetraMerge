@@ -249,10 +249,23 @@ public class UISystem : MonoBehaviour
         {
             helpButtons[i].onClick.RemoveAllListeners();
         }
-        InitializeButton(0, true);
-        InitializeButton(1, boosterModel.BoostersOpen);
-        InitializeButton(2, playerProgressionModel.TurnNumber >= 20);
-        InitializeButton(3, playerProgressionModel.Stage > 0);
+        bool[] tutorialsAvailability = new bool[] 
+        {
+            true,
+            boosterModel.BoostersOpen,
+            playerProgressionModel.TurnNumber >= 20,
+            playerProgressionModel.Stage > 0
+        };
+        int lastOpenTutorialIndex = 0;
+        for (int i = 0; i < helpButtons.Length; i++)
+        {
+            InitializeButton(i, tutorialsAvailability[i]);
+            if (tutorialsAvailability[i])
+            {
+                lastOpenTutorialIndex = i;
+            }
+        }
+        SelectTutorial(lastOpenTutorialIndex);
     }
 
     void InitializeButton(int index, bool open)
@@ -265,15 +278,20 @@ public class UISystem : MonoBehaviour
         if (open)
         {
             AudioSystem.Player.PlayStoneSfx();
-            AnimationSystem.MoveSelection(selection, helpButtons[index].transform.position);
-            videoPlayer.Stop();
-            videoPlayer.clip = videos[index];
-            videoPlayer.Play();
+            SelectTutorial(index);
         }
         else
         {
             AnimationSystem.Rotate(helpButtons[index].GetComponentInChildren<Text>().transform);
         }
+    }
+
+    void SelectTutorial(int index)
+    {
+        AnimationSystem.MoveSelection(selection, helpButtons[index].transform.position);
+        videoPlayer.Stop();
+        videoPlayer.clip = videos[index];
+        videoPlayer.Play();
     }
 
     void OnTurnChanged(int turn)
