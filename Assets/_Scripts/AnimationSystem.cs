@@ -198,7 +198,7 @@ public class AnimationSystem
 
     public static void HideBorder(LineRenderer topLine, LineRenderer middleLine, LineRenderer bottomLine, Vector2 start, Vector2 end, bool merge)
     {
-        float duration = merge ? 0.2f : 0.1f;
+        float duration = merge ? 0.25f : 0.2f;
         float startWidth = 0.06f;
         Color transparent = new Color(0f, 0f, 0f, 0f);
         Color2 white = new Color2(Color.white, Color.white);

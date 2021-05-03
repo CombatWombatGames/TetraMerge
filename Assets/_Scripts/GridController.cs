@@ -19,6 +19,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     Vector2Int beginDragGridPosition;
     Vector2Int endDragGridPosition;
     Vector2Int[] validSelectedArea;
+    Vector2Int[] areaToUpgrade;
 
     float scale;
 
@@ -47,22 +48,25 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         Vector2Int currentDragGridPosition = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition);
         if (AreaIsSquare(beginDragGridPosition, currentDragGridPosition) && (beginDragGridPosition != currentDragGridPosition))
         {
-            Vector2Int[] selectedArea = CalculateArea(beginDragGridPosition, currentDragGridPosition);
+            Vector2Int[] selectedArea = CalculateSelectedArea(beginDragGridPosition, currentDragGridPosition);
             if (AreaIsValid(selectedArea))
             {
                 validSelectedArea = selectedArea; //OnEndDrag validSelectedArea will be merged...
                 endDragGridPosition = currentDragGridPosition; //...using endDragGridPosition
-                gridView.DrawShadow(selectedArea, true);
+                areaToUpgrade = CalculateAreaToUpgrade(beginDragGridPosition, currentDragGridPosition);
+                gridView.DrawShadow(selectedArea, true, areaToUpgrade);
             }
-            else
-            {
-                validSelectedArea = null;
-                gridView.DeleteShadow();
-            }
+            //Trying to disable selection drop if area is not valid
+            //else
+            //{
+            //    validSelectedArea = null;
+            //    gridView.DeleteShadow();
+            //}
         }
-        else if (beginDragGridPosition == currentDragGridPosition)
+        else if (beginDragGridPosition == currentDragGridPosition) //Remove condition to drop all non-valid selections
         {
             validSelectedArea = null;
+            areaToUpgrade = null;
             gridView.DeleteShadow();
         }
     }
@@ -72,7 +76,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         return Mathf.Abs(endPosition.x - beginPosition.x) == Mathf.Abs(endPosition.y - beginPosition.y);
     }
 
-    Vector2Int[] CalculateArea(Vector2Int beginPosition, Vector2Int endPosition)
+    Vector2Int[] CalculateSelectedArea(Vector2Int beginPosition, Vector2Int endPosition)
     {
         int columnsCount = Mathf.Abs(endPosition.x - beginPosition.x) + 1;
         int rowsCount = Mathf.Abs(endPosition.y - beginPosition.y) + 1;
@@ -116,12 +120,14 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         gridView.DeleteShadow();
         if (validSelectedArea != null)
         {
-            Merge(validSelectedArea, beginDragGridPosition, endDragGridPosition);
+            int newLevel = gridModel.Grid[beginDragGridPosition.x, endDragGridPosition.y].Level + 1;
+            Merge(validSelectedArea, areaToUpgrade, newLevel);
             validSelectedArea = null;
+            areaToUpgrade = null;
         }
     }
 
-    void Merge(Vector2Int[] area, Vector2Int beginPosition, Vector2Int endPosition)
+    Vector2Int[] CalculateAreaToUpgrade(Vector2Int beginPosition, Vector2Int endPosition)
     {
         List<Vector2Int> upgradedArea = new List<Vector2Int>();
         //TODO LOW Find better solution
@@ -171,19 +177,23 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
                 }
             }
         }
-        int newLevel = gridModel.Grid[beginPosition.x, beginPosition.y].Level + 1;
-        gridModel.ChangeGrid(area, 0);
-        if (area.Length == gridModel.Height * gridModel.Width)
+        return upgradedArea.ToArray();
+    }
+
+    void Merge(Vector2Int[] clearedArea, Vector2Int[] upgradedArea, int upgradeLevel)
+    {
+        gridModel.ChangeGrid(clearedArea, 0);
+        if (clearedArea.Length == gridModel.Height * gridModel.Width)
         {
             gridModel.StageComplete();
             FindObjectOfType<MessageSystem>().ShowMessage(MessageId.StageChanged, 10f);
         }
         else
         {
-            gridModel.ChangeGrid(upgradedArea.ToArray(), newLevel);
+            gridModel.ChangeGrid(upgradedArea, upgradeLevel);
         }
         playerProgressionModel.TurnNumber++;
-        AudioSystem.Player.PlayMergeSfx(area.Length);
-        AnimationSystem.ShakeField(gridView.Field, area.Length, gridView.DustParticles, gridView.ShardsParticles, gridView.LeafParticles, gridView.LeafParticlesBurst);
+        AudioSystem.Player.PlayMergeSfx(clearedArea.Length);
+        AnimationSystem.ShakeField(gridView.Field, clearedArea.Length, gridView.DustParticles, gridView.ShardsParticles, gridView.LeafParticles, gridView.LeafParticlesBurst);
     }
 }

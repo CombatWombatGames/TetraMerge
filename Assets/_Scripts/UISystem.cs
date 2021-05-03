@@ -73,7 +73,7 @@ public class UISystem : MonoBehaviour
         helpButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
         menuButton.onClick.AddListener(OpenMenu);
         menuButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
-        closeHelpButton.onClick.AddListener(() => CloseScroll());
+        closeHelpButton.onClick.AddListener(CloseScroll);
         //Bottom
         piecesButton.onPointerDown.AddListener(() => { if (piecesButton.interactable) SwitchTable(true); });
         boostersButton.onPointerDown.AddListener(() => { if (boostersButton.interactable) SwitchTable(false); });
@@ -81,7 +81,7 @@ public class UISystem : MonoBehaviour
         ultimateButton.onClick.AddListener(() => { boosterModel.ClearBasicRunes(); SwitchTable(true); });
         ultimateButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayBoosterSfx());
         //Menu
-        continueButton.onClick.AddListener(() => CloseMenu());
+        continueButton.onClick.AddListener(CloseMenu);
         continueButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
         restartButton.onClick.AddListener(RestartScene);
         restartButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
@@ -93,15 +93,15 @@ public class UISystem : MonoBehaviour
         aboutButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
         quitButton.onClick.AddListener(Quit);
         quitButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
-        closeMenuButton.onClick.AddListener(() => CloseMenu());
+        closeMenuButton.onClick.AddListener(CloseMenu);
         ravenButton.onPointerDown.AddListener(() => AnimationSystem.RavenBlink(ravenEye));
         //About
         mailButton.onClick.AddListener(SendEmail);
         termsButton.onClick.AddListener(OpenTerms);
         privacyButton.onClick.AddListener(OpenPrivacy);
-        closeAboutButton.onClick.AddListener(() => CloseScroll());
+        closeAboutButton.onClick.AddListener(CloseScroll);
         //Collection
-        closeCollectionButton.onClick.AddListener(() => CloseScroll());
+        closeCollectionButton.onClick.AddListener(CloseScroll);
 
         SwitchTable(true, false);
         playerProgressionModel.TurnChanged += OnTurnChanged;
@@ -301,7 +301,7 @@ public class UISystem : MonoBehaviour
             OpenScroll(Consts.Help);
             GetComponent<InputDisabler>().DisableInput(2f);
         }
-        //TODO Merge once and restart will spawn buttons
+        //TODO LOW Merge once and restart will spawn buttons
         if (piecesButton.gameObject.activeSelf && !boosterModel.BoostersOpen)
         {
             piecesButton.gameObject.SetActive(false);

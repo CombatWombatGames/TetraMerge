@@ -147,34 +147,52 @@ public class GridView : MonoBehaviour
         AnimationSystem.HideVines(vines);
     }
 
-    Vector2Int[] oldShadowArea;
-    public void DrawShadow(Vector2Int[] area, bool sound = false)
+    Vector2Int[] shadowArea;
+    Vector2Int[] highlightedArea;
+    public void DrawShadow(Vector2Int[] area, bool sound = false, Vector2Int[] areaToUpgrade = null)
     {
-        if (sound && (oldShadowArea == null || (oldShadowArea != null && !area.SequenceEqual(oldShadowArea))))
+        if (sound && (shadowArea == null || (shadowArea != null && !area.SequenceEqual(shadowArea))))
         {
             AudioSystem.Player.PlayHighlightSfx();
         }
         //Remove old shadow
         DeleteShadow();
         //Store shadowless state
-        oldShadowArea = area;
+        shadowArea = area;
+        highlightedArea = areaToUpgrade;
         //Drop shadow
-        for (int i = 0; i < area.Length; i++)
+        for (int i = 0; i < shadowArea.Length; i++)
         {
-            cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].enabled = true;
+            cells[shadowArea[i].x, shadowArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].enabled = true;
+        }
+        if (highlightedArea != null)
+        {
+            for (int i = 0; i < highlightedArea.Length; i++)
+            {
+                cells[highlightedArea[i].x, highlightedArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].color = Color.white;
+            }
         }
     }
 
+    readonly Color highlightColor = new Color32(86, 88, 107, 255);
     public void DeleteShadow()
     {
-        if (oldShadowArea != null)
+        if (shadowArea != null)
         {
-            for (int i = 0; i < oldShadowArea.Length; i++)
+            for (int i = 0; i < shadowArea.Length; i++)
             {
-                cells[oldShadowArea[i].x, oldShadowArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].enabled = false;
+                cells[shadowArea[i].x, shadowArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].enabled = false;
             }
+            shadowArea = null;
         }
-        oldShadowArea = null;
+        if (highlightedArea != null)
+        {
+            for (int i = 0; i < highlightedArea.Length; i++)
+            {
+                cells[highlightedArea[i].x, highlightedArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].color = highlightColor;
+            }
+            highlightedArea = null;
+        }
     }
 
     public Vector2Int WorldToGridCoordinate(Vector2 worldCoordinate)
