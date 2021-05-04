@@ -165,7 +165,7 @@ public class GridView : MonoBehaviour
         {
             cells[shadowArea[i].x, shadowArea[i].y].GetComponentsInChildren<Image>()[cellShadowImageIndex].enabled = true;
         }
-        if (highlightedArea != null)
+        if (highlightedArea != null && areaToClear.Length != gridModel.Height * gridModel.Width)
         {
             for (int i = 0; i < highlightedArea.Length; i++)
             {
