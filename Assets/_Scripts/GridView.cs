@@ -149,16 +149,16 @@ public class GridView : MonoBehaviour
 
     Vector2Int[] shadowArea;
     Vector2Int[] highlightedArea;
-    public void DrawShadow(Vector2Int[] area, bool sound = false, Vector2Int[] areaToUpgrade = null)
+    public void DrawShadow(Vector2Int[] areaToClear, Vector2Int[] areaToUpgrade, bool sound)
     {
-        if (sound && (shadowArea == null || (shadowArea != null && !area.SequenceEqual(shadowArea))))
+        if (sound && (shadowArea == null || (shadowArea != null && !areaToClear.SequenceEqual(shadowArea))))
         {
             AudioSystem.Player.PlayHighlightSfx();
         }
         //Remove old shadow
         DeleteShadow();
         //Store shadowless state
-        shadowArea = area;
+        shadowArea = areaToClear;
         highlightedArea = areaToUpgrade;
         //Drop shadow
         for (int i = 0; i < shadowArea.Length; i++)

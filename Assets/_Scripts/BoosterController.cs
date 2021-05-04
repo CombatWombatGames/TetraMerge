@@ -20,7 +20,13 @@ public class BoosterController : MonoBehaviour, IDragHandler, IEndDragHandler, I
             Vector2Int nearestCell = gridView.WorldToGridCoordinate(eventData.pointerCurrentRaycast.worldPosition + gridView.BoosterFingerShift);
             if (CellIsAvailable(nearestCell))
             {
-                gridView.DrawShadow(new Vector2Int[] { nearestCell }, true);
+                var areaToClear = new Vector2Int[] { nearestCell };
+                Vector2Int[] areaToUpgrade = null;
+                if (boosterType == BoosterType.Add)
+                {
+                    areaToUpgrade = areaToClear;
+                }
+                gridView.DrawShadow(areaToClear, areaToUpgrade, true);
             }
             else
             {

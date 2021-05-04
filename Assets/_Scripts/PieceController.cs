@@ -53,7 +53,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
             Vector2Int[] nearestArea = FindNearestArea(eventData.pointerCurrentRaycast.worldPosition + gridView.FingerShift, piecesModel.NextPieces[index]);
             if (AreaIsAvailable(nearestArea))
             {
-                gridView.DrawShadow(nearestArea);
+                gridView.DrawShadow(nearestArea, nearestArea, false);
             }
             else
             {

@@ -54,7 +54,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
                 validSelectedArea = selectedArea; //OnEndDrag validSelectedArea will be merged...
                 endDragGridPosition = currentDragGridPosition; //...using endDragGridPosition
                 areaToUpgrade = CalculateAreaToUpgrade(beginDragGridPosition, currentDragGridPosition);
-                gridView.DrawShadow(selectedArea, true, areaToUpgrade);
+                gridView.DrawShadow(selectedArea, areaToUpgrade, true);
             }
             //Trying to disable selection drop if area is not valid
             //else
