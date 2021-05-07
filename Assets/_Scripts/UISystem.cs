@@ -43,6 +43,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] Button closeCollectionButton = default;
     [SerializeField] Transform runesParent = default;
     [SerializeField] Text collectedRunes = default;
+    [SerializeField] GameObject completeLabel = default;
     [Header("Help")]
     [SerializeField] ButtonEnhanced[] helpButtons = default;
     [SerializeField] VideoClip[] videos = default;
@@ -225,8 +226,9 @@ public class UISystem : MonoBehaviour
     void InitializeRuneCollection()
     {
         Sprite[] tiles = GetComponent<Resources>().TilesList;
-        for (int i = 1; i < runesParent.childCount; i++)
+        for (int i = 2; i < runesParent.childCount; i++)
         {
+            completeLabel.transform.SetAsFirstSibling();
             Destroy(runesParent.GetChild(i).gameObject);
         }
         int unlockedCount = Mathf.Clamp(playerProgressionModel.BestRune, 0, tiles.Length);
@@ -238,6 +240,12 @@ public class UISystem : MonoBehaviour
         if (unlockedCount < tiles.Length)
         {
             Instantiate(runePrefab, runesParent);
+            completeLabel.SetActive(false);
+        }
+        else
+        {
+            completeLabel.SetActive(true);
+            completeLabel.transform.SetAsLastSibling();
         }
         collectedRunes.text = $"You have collected {playerProgressionModel.TotalMerged} runes";
     }
