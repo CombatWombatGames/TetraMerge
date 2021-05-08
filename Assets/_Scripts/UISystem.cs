@@ -12,6 +12,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] ButtonEnhanced helpButton = default;
     [SerializeField] ButtonEnhanced undoButton = default;
     [SerializeField] Button closeHelpButton = default;
+    [SerializeField] Transform newTip = default;
     [Header("Bottom UI")]
     [SerializeField] ButtonEnhanced piecesButton = default;
     [SerializeField] ButtonEnhanced boostersButton = default;
@@ -290,7 +291,7 @@ public class UISystem : MonoBehaviour
         }
         else
         {
-            AnimationSystem.Rotate(helpButtons[index].GetComponentInChildren<Text>().transform);
+            AnimationSystem.Shake(helpButtons[index].GetComponentInChildren<Text>().transform);
         }
     }
 
@@ -304,11 +305,11 @@ public class UISystem : MonoBehaviour
 
     void OnTurnChanged(int turn)
     {
-        if (turn == 0 && playerProgressionModel.TotalMerged == 0)
-        {
-            OpenScroll(Consts.Help);
-            GetComponent<InputDisabler>().DisableInput(2f);
-        }
+        //if (turn == 0 && playerProgressionModel.TotalMerged == 0)
+        //{
+        //    OpenScroll(Consts.Help);
+        //    GetComponent<InputDisabler>().DisableInput(2f);
+        //}
         //TODO LOW Merge once and restart will spawn buttons
         if (piecesButton.gameObject.activeSelf && !boosterModel.BoostersOpen)
         {
@@ -320,5 +321,7 @@ public class UISystem : MonoBehaviour
             AnimationSystem.ShowButtons(piecesButton, boostersButton);
             boosterModel.BoostersOpen = true;
         }
+        newTip.gameObject.SetActive(false);
+        //AnimationSystem.LoopShake(newTip);
     }
 }
