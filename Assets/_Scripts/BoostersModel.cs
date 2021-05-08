@@ -156,6 +156,7 @@ public class BoostersModel : MonoBehaviour
 
     void GiveRandomBooster()
     {
+        UnityEngine.Random.InitState(playerProgressionModel.Seed);
         int index = UnityEngine.Random.Range(0, 3);
         switch (index)
         {

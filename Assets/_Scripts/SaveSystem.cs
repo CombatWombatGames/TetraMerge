@@ -59,7 +59,7 @@ public class SaveSystem : MonoBehaviour
         gridModel.Initialize(stateData.Grid);
         piecesModel.Initialize(stateData.NextPieces, stateData.LevelNumber);
         boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.UltimateUsed, stateData.BoostersOpen);
-        playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber, stateData.BestScore, stateData.BestLevel, stateData.BestRune, stateData.Stage, stateData.TotalMerged);
+        playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber, stateData.BestScore, stateData.BestLevel, stateData.BestRune, stateData.Stage, stateData.TotalMerged, stateData.TriesCount);
         undoButton.interactable = File.Exists(preveousSaveFilePath);
     }                            
                                  
@@ -77,6 +77,7 @@ public class SaveSystem : MonoBehaviour
             TotalMerged = playerProgressionModel.TotalMerged,
             TurnNumber = 0,
             LevelNumber = 1,
+            TriesCount = playerProgressionModel.TriesCount,
             RefreshesCount = 0,
             AddsCount = 0,
             ClearsCount = 0,
@@ -144,6 +145,7 @@ public class SaveSystem : MonoBehaviour
             BestRune = playerProgressionModel.BestRune,
             Stage = playerProgressionModel.Stage,
             TotalMerged = playerProgressionModel.TotalMerged,
+            TriesCount = playerProgressionModel.TriesCount,
             RefreshesCount = boostersModel.RefreshesCount,
             AddsCount = boostersModel.AddsCount,
             ClearsCount = boostersModel.ClearsCount,
@@ -165,6 +167,7 @@ public class SaveSystem : MonoBehaviour
 
     public void StartFromScratch()
     {
+        playerProgressionModel.TriesCount++;
         Save();
         CreateInitialSave(saveFilePath);
         DOTween.Clear();
@@ -213,6 +216,7 @@ public struct StateData
     public int BestRune;
     public int Stage;
     public int TotalMerged;
+    public int TriesCount;
     //Booster model
     public int RefreshesCount;
     public int AddsCount;

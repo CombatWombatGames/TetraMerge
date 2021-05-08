@@ -21425,6 +21425,7 @@ MonoBehaviour:
   closeCollectionButton: {fileID: 697910472}
   runesParent: {fileID: 1309749661}
   collectedRunes: {fileID: 1333843157}
+  completeLabel: {fileID: 1804650383}
   helpButtons:
   - {fileID: 8154300878900760176}
   - {fileID: 1606432038}

@@ -98,12 +98,12 @@ public class PiecesModel : MonoBehaviour
     public void GenerateNextPieces()
     {
         NextPieces = GenerateRandomPieces();
-        //TODO LOW Put in setter?
         PiecesGenerated();
     }
 
     Piece[] GenerateRandomPieces()
     {
+        Random.InitState(playerProgressionModel.Seed);
         if (playerProgressionModel.TurnNumber != 0)
         {
             return new Piece[] { new Piece(Pieces[Random.Range(0, Pieces.Length)]), new Piece(Pieces[Random.Range(0, Pieces.Length)]), new Piece(Pieces[Random.Range(0, Pieces.Length)]) };
