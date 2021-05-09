@@ -59,7 +59,7 @@ public class SaveSystem : MonoBehaviour
         gridModel.Initialize(stateData.Grid);
         piecesModel.Initialize(stateData.NextPieces, stateData.LevelNumber);
         boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.UltimateUsed, stateData.BoostersOpen);
-        playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber, stateData.BestScore, stateData.BestLevel, stateData.BestRune, stateData.Stage, stateData.TotalMerged, stateData.TriesCount);
+        playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber, stateData.BestScore, stateData.BestLevel, stateData.BestRune, stateData.Stage, stateData.TotalMerged, stateData.TriesCount, stateData.TutorialsWatched);
         undoButton.interactable = File.Exists(preveousSaveFilePath);
     }                            
                                  
@@ -78,6 +78,7 @@ public class SaveSystem : MonoBehaviour
             TurnNumber = 0,
             LevelNumber = 1,
             TriesCount = playerProgressionModel.TriesCount,
+            TutorialsWatched = playerProgressionModel.TutorialsWatched ?? new bool[GetComponent<Resources>().Tutorials.Length],
             RefreshesCount = 0,
             AddsCount = 0,
             ClearsCount = 0,
@@ -146,6 +147,7 @@ public class SaveSystem : MonoBehaviour
             Stage = playerProgressionModel.Stage,
             TotalMerged = playerProgressionModel.TotalMerged,
             TriesCount = playerProgressionModel.TriesCount,
+            TutorialsWatched = playerProgressionModel.TutorialsWatched,
             RefreshesCount = boostersModel.RefreshesCount,
             AddsCount = boostersModel.AddsCount,
             ClearsCount = boostersModel.ClearsCount,
@@ -217,6 +219,7 @@ public struct StateData
     public int Stage;
     public int TotalMerged;
     public int TriesCount;
+    public bool[] TutorialsWatched;
     //Booster model
     public int RefreshesCount;
     public int AddsCount;

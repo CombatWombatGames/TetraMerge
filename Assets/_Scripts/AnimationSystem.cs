@@ -7,6 +7,11 @@ using static UnityEngine.ParticleSystem;
 //Plays animations
 public class AnimationSystem
 {
+    public static void Kill(Component component)
+    {
+        component.DOKill(true);
+    }
+
     static List<Sequence> rotatePieceSequences = new List<Sequence>();
     public static void RotatePiece(Transform[] transforms, Vector3[] targetPositions)
     {
@@ -239,7 +244,7 @@ public class AnimationSystem
     public static void Shake(Transform transform)
     {
         float duration = 0.1f;
-        float amplitude = 25f;
+        float amplitude = 15f;
         DOTween.Sequence()
             .Join(transform.DOBlendableRotateBy(-amplitude * Vector3.forward, duration).SetLoops(2, LoopType.Yoyo))
             .Append(transform.DOBlendableRotateBy(amplitude * Vector3.forward, duration).SetLoops(2, LoopType.Yoyo));
@@ -247,10 +252,10 @@ public class AnimationSystem
 
     public static void LoopShake(Transform transform)
     {
-        transform.DOKill();
+        //Not killing somehow
+        transform.DOKill(true);
         float duration = 0.2f;
         float amplitude = 10f;
-        //transform.DOShakeRotation(duration, 15f * Vector3.forward, 10, 90f, false).SetLoops(-1);
         transform.localScale = 0.8f * Vector3.one;
         DOTween.Sequence()
             .Append(transform.DOScale(1f, duration))

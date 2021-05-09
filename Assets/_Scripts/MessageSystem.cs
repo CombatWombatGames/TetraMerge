@@ -11,7 +11,7 @@ public class MessageSystem : MonoBehaviour
         colors = GetComponent<Resources>().ColorsList;
     }
 
-    public void ShowMessage(MessageId messageId, float duration = 3f)
+    public void ShowMessage(MessageId messageId, float duration = 5f)
     {
         Message message = Instantiate(messagePrefab, messageList);
         message.Initialize(messageId, colors[(int)messageId]);

@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using System.Linq;
 
 // Handles button clicks
 public class UISystem : MonoBehaviour
@@ -47,11 +48,11 @@ public class UISystem : MonoBehaviour
     [SerializeField] GameObject completeLabel = default;
     [Header("Help")]
     [SerializeField] ButtonEnhanced[] helpButtons = default;
-    [SerializeField] VideoClip[] videos = default;
     [SerializeField] VideoPlayer videoPlayer = default;
     [SerializeField] Transform selection = default;
 
     SaveSystem saveSystem;
+    Resources resources;
     BoostersModel boosterModel;
     PlayerProgressionModel playerProgressionModel;
     Dictionary<string, Window> windows;
@@ -66,6 +67,7 @@ public class UISystem : MonoBehaviour
             { Consts.Collection, collectionCanvas }
         };
         saveSystem = GetComponent<SaveSystem>();
+        resources = GetComponent<Resources>();
         boosterModel = GetComponent<BoostersModel>();
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
         //Top
@@ -107,6 +109,7 @@ public class UISystem : MonoBehaviour
 
         SwitchTable(true, false);
         playerProgressionModel.TurnChanged += OnTurnChanged;
+        newTip.gameObject.SetActive(false);
     }
 
     void OnDestroy()
@@ -226,7 +229,7 @@ public class UISystem : MonoBehaviour
 
     void InitializeRuneCollection()
     {
-        Sprite[] tiles = GetComponent<Resources>().TilesList;
+        Sprite[] tiles = resources.TilesList;
         for (int i = 2; i < runesParent.childCount; i++)
         {
             completeLabel.transform.SetAsFirstSibling();
@@ -258,17 +261,11 @@ public class UISystem : MonoBehaviour
         {
             helpButtons[i].onClick.RemoveAllListeners();
         }
-        bool[] tutorialsAvailability = new bool[] 
-        {
-            true,
-            boosterModel.BoostersOpen,
-            playerProgressionModel.TurnNumber >= 20,
-            playerProgressionModel.Stage > 0
-        };
+        bool[] tutorialsAvailability = GetTutorialsAvailability();
         int lastOpenTutorialIndex = 0;
         for (int i = 0; i < helpButtons.Length; i++)
         {
-            InitializeButton(i, tutorialsAvailability[i]);
+            InitializeButton(i, tutorialsAvailability[i], playerProgressionModel.TutorialsWatched[i]);
             if (tutorialsAvailability[i])
             {
                 lastOpenTutorialIndex = i;
@@ -277,9 +274,9 @@ public class UISystem : MonoBehaviour
         SelectTutorial(lastOpenTutorialIndex);
     }
 
-    void InitializeButton(int index, bool open)
+    void InitializeButton(int index, bool open, bool watched)
     {
-        helpButtons[index].GetComponent<GalleryButton>().Initialize(open, () => OnHelpButtonClicked(index, open));
+        helpButtons[index].GetComponent<GalleryButton>().Initialize(open, open ? !watched : false, () => OnHelpButtonClicked(index, open));
     }
 
     void OnHelpButtonClicked(int index, bool open)
@@ -299,17 +296,15 @@ public class UISystem : MonoBehaviour
     {
         AnimationSystem.MoveSelection(selection, helpButtons[index].transform.position);
         videoPlayer.Stop();
-        videoPlayer.clip = videos[index];
+        videoPlayer.clip = resources.Tutorials[index];
         videoPlayer.Play();
+        //Will be saved only on turn event
+        playerProgressionModel.TutorialsWatched[index] = true;
+        SetTutorialNotificationActive(false);
     }
 
     void OnTurnChanged(int turn)
     {
-        //if (turn == 0 && playerProgressionModel.TotalMerged == 0)
-        //{
-        //    OpenScroll(Consts.Help);
-        //    GetComponent<InputDisabler>().DisableInput(2f);
-        //}
         //TODO LOW Merge once and restart will spawn buttons
         if (piecesButton.gameObject.activeSelf && !boosterModel.BoostersOpen)
         {
@@ -320,8 +315,40 @@ public class UISystem : MonoBehaviour
         {
             AnimationSystem.ShowButtons(piecesButton, boostersButton);
             boosterModel.BoostersOpen = true;
+        }        
+        //Lazy way to open tutorials
+        bool[] tutorialsAvailability = GetTutorialsAvailability();
+        for (int i = 0; i < tutorialsAvailability.Length; i++)
+        {
+            if (!playerProgressionModel.TutorialsWatched[i] && tutorialsAvailability[i])
+            {
+                SetTutorialNotificationActive(true);
+            }
         }
-        newTip.gameObject.SetActive(false);
-        //AnimationSystem.LoopShake(newTip);
+    }
+
+    void SetTutorialNotificationActive(bool value)
+    {
+        if (value)
+        {
+            AnimationSystem.LoopShake(newTip);
+        }
+        else
+        {
+            AnimationSystem.Kill(newTip);
+        }
+        newTip.gameObject.SetActive(value);
+    }
+
+    bool[] GetTutorialsAvailability()
+    { 
+        return new bool[]
+        {
+            true, //basic
+            playerProgressionModel.TurnNumber >= 5, //level up
+            boosterModel.BoostersOpen, //boosters
+            playerProgressionModel.Stage > 0 || playerProgressionModel.TurnNumber >= 20, //stages
+            playerProgressionModel.Stage > 0, //ultimate
+        };
     }
 }

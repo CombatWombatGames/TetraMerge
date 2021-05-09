@@ -1,5 +1,6 @@
 ﻿using Array2DEditor;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class Resources : MonoBehaviour
 {
@@ -17,4 +18,7 @@ public class Resources : MonoBehaviour
 
     public Color[] ColorsList => colorsList;
     [SerializeField] Color[] colorsList = default;
+
+    public VideoClip[] Tutorials => tutorials;
+    [SerializeField] VideoClip[] tutorials = default;
 }
