@@ -28411,7 +28411,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Contact us: combatwombat@ro.ru'
+  m_Text: 'Contact us: support@cwgames.ru'
 --- !u!222 &1589624678
 CanvasRenderer:
   m_ObjectHideFlags: 0

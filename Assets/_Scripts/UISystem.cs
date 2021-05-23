@@ -214,17 +214,17 @@ public class UISystem : MonoBehaviour
 
     void SendEmail()
     {
-        Application.OpenURL("mailto:combatwombat@ro.ru");
+        Application.OpenURL("mailto:support@cwgames.ru");
     }
 
     void OpenTerms()
     {
-        Application.OpenURL("https://docs.google.com/document/d/1eige_tr6YDSQ8-XE1gdLG8ZbNeGmVvD4Mex3bHjJYxA/edit?usp=sharing");
+        Application.OpenURL("http://cwgames.ru/Terms-and-Conditions/");
     }
 
     void OpenPrivacy()
     {
-        Application.OpenURL("https://docs.google.com/document/d/1gVyA0oGOmKJ9KjuA-RmlUS0nkkNwe3kmVs1v3bX29FA/edit?usp=sharing");
+        Application.OpenURL("http://cwgames.ru/Privacy-Policy/");
     }
 
     void InitializeRuneCollection()
@@ -345,7 +345,7 @@ public class UISystem : MonoBehaviour
         return new bool[]
         {
             true, //basic
-            playerProgressionModel.TurnNumber >= 5, //level up
+            playerProgressionModel.TurnNumber >= 5 || playerProgressionModel.LevelNumber > 1, //level up
             boosterModel.BoostersOpen, //boosters
             playerProgressionModel.Stage > 0 || playerProgressionModel.TurnNumber >= 20, //stages
             playerProgressionModel.Stage > 0, //ultimate
