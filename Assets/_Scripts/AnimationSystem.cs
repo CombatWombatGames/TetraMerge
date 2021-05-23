@@ -250,14 +250,15 @@ public class AnimationSystem
             .Append(transform.DOBlendableRotateBy(amplitude * Vector3.forward, duration).SetLoops(2, LoopType.Yoyo));
     }
 
+    static Sequence shake;
     public static void LoopShake(Transform transform)
     {
-        //Not killing somehow, adds every turn
-        transform.DOKill(true);
+        shake?.Kill();
         float duration = 0.2f;
         float amplitude = 10f;
         transform.localScale = 0.8f * Vector3.one;
-        DOTween.Sequence()
+        transform.localRotation = new Quaternion();
+        shake = DOTween.Sequence()
             .Append(transform.DOScale(1f, duration))
             .Append(transform.DOBlendableRotateBy(-amplitude * Vector3.forward, duration).SetLoops(2, LoopType.Yoyo))
             .Append(transform.DOBlendableRotateBy(amplitude * Vector3.forward, duration).SetLoops(2, LoopType.Yoyo))

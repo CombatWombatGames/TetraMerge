@@ -333,7 +333,6 @@ public class UISystem : MonoBehaviour
         bool tutorialMode = false;
         if (!tutorialMode)
         {
-            //TODO HIGH Fix wobbling
             if (value)
             {
                 AnimationSystem.LoopShake(newTip);
