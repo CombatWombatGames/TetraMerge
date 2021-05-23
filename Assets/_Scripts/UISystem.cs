@@ -329,15 +329,19 @@ public class UISystem : MonoBehaviour
 
     void SetTutorialNotificationActive(bool value)
     {
-        if (value)
+        bool tutorialMode = false;
+        if (!tutorialMode)
         {
-            AnimationSystem.LoopShake(newTip);
+            if (value)
+            {
+                AnimationSystem.LoopShake(newTip);
+            }
+            else
+            {
+                AnimationSystem.Kill(newTip);
+            }
+            newTip.gameObject.SetActive(value);
         }
-        else
-        {
-            AnimationSystem.Kill(newTip);
-        }
-        newTip.gameObject.SetActive(value);
     }
 
     bool[] GetTutorialsAvailability()

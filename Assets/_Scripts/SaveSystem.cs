@@ -18,6 +18,7 @@ public class SaveSystem : MonoBehaviour
     PlayerProgressionModel playerProgressionModel;
     BoostersModel boostersModel;
     PiecesModel piecesModel;
+    Resources resources;
     string saveFileName = "data.json";
     string preveousSaveFileName = "olddata.json";
     string saveFilePath;
@@ -30,6 +31,7 @@ public class SaveSystem : MonoBehaviour
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
         boostersModel = GetComponent<BoostersModel>();
         piecesModel = GetComponent<PiecesModel>();
+        resources = GetComponent<Resources>();
         PrepareStateData();
         AnalyticsSystem.Initialize(playerProgressionModel);
     }
@@ -50,6 +52,14 @@ public class SaveSystem : MonoBehaviour
     {
         saveFilePath = Path.Combine(Application.persistentDataPath, saveFileName);
         preveousSaveFilePath = Path.Combine(Application.persistentDataPath, preveousSaveFileName);
+        int tutorial = 0;
+        if (tutorial > 0)
+        {
+            File.Delete(saveFilePath);
+            File.Delete(preveousSaveFilePath);
+            string tutorialSaveFilePath = $"Assets/_Saves/Tutorial{tutorial}/data.json";
+            File.Copy(tutorialSaveFilePath, saveFilePath);
+        }
         if (!File.Exists(saveFilePath)) { CreateInitialSave(saveFilePath); }
         stateData = ReadSaveFile(saveFilePath);
     }
@@ -78,7 +88,7 @@ public class SaveSystem : MonoBehaviour
             TurnNumber = 0,
             LevelNumber = 1,
             TriesCount = playerProgressionModel.TriesCount,
-            TutorialsWatched = playerProgressionModel.TutorialsWatched ?? new bool[GetComponent<Resources>().Tutorials.Length],
+            TutorialsWatched = playerProgressionModel.TutorialsWatched ?? new bool[resources.Tutorials.Length],
             RefreshesCount = 0,
             AddsCount = 0,
             ClearsCount = 0,
@@ -114,7 +124,7 @@ public class SaveSystem : MonoBehaviour
 
     int[] CreateNextPieces()
     {
-        int piecesCount = GetComponent<Resources>().PiecesList.Length;
+        int piecesCount = resources.PiecesList.Length;
         return new int[] { Random.Range(1, piecesCount), Random.Range(1, piecesCount), Random.Range(1, piecesCount) };
     }
 

@@ -13,8 +13,12 @@ public class MessageSystem : MonoBehaviour
 
     public void ShowMessage(MessageId messageId, float duration = 5f)
     {
-        Message message = Instantiate(messagePrefab, messageList);
-        message.Initialize(messageId, colors[(int)messageId]);
-        AnimationSystem.ShowMessage(message, duration);
+        bool tutorialMode = false;
+        if (!tutorialMode)
+        {
+            Message message = Instantiate(messagePrefab, messageList);
+            message.Initialize(messageId, colors[(int)messageId]);
+            AnimationSystem.ShowMessage(message, duration);
+        }
     }
 }
