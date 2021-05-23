@@ -3,7 +3,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
-using System.Linq;
 
 // Handles button clicks
 public class UISystem : MonoBehaviour
@@ -50,6 +49,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] ButtonEnhanced[] helpButtons = default;
     [SerializeField] VideoPlayer videoPlayer = default;
     [SerializeField] Transform selection = default;
+    [SerializeField] Text rulesText = default;
 
     SaveSystem saveSystem;
     Resources resources;
@@ -294,6 +294,7 @@ public class UISystem : MonoBehaviour
 
     void SelectTutorial(int index)
     {
+        rulesText.text = Consts.Tutorials[index];
         AnimationSystem.MoveSelection(selection, helpButtons[index].transform.position);
         videoPlayer.Stop();
         videoPlayer.clip = resources.Tutorials[index];
@@ -316,7 +317,7 @@ public class UISystem : MonoBehaviour
             AnimationSystem.ShowButtons(piecesButton, boostersButton);
             boosterModel.BoostersOpen = true;
         }        
-        //Lazy way to open tutorials
+        //Lazy way to unlock tutorials
         bool[] tutorialsAvailability = GetTutorialsAvailability();
         for (int i = 0; i < tutorialsAvailability.Length; i++)
         {
@@ -332,6 +333,7 @@ public class UISystem : MonoBehaviour
         bool tutorialMode = false;
         if (!tutorialMode)
         {
+            //TODO HIGH Fix wobbling
             if (value)
             {
                 AnimationSystem.LoopShake(newTip);

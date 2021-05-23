@@ -11865,7 +11865,7 @@ GameObject:
   - component: {fileID: 509631236}
   - component: {fileID: 509631235}
   m_Layer: 5
-  m_Name: MainRulesBackground
+  m_Name: RulesBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21429,6 +21429,7 @@ MonoBehaviour:
   - {fileID: 512044031}
   videoPlayer: {fileID: 1729842936}
   selection: {fileID: 2036490425}
+  rulesText: {fileID: 1819767857}
 --- !u!114 &1380896185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29668,7 +29669,7 @@ GameObject:
   - component: {fileID: 1819767858}
   - component: {fileID: 1819767857}
   m_Layer: 5
-  m_Name: MainRulesText
+  m_Name: RulesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29690,8 +29691,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 37.499992, y: 0}
-  m_SizeDelta: {x: -75.00001, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -120, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1819767857
 MonoBehaviour:
@@ -29726,14 +29727,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '1. Tap a piece to rotate.
-
-    2. Drag pieces to the field.
-
-    3. Select
-    square area to merge.
-
-    <color=yellow>4. Get rid of all basic runes!</color>'
+  m_Text: 
 --- !u!222 &1819767858
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -33,7 +33,14 @@ public struct Consts
         "Sowilo - means \"Sun\"."//Sowilō
     };
 
-    public const string Text = "TWO FUP GMZS";
+    public static string[] Tutorials = new string[]
+    {
+        "1. Tap a piece to rotate.\n2. Drag pieces to the field.\n3. Select square area to merge.<color=yellow>\n4. Get rid of all basic runes!</color>",
+        "1. You can undo your last turn.\n2. Level up pieces by removing all basic runes!",
+        "Boosters appear once in a while: pink bar, merge > 4x4, basic rune level up.\n\"<color=yellow>Refresh</color>\" booster respawns pieces.\n\"<color=green>Add</color>\" booster creates a rune.\n\"<color=red>Remove</color>\" booster destroys a rune.",
+        "Merge entire field to get to the next stage with new obstacles!",
+        "Ultimate booster destroys all basic runes and boosters, but available only once per stage.",
+    };
 }
 
 public enum MessageId

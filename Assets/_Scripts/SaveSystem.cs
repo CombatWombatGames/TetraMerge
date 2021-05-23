@@ -43,7 +43,7 @@ public class SaveSystem : MonoBehaviour
 
     void Start()
     {
-        //HACK subscribing in Start so saving would be called last
+        //Subscribing in Start so saving would be called last
         playerProgressionModel.TurnChanged += OnTurnChanged;
         Load();
     }

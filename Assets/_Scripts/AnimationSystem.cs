@@ -252,7 +252,7 @@ public class AnimationSystem
 
     public static void LoopShake(Transform transform)
     {
-        //Not killing somehow
+        //Not killing somehow, adds every turn
         transform.DOKill(true);
         float duration = 0.2f;
         float amplitude = 10f;
