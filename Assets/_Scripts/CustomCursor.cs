@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CustomCursor : MonoBehaviour
 {
-    [SerializeField] Texture2D cursorTexture;
-    [SerializeField] Texture2D transparentTexture;
+    [SerializeField] Texture2D cursorTexture = default;
+    [SerializeField] Texture2D transparentTexture = default;
     CursorMode cursorMode = CursorMode.ForceSoftware;
     Vector2 hotSpot = new Vector2(23f, 25f);
 

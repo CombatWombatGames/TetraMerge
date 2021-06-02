@@ -15,6 +15,7 @@ public class AudioSystem : MonoBehaviour
     [SerializeField] AudioClip woodSfx = default;
     [SerializeField] AudioClip stoneSfx = default;
     [SerializeField] AudioClip boosterSfx = default;
+    [SerializeField] AudioClip thunderSfx = default;
     [SerializeField] AudioClip raiseSfx = default;
     [SerializeField] AudioClip paperFastSfx = default;
     [SerializeField] AudioClip paperSlowSfx = default;
@@ -90,6 +91,12 @@ public class AudioSystem : MonoBehaviour
     {
         sfxSource.pitch = 1.2f;
         sfxSource.PlayOneShot(boosterSfx, 0.4f);
+    }
+
+    public void PlayThunderSfx()
+    {
+        sfxSource.pitch = 1f;
+        sfxSource.PlayOneShot(thunderSfx, 0.4f);
     }
 
     public void PlayRaiseSfx()

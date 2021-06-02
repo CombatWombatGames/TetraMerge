@@ -15,40 +15,59 @@ public class AnalyticsSystem
     public static void Initialize(PlayerProgressionModel playerProgressionModel)
     {
         AnalyticsSystem.playerProgressionModel = playerProgressionModel;
+        if (playerProgressionModel.TurnNumber == 0)
+        {
+            LevelStart();
+            StageStart();
+        }
     }
 
-    public static void LevelStart(int level)
+    public static void LevelStart()
     {
-        AnalyticsEvent.LevelStart(level, parameters);
+        SendEvent("level_start", parameters);
     }
 
-    public static void StageStart(int stage)
+    public static void StageStart()
     {
-        AnalyticsEvent.LevelUp(stage, parameters);
+        SendEvent("stage_start", parameters);
     }
 
-    public static void Restart(int level)
+    public static void Restart()
     {
-        AnalyticsEvent.LevelFail(level, parameters);
+        SendEvent("restart", parameters);
     }
 
     public static void WindowOpen(string name)
     {
-        AnalyticsEvent.ScreenVisit(name);
+        SendEvent("window_open", new Dictionary<string, object>(parameters) { { "name", name } });
     }
 
     public static void BoosterAcquired(BoosterType type)
     {
-        AnalyticsEvent.Custom("booster_acquired", new Dictionary<string, object> (parameters) { { "name", type } });
+        SendEvent("booster_acquired", new Dictionary<string, object> (parameters) { { "name", type } });
     }
 
     public static void BoosterUsed(BoosterType type)
     {
-        AnalyticsEvent.Custom("booster_used", new Dictionary<string, object>(parameters) { { "name", type } });
+        SendEvent("booster_used", new Dictionary<string, object>(parameters) { { "name", type } });
     }
 
-    public static void Merge(int count)
+    public static void Merge(int area)
     {
-        AnalyticsEvent.Custom("merge", new Dictionary<string, object>(parameters) { { "count", count } });
+        SendEvent("merge", new Dictionary<string, object>(parameters) { { "area", area } });
+    }
+
+    public static void SendEvent(string name, Dictionary<string, object> data)
+    {
+#if UNITY_EDITOR
+        string message = $"Event \"{name}\" fired";
+        foreach (var parameter in data)
+        {
+            message += $", {parameter.Key}: {parameter.Value}";
+        }
+        UnityEngine.Debug.Log(message);
+#else
+        AnalyticsEvent.Custom(name, data);
+#endif
     }
 }

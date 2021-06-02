@@ -21398,6 +21398,7 @@ MonoBehaviour:
   boostersPanel: {fileID: 1400211690}
   refreshButton: {fileID: 2071144091}
   ultimateButton: {fileID: 414965115}
+  flashCanvas: {fileID: 518520520}
   continueButton: {fileID: 676388687}
   restartButton: {fileID: 1782060909}
   collectionButton: {fileID: 289329352}
@@ -21618,6 +21619,7 @@ MonoBehaviour:
   woodSfx: {fileID: 8300000, guid: 8dc9816c7698fe142b5e7a0e75e3677f, type: 3}
   stoneSfx: {fileID: 8300000, guid: 5d676c48da6db234fbaadbc8bde4eb1f, type: 3}
   boosterSfx: {fileID: 8300000, guid: 50879e7454e5a7d41904951cfd70c3cd, type: 3}
+  thunderSfx: {fileID: 8300000, guid: d6f7c06f37ec3a048a1b20393ec4caa5, type: 3}
   raiseSfx: {fileID: 8300000, guid: 599e8216a30236b4ab12939005833bb9, type: 3}
   paperFastSfx: {fileID: 8300000, guid: 37d03b35160f0b446a1cf037468c721d, type: 3}
   paperSlowSfx: {fileID: 8300000, guid: 5b83c08ad38332a4c88f9f00682de362, type: 3}

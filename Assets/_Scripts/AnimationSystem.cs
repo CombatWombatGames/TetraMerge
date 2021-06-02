@@ -265,4 +265,14 @@ public class AnimationSystem
             .Append(transform.DOScale(0.8f, duration))
             .SetLoops(-1);
     }
+
+    public static void Flash(GameObject panel)
+    {
+        var image = panel.GetComponent<Image>();
+        image.color = new Color(1f, 1f, 1f, 0f);
+        panel.SetActive(true);
+        DOTween.Sequence()
+            .Append(image.DOFade(0.3f, 0.05f).SetLoops(2, LoopType.Yoyo))
+            .AppendCallback(() => panel.SetActive(false));
+    }
 }

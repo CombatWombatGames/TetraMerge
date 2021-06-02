@@ -52,6 +52,7 @@ public class SaveSystem : MonoBehaviour
     {
         saveFilePath = Path.Combine(Application.persistentDataPath, saveFileName);
         preveousSaveFilePath = Path.Combine(Application.persistentDataPath, preveousSaveFileName);
+        //Quick tutorial loading
         int tutorial = 0;
         if (tutorial > 0)
         {
@@ -184,7 +185,7 @@ public class SaveSystem : MonoBehaviour
         CreateInitialSave(saveFilePath);
         DOTween.Clear();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        AnalyticsSystem.Restart(playerProgressionModel.LevelNumber);
+        AnalyticsSystem.Restart();
     }
 
     //Produces array from field left to right top to bottom

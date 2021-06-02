@@ -20,6 +20,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] GameObject boostersPanel = default;
     [SerializeField] ButtonEnhanced refreshButton = default;
     [SerializeField] ButtonEnhanced ultimateButton = default;
+    [SerializeField] GameObject flashCanvas = default;
     [Header("Menu")]
     [SerializeField] ButtonEnhanced continueButton = default;
     [SerializeField] ButtonEnhanced restartButton = default;
@@ -82,8 +83,7 @@ public class UISystem : MonoBehaviour
         piecesButton.onPointerDown.AddListener(() => { if (piecesButton.interactable) SwitchTable(true); });
         boostersButton.onPointerDown.AddListener(() => { if (boostersButton.interactable) SwitchTable(false); });
         refreshButton.onClick.AddListener(() => { boosterModel.GenerateNewPieces(); SwitchTable(true); });
-        ultimateButton.onClick.AddListener(() => { boosterModel.ClearBasicRunes(); SwitchTable(true); });
-        ultimateButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayBoosterSfx());
+        ultimateButton.onPointerDown.AddListener(UltimateUsed);
         //Menu
         continueButton.onClick.AddListener(CloseMenu);
         continueButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayStoneSfx());
@@ -350,10 +350,18 @@ public class UISystem : MonoBehaviour
         return new bool[]
         {
             true, //basic
-            playerProgressionModel.TurnNumber >= 5 || playerProgressionModel.LevelNumber > 1, //level up
-            boosterModel.BoostersOpen, //boosters
-            playerProgressionModel.Stage > 0 || playerProgressionModel.TurnNumber >= 20, //stages
-            playerProgressionModel.Stage > 0, //ultimate
+            playerProgressionModel.TutorialsWatched[1] || playerProgressionModel.TurnNumber >= 5 || playerProgressionModel.LevelNumber > 1, //level up
+            playerProgressionModel.TutorialsWatched[2] || boosterModel.BoostersOpen, //boosters
+            playerProgressionModel.TutorialsWatched[3] || playerProgressionModel.Stage > 0 || playerProgressionModel.TurnNumber >= 20, //stages
+            playerProgressionModel.TutorialsWatched[4] || playerProgressionModel.Stage > 0 || !boosterModel.UltimateUsed, //ultimate
         };
+    }
+
+    void UltimateUsed()
+    {
+        boosterModel.ClearBasicRunes(); 
+        AnimationSystem.Flash(flashCanvas); 
+        AudioSystem.Player.PlayThunderSfx();
+        SwitchTable(true);
     }
 }

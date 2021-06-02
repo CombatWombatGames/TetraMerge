@@ -4,9 +4,8 @@ using UnityEngine.Events;
 
 public class GalleryButton : MonoBehaviour
 {
-    [SerializeField] GameObject locked;
-    [SerializeField] GameObject newBadge;
-    [SerializeField] Image preview;
+    [SerializeField] GameObject newBadge = default;
+    [SerializeField] Image preview = default;
 
     public void Initialize(bool open, bool showBadge, UnityAction call)
     {

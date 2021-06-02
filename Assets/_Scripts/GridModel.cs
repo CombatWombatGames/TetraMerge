@@ -57,7 +57,7 @@ public class GridModel : MonoBehaviour
                 playerProgressionModel.LevelNumber++;
                 piecesModel.LevelUpCollection();
                 AudioSystem.Player.RestartMusicWithFading();
-                AnalyticsSystem.LevelStart(playerProgressionModel.LevelNumber);
+                AnalyticsSystem.LevelStart();
             }
             if (cellsMerged)
             {
@@ -122,7 +122,7 @@ public class GridModel : MonoBehaviour
         playerProgressionModel.Stage = (playerProgressionModel.Stage + 1) % stagesList.Length;
         boostersModel.UltimateUsed = false;
         AnalyticsSystem.BoosterAcquired(BoosterType.Ultimate);
-        AnalyticsSystem.StageStart(playerProgressionModel.Stage);
+        AnalyticsSystem.StageStart();
     }
 
     Vector2Int[] ArrayToField(Array2DBool array2DBool)
