@@ -93,6 +93,11 @@ public class PlayerProgressionModel : MonoBehaviour
         TutorialsWatched = tutorialsWatched;
         //Setting last so everything is ready for turn set event 
         TurnNumber = turnNumber;
+        if (TurnNumber == 0)
+        {
+            AnalyticsSystem.LevelStart();
+            AnalyticsSystem.StageStart();
+        }
     }
 
     void OnGridChanged(Vector2Int[] area, int level)

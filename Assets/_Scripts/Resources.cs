@@ -21,4 +21,7 @@ public class Resources : MonoBehaviour
 
     public VideoClip[] Tutorials => tutorials;
     [SerializeField] VideoClip[] tutorials = default;
+
+    public Sprite[] CupsList => cupsList;
+    [SerializeField] Sprite[] cupsList = default;
 }

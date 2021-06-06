@@ -11,6 +11,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] ButtonEnhanced menuButton = default;
     [SerializeField] ButtonEnhanced helpButton = default;
     [SerializeField] ButtonEnhanced undoButton = default;
+    [SerializeField] ButtonEnhanced cupButton = default;
     [SerializeField] Button closeHelpButton = default;
     [SerializeField] Transform newTip = default;
     [Header("Bottom UI")]
@@ -76,6 +77,7 @@ public class UISystem : MonoBehaviour
         undoButton.onPointerDown.AddListener(() => { if (undoButton.interactable) AudioSystem.Player.PlayButtonSfx(); });
         helpButton.onClick.AddListener(() => OpenScroll(Consts.Help));
         helpButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
+        cupButton.onPointerDown.AddListener(() => OpenScroll(Consts.Collection));
         menuButton.onClick.AddListener(OpenMenu);
         menuButton.onPointerDown.AddListener(() => AudioSystem.Player.PlayButtonSfx());
         closeHelpButton.onClick.AddListener(CloseScroll);

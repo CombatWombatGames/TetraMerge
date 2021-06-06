@@ -15,11 +15,6 @@ public class AnalyticsSystem
     public static void Initialize(PlayerProgressionModel playerProgressionModel)
     {
         AnalyticsSystem.playerProgressionModel = playerProgressionModel;
-        if (playerProgressionModel.TurnNumber == 0)
-        {
-            LevelStart();
-            StageStart();
-        }
     }
 
     public static void LevelStart()
