@@ -275,4 +275,12 @@ public class AnimationSystem
             .Append(image.DOFade(0.3f, 0.05f).SetLoops(2, LoopType.Yoyo))
             .AppendCallback(() => panel.SetActive(false));
     }
+
+    public static void PunchScale(Transform[] items)
+    {
+        foreach (var item in items)
+        {
+            item.DOPunchScale(Vector3.one * 0.3f, 0.4f, 0, 0);
+        }
+    }
 }

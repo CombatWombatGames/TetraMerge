@@ -85,6 +85,7 @@ public class PiecesView : MonoBehaviour
     void OnCollectionLevelUp()
     {
         ShowPieces();
+        AnimationSystem.PunchScale(pieceParents);
         messageSystem.ShowMessage(MessageId.BaseRuneUpdated);
         int tilesCount = resources.TilesList.Length;
         if (playerProgressionModel.LevelNumber == tilesCount + 1)
