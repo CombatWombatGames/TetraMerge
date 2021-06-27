@@ -41,6 +41,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] Button termsButton = default;
     [SerializeField] Button privacyButton = default;
     [SerializeField] Button closeAboutButton = default;
+    [SerializeField] Text versionText = default;
     [Header("Collection")]
     [SerializeField] Rune runePrefab = default;
     [SerializeField] Button closeCollectionButton = default;
@@ -160,6 +161,10 @@ public class UISystem : MonoBehaviour
         {
             InitializeHelp();
         }
+        else if (id == Consts.About)
+        {
+            InitializeAbout();
+        }
     }
 
     void CloseMenu()
@@ -274,6 +279,11 @@ public class UISystem : MonoBehaviour
             }
         }
         SelectTutorial(lastOpenTutorialIndex);
+    }
+
+    void InitializeAbout()
+    {
+        versionText.text = $"Version: \"{Application.version}\"";
     }
 
     void InitializeButton(int index, bool open, bool watched)
