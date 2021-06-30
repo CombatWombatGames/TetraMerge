@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine.Analytics;
 
 public class AnalyticsSystem
 {
@@ -62,7 +61,7 @@ public class AnalyticsSystem
         }
         UnityEngine.Debug.Log(message);
 #else
-        AnalyticsEvent.Custom(name, data);
+        UnityEngine.Analytics.AnalyticsEvent.Custom(name, data);
 #endif
     }
 }

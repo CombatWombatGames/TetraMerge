@@ -60,6 +60,7 @@ public class BoostersModel : MonoBehaviour
     int refreshesCount = 0;
     int addsCount = 0;
     int clearsCount = 0;
+    int givenThisTurn = 0;
 
     void Awake()
     {
@@ -90,6 +91,8 @@ public class BoostersModel : MonoBehaviour
 
     void OnTurnChanged(int turnNumber)
     {
+        givenThisTurn = 0;
+
         if (turnNumber == NextBoosterTurnNumber)
         {
             for (int i = 0; i < 3; i++)
@@ -156,7 +159,7 @@ public class BoostersModel : MonoBehaviour
 
     void GiveRandomBooster()
     {
-        UnityEngine.Random.InitState(playerProgressionModel.Seed);
+        UnityEngine.Random.InitState(playerProgressionModel.Seed * givenThisTurn);
         int index = UnityEngine.Random.Range(0, 3);
         switch (index)
         {
@@ -175,6 +178,7 @@ public class BoostersModel : MonoBehaviour
             default:
                 break;
         }
+        givenThisTurn++;
     }
 
     void OnCellsMerged(int area)
