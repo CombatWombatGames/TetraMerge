@@ -10,7 +10,7 @@ public class PiecesModel : MonoBehaviour
     public event Action PiecesGenerated;
     public event Action<int> PieceRemoved;
     public event Action<int> PieceRotated;
-    public event Action CollectionLevelUp;
+    public event Action<bool> CollectionLevelUp;
     public Piece[] Pieces { get; private set; }
     public Piece[] NextPieces { get; private set; }
 
@@ -146,7 +146,7 @@ public class PiecesModel : MonoBehaviour
         PieceRotated(index);
     }
 
-    public void LevelUpCollection()
+    public void LevelUpCollection(bool afterUltimate)
     {
         //Update collection
         InitializeCollection(playerProgressionModel.LevelNumber);
@@ -155,7 +155,7 @@ public class PiecesModel : MonoBehaviour
         {
             LevelUpPiece(NextPieces[i]);
         }
-        CollectionLevelUp();
+        CollectionLevelUp(afterUltimate);
     }
 
     void LevelUpPiece(Piece piece)

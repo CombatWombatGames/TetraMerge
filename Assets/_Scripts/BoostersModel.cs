@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 //Handles amount of boosters, gives boosters at appointed turns
 public class BoostersModel : MonoBehaviour
 {
     public event Action<int, BoosterType> BoosterCountChanged;
+    public event Action<int> RandomBoostersAcquired;
 
     public int RefreshesCount
     {
@@ -52,6 +55,8 @@ public class BoostersModel : MonoBehaviour
             return BoostersGiven * (BoostersGiven + 19) / 2;
         }
     }
+    public int BoostersLimit = 5;
+
 
     GridModel gridModel;
     PiecesModel piecesModel;
@@ -95,10 +100,7 @@ public class BoostersModel : MonoBehaviour
 
         if (turnNumber == NextBoosterTurnNumber)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                GiveRandomBooster();
-            }
+            GiveRandomBoosters(3);
             BoostersGiven++;
         }
 
@@ -123,7 +125,7 @@ public class BoostersModel : MonoBehaviour
     {
         if (ClearsCount > 0)
         {
-            gridModel.ChangeGrid(new Vector2Int[] { position }, 0);
+            gridModel.ChangeGrid(new Vector2Int[] { position }, 0, GridChanger.RegularBooster);
             ClearsCount--;
             playerProgressionModel.TurnNumber++;
             AnalyticsSystem.BoosterUsed(BoosterType.Clear);
@@ -134,7 +136,7 @@ public class BoostersModel : MonoBehaviour
     {
         if (AddsCount > 0)
         {
-            gridModel.ChangeGrid(new Vector2Int[] { position }, playerProgressionModel.LevelNumber);
+            gridModel.ChangeGrid(new Vector2Int[] { position }, playerProgressionModel.LevelNumber, GridChanger.RegularBooster);
             AddsCount--;
             playerProgressionModel.TurnNumber++;
             AnalyticsSystem.BoosterUsed(BoosterType.Add);
@@ -157,44 +159,55 @@ public class BoostersModel : MonoBehaviour
         return AddsCount > 0 || ClearsCount > 0 || RefreshesCount > 0;
     }
 
-    void GiveRandomBooster()
+    void GiveRandomBoosters(int count)
     {
-        UnityEngine.Random.InitState(playerProgressionModel.Seed * givenThisTurn);
-        int index = UnityEngine.Random.Range(0, 3);
-        switch (index)
+        int countAcquired = 0;
+        for (int i = 0; i < count; i++)
         {
-            case 0:
-                RefreshesCount++;
-                AnalyticsSystem.BoosterAcquired(BoosterType.Refresh);
-                break;
-            case 1:
-                AddsCount++;
-                AnalyticsSystem.BoosterAcquired(BoosterType.Add);
-                break;
-            case 2:
-                ClearsCount++;
-                AnalyticsSystem.BoosterAcquired(BoosterType.Clear);
-                break;
-            default:
-                break;
+            Random.InitState(playerProgressionModel.Seed * givenThisTurn);
+            var availableBoosters = new List<BoosterType>();
+            if (RefreshesCount < BoostersLimit) { availableBoosters.Add(BoosterType.Refresh); }
+            if (AddsCount < BoostersLimit) { availableBoosters.Add(BoosterType.Add); }
+            if (ClearsCount < BoostersLimit) { availableBoosters.Add(BoosterType.Clear); }
+            if (availableBoosters.Count > 0)
+            {
+                int index = Random.Range(0, availableBoosters.Count);
+                var type = availableBoosters[index];
+                switch (type)
+                {
+                    case BoosterType.Refresh:
+                        RefreshesCount++;
+                        break;
+                    case BoosterType.Add:
+                        AddsCount++;
+                        break;
+                    case BoosterType.Clear:
+                        ClearsCount++;
+                        break;
+                    default:
+                        break;
+                }
+                AnalyticsSystem.BoosterAcquired(type);
+                givenThisTurn++;
+                countAcquired++;
+            }
         }
-        givenThisTurn++;
+        RandomBoostersAcquired(countAcquired);
     }
 
     void OnCellsMerged(int area)
     {
         if (9 < area && area < 36)
         {
-            GiveRandomBooster();
+            GiveRandomBoosters(1);
         }
     }
 
-    void OnCollectionLevelUp()
+    void OnCollectionLevelUp(bool afterUltimate)
     {
-        //TODO MED Show message
-        for (int i = 0; i < 2; i++)
+        if (!afterUltimate)
         {
-            GiveRandomBooster();
+            GiveRandomBoosters(2);
         }
     }
 }

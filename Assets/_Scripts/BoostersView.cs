@@ -17,25 +17,23 @@ public class BoostersView : MonoBehaviour
 
     BoostersModel boostersModel;
     PlayerProgressionModel playerProgressionModel;
-    GridModel gridModel;
     MessageSystem messageSystem;
 
     void Awake()
     {
         boostersModel = GetComponent<BoostersModel>();
         playerProgressionModel = GetComponent<PlayerProgressionModel>();
-        gridModel = GetComponent<GridModel>();
         messageSystem = GetComponent<MessageSystem>();
         playerProgressionModel.TurnChanged += OnTurnChanged;
         boostersModel.BoosterCountChanged += OnBoostersCountChanged;
-        gridModel.CellsMerged += OnCellsMerged;
+        boostersModel.RandomBoostersAcquired += OnRandomBoostersAcquired;
     }
 
     void OnDestroy()
     {
         playerProgressionModel.TurnChanged -= OnTurnChanged;
         boostersModel.BoosterCountChanged -= OnBoostersCountChanged;
-        gridModel.CellsMerged -= OnCellsMerged;
+        boostersModel.RandomBoostersAcquired -= OnRandomBoostersAcquired;
     }
 
     void OnBoostersCountChanged(int count, BoosterType type)
@@ -58,7 +56,7 @@ public class BoostersView : MonoBehaviour
 
     void OnRefreshesCountChanged(int count)
     {
-        refreshesCount.text = count.ToString();
+        refreshesCount.text = $"{count}/{boostersModel.BoostersLimit}";
         if (count == 0)
         {
             refreshButton.interactable = false;
@@ -71,7 +69,7 @@ public class BoostersView : MonoBehaviour
 
     void OnAddsCountChanged(int count)
     {
-        addsCount.text = count.ToString();
+        addsCount.text = $"{count}/{boostersModel.BoostersLimit}";
         if (count == 0)
         {
             addsRaycastTarget.raycastTarget = false;
@@ -86,7 +84,7 @@ public class BoostersView : MonoBehaviour
 
     void OnClearsCountChanged(int count)
     {
-        clearsCount.text = count.ToString();
+        clearsCount.text = $"{count}/{boostersModel.BoostersLimit}";
         if (count == 0)
         {
             clearsRaycastTarget.raycastTarget = false;
@@ -103,24 +101,12 @@ public class BoostersView : MonoBehaviour
     {
         var value = (float)(turnNumber - boostersModel.PreviousBoosterTurnNumber) / (boostersModel.NextBoosterTurnNumber - boostersModel.PreviousBoosterTurnNumber);
         AnimationSystem.ChangeProgress(slider, value);
-        if (value < slider.value)
-        {
-            messageSystem.ShowMessage(MessageId.BoostersIncremented);
-        }
         ultimateButton.gameObject.SetActive(!boostersModel.UltimateUsed);
     }
 
-    void OnCellsMerged(int area)
+    void OnRandomBoostersAcquired(int count)
     {
-        //if (area > 25)
-        //{
-        //    messageSystem.ShowMessage(MessageId.BoostersIncremented);
-        //}
-        //else if (area > 16)
-        //{
-        //    messageSystem.ShowMessage(MessageId.BoostersIncremented);
-        //}
-        if (area > 9)
+        if (count > 0)
         {
             messageSystem.ShowMessage(MessageId.BoostersIncremented);
         }

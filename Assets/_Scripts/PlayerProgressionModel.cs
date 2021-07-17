@@ -128,7 +128,6 @@ public class PlayerProgressionModel : MonoBehaviour
             CurrentScore += score;
         }
 
-        //TODO LOW: Cache
         if (level > BestRune && level <= GetComponent<Resources>().TilesList.Length)
         {
             BestRune = level;

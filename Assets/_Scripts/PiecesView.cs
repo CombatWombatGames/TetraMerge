@@ -82,7 +82,7 @@ public class PiecesView : MonoBehaviour
         }
     }
 
-    void OnCollectionLevelUp()
+    void OnCollectionLevelUp(bool afterUltimate)
     {
         ShowPieces();
         AnimationSystem.PunchScale(pieceParents);

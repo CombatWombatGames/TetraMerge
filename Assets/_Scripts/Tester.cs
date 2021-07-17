@@ -30,7 +30,7 @@ public class Tester : MonoBehaviour
                 area[i + y * j] = new Vector2Int(i, j);
             }
         }
-        grid.ChangeGrid(area, level);
+        grid.ChangeGrid(area, level, GridChanger.Cheat);
     }
 
     [ContextMenu("FillGridWithBasicRunes")]

@@ -14,6 +14,13 @@ public class AnalyticsSystem
     public static void Initialize(PlayerProgressionModel playerProgressionModel)
     {
         AnalyticsSystem.playerProgressionModel = playerProgressionModel;
+#if false
+        if (UnityEngine.PlayerPrefs.GetInt("FirstLaunch", 0) == 0)
+        {
+            FreeVersionFirstLaunch();
+            UnityEngine.PlayerPrefs.SetInt("FirstLaunch", 1);
+        }
+#endif
     }
 
     public static void LevelStart()
@@ -51,17 +58,32 @@ public class AnalyticsSystem
         SendEvent("merge", new Dictionary<string, object>(parameters) { { "area", area } });
     }
 
-    public static void SendEvent(string name, Dictionary<string, object> data)
+    public static void FreeVersionFirstLaunch()
+    {
+        SendEvent("free_version_first_launch");
+    }
+
+    public static void SendEvent(string name, Dictionary<string, object> data = null)
     {
 #if UNITY_EDITOR
         string message = $"Event \"{name}\" fired";
-        foreach (var parameter in data)
+        if (data != null)
         {
-            message += $", {parameter.Key}: {parameter.Value}";
+            foreach (var parameter in data)
+            {
+                message += $", {parameter.Key}: {parameter.Value}";
+            }
         }
         UnityEngine.Debug.Log(message);
 #else
-        UnityEngine.Analytics.AnalyticsEvent.Custom(name, data);
+        if (data == null)
+        {
+            UnityEngine.Analytics.AnalyticsEvent.Custom(name);
+        }
+        else
+        {
+            UnityEngine.Analytics.AnalyticsEvent.Custom(name, data);
+        }
 #endif
     }
 }

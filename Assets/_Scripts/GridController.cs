@@ -182,7 +182,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     void Merge(Vector2Int[] clearedArea, Vector2Int[] upgradedArea, int upgradeLevel)
     {
-        gridModel.ChangeGrid(clearedArea, 0);
+        gridModel.ChangeGrid(clearedArea, 0, GridChanger.Merge);
         if (clearedArea.Length == gridModel.Height * gridModel.Width)
         {
             gridModel.StageComplete();
@@ -190,7 +190,7 @@ public class GridController : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         }
         else
         {
-            gridModel.ChangeGrid(upgradedArea, upgradeLevel);
+            gridModel.ChangeGrid(upgradedArea, upgradeLevel, GridChanger.Merge);
         }
         playerProgressionModel.TurnNumber++;
         AudioSystem.Player.PlayMergeSfx(clearedArea.Length);

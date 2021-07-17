@@ -77,7 +77,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         {
             //Drop the piece
             //TODO LOW Ask for level another way. MB make entire piece level?
-            gridModel.ChangeGrid(nearestArea, piecesModel.NextPieces[index].Cells[0].Level);
+            gridModel.ChangeGrid(nearestArea, piecesModel.NextPieces[index].Cells[0].Level, GridChanger.Piece);
             gameObject.SetActive(false);
             piecesModel.RemovePiece(index);
             playerProgressionModel.TurnNumber++;

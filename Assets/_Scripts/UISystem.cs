@@ -258,7 +258,10 @@ public class UISystem : MonoBehaviour
             completeLabel.SetActive(true);
             completeLabel.transform.SetAsLastSibling();
         }
-        collectedRunes.text = $"You have collected {playerProgressionModel.TotalMerged} runes";
+
+        string collectedTextEn = $"You have collected {playerProgressionModel.TotalMerged} runes";
+        string collectedTextRu = $"Собрано рун: {playerProgressionModel.TotalMerged}";
+        collectedRunes.text = Application.systemLanguage == SystemLanguage.Russian ? collectedTextRu : collectedTextEn;
     }
 
     void InitializeHelp()

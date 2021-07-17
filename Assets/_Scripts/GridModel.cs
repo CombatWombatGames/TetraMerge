@@ -41,7 +41,7 @@ public class GridModel : MonoBehaviour
         return grid;
     }
 
-    public void ChangeGrid(Vector2Int[] coordinates, int level, bool cellsMerged = true)
+    public void ChangeGrid(Vector2Int[] coordinates, int level, GridChanger gridChanger)
     {
         for (int i = 0; i < coordinates.Length; i++)
         {
@@ -55,11 +55,11 @@ public class GridModel : MonoBehaviour
             if (MinimumLevelPiecesRemoved())
             {
                 playerProgressionModel.LevelNumber++;
-                piecesModel.LevelUpCollection();
+                piecesModel.LevelUpCollection(gridChanger == GridChanger.UltimateBooster);
                 AudioSystem.Player.RestartMusicWithFading();
                 AnalyticsSystem.LevelStart();
             }
-            if (cellsMerged)
+            if (gridChanger == GridChanger.Merge)
             {
                 AnalyticsSystem.Merge(coordinates.Length);
                 CellsMerged(coordinates.Length);
@@ -111,14 +111,14 @@ public class GridModel : MonoBehaviour
                 }
             }
         }
-        ChangeGrid(coordinates.ToArray(), 0, false);
+        ChangeGrid(coordinates.ToArray(), 0, GridChanger.UltimateBooster);
     }
 
     public void StageComplete()
     {
         //TODO LOW make event
         var stagesList = GetComponent<Resources>().StagesList;
-        ChangeGrid(ArrayToField(stagesList[playerProgressionModel.Stage]), playerProgressionModel.LevelNumber, false);
+        ChangeGrid(ArrayToField(stagesList[playerProgressionModel.Stage]), playerProgressionModel.LevelNumber, GridChanger.Merge);
         playerProgressionModel.Stage = (playerProgressionModel.Stage + 1) % stagesList.Length;
         boostersModel.UltimateUsed = false;
         AnalyticsSystem.BoosterAcquired(BoosterType.Ultimate);
@@ -141,4 +141,13 @@ public class GridModel : MonoBehaviour
         }
         return field.ToArray();
     }
+}
+
+public enum GridChanger
+{
+    Piece,
+    Merge,
+    RegularBooster,
+    UltimateBooster,
+    Cheat
 }
