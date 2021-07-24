@@ -119,6 +119,10 @@ public class GridModel : MonoBehaviour
         //TODO LOW make event
         var stagesList = GetComponent<Resources>().StagesList;
         ChangeGrid(ArrayToField(stagesList[playerProgressionModel.Stage]), playerProgressionModel.LevelNumber, GridChanger.Merge);
+        if (playerProgressionModel.Stage + 1 == stagesList.Length)
+        {
+            playerProgressionModel.StagesComplete = true;
+        }
         playerProgressionModel.Stage = (playerProgressionModel.Stage + 1) % stagesList.Length;
         boostersModel.UltimateUsed = false;
         AnalyticsSystem.BoosterAcquired(BoosterType.Ultimate);

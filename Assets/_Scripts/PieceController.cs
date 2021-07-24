@@ -11,6 +11,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     PlayerProgressionModel playerProgressionModel;
     int index;
     float scaleRate = 1.75f;
+    static bool dragging = false;
 
     public void Initialize(int index, GameObject managersContainer)
     {
@@ -64,6 +65,7 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        dragging = true;
         AnimationSystem.FinishPieceRotation();
         piecesView.ScalePiece(index, scaleRate);
         AudioSystem.Player.PlayRaiseSfx();
@@ -89,11 +91,12 @@ public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, I
             AudioSystem.Player.PlayTurnSfx();
         }
         gridView.DeleteShadow();
+        dragging = false;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!eventData.dragging)
+        if (!dragging)
         {
             AudioSystem.Player.PlayTurnSfx();
             piecesModel.RotatePiece(index);

@@ -52,16 +52,16 @@ public struct Consts
 
     static string[] runeDescriptionsRu = new string[]
     {
-        "Tiwaz - бог Тюр.",//Týr
+        "Tiwaz - бог Тюр.",
         "Wynn - \"радость\".",
         "Odal - \"наследие\".",
         "Fehu - \"скот\".",
         "Ur - \"вода\".",
-        "Peorth - \"дерево\".",//Peorð
+        "Peorth - \"дерево\".",
         "Gyfu - \"подарок\".",
         "Mannaz -  \"человек\".",
         "Algiz - \"лось\".",
-        "Sowilo - \"Солнце\"."//Sowilō
+        "Sowilo - \"Солнце\"."
     };
 
     public static string[] Tutorials => Application.systemLanguage == SystemLanguage.Russian ? tutorialsRu : tutorialsEn;

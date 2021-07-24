@@ -70,7 +70,7 @@ public class SaveSystem : MonoBehaviour
         gridModel.Initialize(stateData.Grid);
         piecesModel.Initialize(stateData.NextPieces, stateData.LevelNumber);
         boostersModel.Initialize(stateData.RefreshesCount, stateData.AddsCount, stateData.ClearsCount, stateData.BoostersGiven, stateData.UltimateUsed, stateData.BoostersOpen);
-        playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber, stateData.BestScore, stateData.BestLevel, stateData.BestRune, stateData.Stage, stateData.TotalMerged, stateData.TriesCount, stateData.TutorialsWatched);
+        playerProgressionModel.Initialize(stateData.CurrentScore, stateData.LevelNumber, stateData.TurnNumber, stateData.BestScore, stateData.BestLevel, stateData.BestRune, stateData.Stage, stateData.TotalMerged, stateData.TriesCount, stateData.TutorialsWatched, stateData.StagesComplete);
         undoButton.interactable = File.Exists(preveousSaveFilePath);
     }                            
                                  
@@ -90,6 +90,7 @@ public class SaveSystem : MonoBehaviour
             LevelNumber = 1,
             TriesCount = playerProgressionModel.TriesCount,
             TutorialsWatched = playerProgressionModel.TutorialsWatched ?? new bool[resources.Tutorials.Length],
+            StagesComplete = playerProgressionModel.StagesComplete,
             RefreshesCount = 0,
             AddsCount = 0,
             ClearsCount = 0,
@@ -157,6 +158,7 @@ public class SaveSystem : MonoBehaviour
             BestRune = playerProgressionModel.BestRune,
             Stage = playerProgressionModel.Stage,
             TotalMerged = playerProgressionModel.TotalMerged,
+            StagesComplete = playerProgressionModel.StagesComplete,
             TriesCount = playerProgressionModel.TriesCount,
             TutorialsWatched = playerProgressionModel.TutorialsWatched,
             RefreshesCount = boostersModel.RefreshesCount,
@@ -231,6 +233,7 @@ public struct StateData
     public int TotalMerged;
     public int TriesCount;
     public bool[] TutorialsWatched;
+    public bool StagesComplete;
     //Booster model
     public int RefreshesCount;
     public int AddsCount;

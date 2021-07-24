@@ -56,8 +56,9 @@ public class PlayerProgressionModel : MonoBehaviour
     public int TotalMerged { get; set; }
     public int TriesCount { get; set; }
     public bool[] TutorialsWatched { get; set; }
+    public bool StagesComplete { get; set; }
     //Saving RNG state didn't work properly because of execution order, so using seed as workaround
-    public int Seed => 10000 * TriesCount + TurnNumber;
+    public int Seed => 1000 * TriesCount + TurnNumber;
 
     GridModel gridModel;
     int currentScore;
@@ -80,7 +81,7 @@ public class PlayerProgressionModel : MonoBehaviour
         LevelNumberChanged -= UpdateBestLevel;
     }
 
-    public void Initialize(int currentScore, int levelNumber, int turnNumber, int bestScore, int bestLevel, int bestRune, int stage, int totalMerged, int triesCount, bool[] tutorialsWatched)
+    public void Initialize(int currentScore, int levelNumber, int turnNumber, int bestScore, int bestLevel, int bestRune, int stage, int totalMerged, int triesCount, bool[] tutorialsWatched, bool stagesComplete)
     {
         CurrentScore = currentScore;
         LevelNumber = levelNumber;
@@ -91,6 +92,7 @@ public class PlayerProgressionModel : MonoBehaviour
         TotalMerged = totalMerged;
         TriesCount = triesCount;
         TutorialsWatched = tutorialsWatched;
+        StagesComplete = stagesComplete;
         //Setting last so everything is ready for turn set event 
         TurnNumber = turnNumber;
         if (TurnNumber == 0)
