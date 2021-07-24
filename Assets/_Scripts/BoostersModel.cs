@@ -104,7 +104,7 @@ public class BoostersModel : MonoBehaviour
             BoostersGiven++;
         }
 
-        if (playerProgressionModel.Stage == 0 && BoostersOpen && !AnyBoosterAvailable())
+        if (playerProgressionModel.Stage == 0 && BoostersOpen && !AnyBoosterAvailable() && !playerProgressionModel.StagesComplete)
         {
             UltimateUsed = false;
         }
